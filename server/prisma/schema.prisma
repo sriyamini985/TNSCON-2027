@@ -1,0 +1,87 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Registration {
+  id                 Int       @id @default(autoincrement())
+  registrationId     String    @unique
+  title              String?
+  firstName          String
+  lastName           String?
+  gender             String?
+  designation        String?
+  qualification      String?
+  medicalCouncilNo   String?
+  hospital           String
+  address            String?
+  city               String?
+  state              String?
+  pinCode            String?
+  mobile             String    @unique
+  email              String    @unique
+  category           String
+  fee                Float
+  transactionId      String    @unique
+  paymentScreenshot  String    @db.LongText
+  registrationStatus String    @default("Pending Verification")
+  paymentStatus      String    @default("Verification Pending")
+  exportStatus       String    @default("Pending")
+  adminNotes         String?   @db.Text
+  rejectionReason    String?   @db.Text
+  verifiedAt         DateTime?
+  verifiedBy         String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model AbstractSubmission {
+  id                          Int       @id @default(autoincrement())
+  submissionId                String    @unique
+  category                    String    // "Award Paper Presentation", "Free Paper Presentation", "Poster Presentation"
+  specialty                   String    // "Neurosurgery" or "Neurology"
+  subTopic                    String    // e.g. "Skull base", "Vascular", "Stroke", etc.
+  title                       String    @db.Text
+  wordCount                   Int
+  presentingAuthorTitle       String?
+  presentingAuthorName        String
+  presentingAuthorEmail       String
+  presentingAuthorPhone       String
+  presentingAuthorDesignation String?
+  presentingAuthorInstitution String
+  isResident                  Boolean   @default(false)
+  coAuthors                   String?   @db.Text
+  introduction                String?   @db.Text
+  methods                     String?   @db.Text
+  results                     String?   @db.Text
+  conclusion                  String?   @db.Text
+  fullAbstractText            String    @db.Text
+  docFilePath                 String?
+  docOriginalName             String?
+  bonafideFilePath            String?
+  status                      String    @default("Submitted") // "Submitted", "Under Review", "Accepted", "Rejected", "Revision Requested"
+  reviewerNotes               String?   @db.Text
+  reviewedAt                  DateTime?
+  reviewedBy                  String?
+  createdAt                   DateTime  @default(now())
+  updatedAt                   DateTime  @updatedAt
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  role         String   @default("Admin")
+  createdAt    DateTime @default(now())
+}
+
+model ConferenceSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}

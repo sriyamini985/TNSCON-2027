@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment secrets
+.env
+.env.local
+.env.*.local
+
+# File uploads & runtime data
+uploads/
+*.log
+
+# Prisma
+dev.db
+dev.db-journal

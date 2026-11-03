@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  /* Official TNSCON 2027 Logo-Based Global Color Tokens */
+  --color-brand-blue: #003399;
+  --color-brand-blue-hover: #002266;
+  --color-brand-blue-deep: #001A4D;
+  --color-brand-blue-light: #1A4DB8;
+  --color-brand-blue-tint: #EBF1FA;
+
+  --color-brand-gold: #D49B00;
+  --color-brand-gold-hover: #B88500;
+  --color-brand-gold-light: #FFCC00;
+  --color-brand-gold-tint: #FFF8E7;
+
+  --color-ivory: #FAF5ED;
+  --color-ivory-section: #F2EAE0;
+  --color-ivory-surface: #FFFDF9;
+  --color-ivory-border: #E5DCCB;
+
+  --color-charcoal-primary: #182230;
+  --color-charcoal-muted: #556070;
+
+  /* Aliases for instant backward-compatibility across all component classnames */
+  --color-navy-900: #001A4D;
+  --color-navy-800: #002266;
+  --color-navy-700: #003399;
+  --color-primary: #003399;
+  --color-primary-dark: #001A4D;
+  --color-primary-deep: #001A4D;
+  --color-primary-light: #1A4DB8;
+  --color-navy: #001A4D;
+  --color-royal: #003399;
+
+  --color-gold: #D49B00;
+  --color-gold-500: #D49B00;
+  --color-gold-400: #FFCC00;
+  --color-gold-600: #B88500;
+
+  --color-ice-50: #FAF5ED;
+  --color-bg-base: #FAF5ED;
+  --color-bg-card: #FFFDF9;
+  --color-surface: #FFFDF9;
+
+  --color-text-dark: #182230;
+  --color-slate-800: #182230;
+  --color-slate-700: #182230;
+  --color-slate-600: #556070;
+  --color-slate-500: #556070;
+  --color-muted: #556070;
+
+  --color-slate-200: #E5DCCB;
+  --color-slate-300: #D8CEBC;
+  --color-border-subtle: #E5DCCB;
+
+  /* Typography */
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-numbers: "Inter", -apple-system, sans-serif;
+}
+
+:root {
+  /* Official TNSCON 2027 Logo-Based Variables */
+  --brand-blue: #003399;
+  --brand-blue-hover: #002266;
+  --brand-blue-deep: #001A4D;
+  --brand-blue-light: #1A4DB8;
+  --brand-blue-tint: #EBF1FA;
+
+  --brand-gold: #D49B00;
+  --brand-gold-hover: #B88500;
+  --brand-gold-light: #FFCC00;
+  --brand-gold-tint: #FFF8E7;
+
+  --page-background: #FAF5ED;
+  --section-background: #F2EAE0;
+  --surface-background: #FFFDF9;
+
+  --text-primary: #182230;
+  --text-secondary: #556070;
+
+  --border-color: #E5DCCB;
+
+  /* Backward-compatible variables */
+  --navy-900: #001A4D;
+  --navy-700: #003399;
+  --gold-500: #D49B00;
+  --ice-50: #FAF5ED;
+  --slate-600: #556070;
+  --slate-200: #E5DCCB;
+
+  --tns-navy: #001A4D;
+  --tns-blue: #003399;
+  --tns-gold: #D49B00;
+  --tns-bg: #FAF5ED;
+  --tns-dark: #182230;
+  --tns-muted: #556070;
+  --tns-border: #E5DCCB;
+}
+
+/* Custom Editorial Typography Classes */
+.font-serif-display {
+  font-family: var(--font-serif);
+}
+
+.font-editorial-heading {
+  font-family: var(--font-serif);
+}
+
+.font-manrope {
+  font-family: var(--font-sans);
+}
+
+/* Smooth Scrolling & Accessible Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF5ED;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8CEBC;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #003399;
+}
+
+/* Clean Medical Card Panels with Warm Ivory Surface */
+.medical-card {
+  background: #FFFDF9;
+  border: 1px solid #E5DCCB;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px -2px rgba(0, 26, 77, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.medical-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(0, 26, 77, 0.07);
+  border-color: #003399;
+}
