@@ -612,9 +612,14 @@ export const AdminPage: React.FC = () => {
                             {reg.hospital}
                           </td>
                           <td className="py-3 px-4">
-                            <span className="px-2 py-0.5 rounded bg-[#FAF5ED] text-[#182230] border border-[#E5DCCB] text-[11px] font-medium">
+                            <span className="px-2 py-0.5 rounded bg-[#FAF5ED] text-[#182230] border border-[#E5DCCB] text-[11px] font-medium block">
                               {reg.category}
                             </span>
+                            {reg.speciality && (
+                              <span className="text-[10px] text-[#003399] font-bold mt-0.5 block">
+                                {reg.speciality}
+                              </span>
+                            )}
                           </td>
                           <td className="py-3 px-4 font-manrope font-semibold text-[#003399]">
                             ₹{reg.fee.toLocaleString('en-IN')}
@@ -799,8 +804,10 @@ export const AdminPage: React.FC = () => {
                   <strong className="text-sm text-[#182230]">{selectedReg.title} {selectedReg.firstName} {selectedReg.lastName}</strong>
                 </div>
                 <div>
-                  <span className="text-[#556070] block">Category:</span>
-                  <strong className="text-sm text-[#003399]">{selectedReg.category}</strong>
+                  <span className="text-[#556070] block">Category & Speciality:</span>
+                  <strong className="text-sm text-[#003399]">
+                    {selectedReg.category} {selectedReg.speciality ? `(${selectedReg.speciality})` : ''}
+                  </strong>
                 </div>
                 <div>
                   <span className="text-[#556070] block">Institution:</span>

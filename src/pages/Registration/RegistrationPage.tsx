@@ -24,11 +24,17 @@ export const RegistrationPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   // Form State
+  const initialCategory = preselectedCategory || registrationCategories[0].name;
+  const initialFound = registrationCategories.find(c => c.name === initialCategory) || registrationCategories[0];
+  const initialBase = initialFound.fee;
+  const initialGst = Math.round(initialBase * 0.18);
+
   const [formData, setFormData] = useState<RegistrationFormData>({
     title: 'Dr.',
     firstName: '',
     lastName: '',
     gender: 'Male',
+    speciality: 'Neurosurgery',
     designation: 'Consultant',
     qualification: 'MCh / DM / DNB',
     medicalCouncilNo: '',
@@ -39,11 +45,13 @@ export const RegistrationPage: React.FC = () => {
     pinCode: '',
     mobile: '',
     email: '',
-    category: preselectedCategory || registrationCategories[0].name,
-    fee: registrationCategories[0].fee,
-    baseFee: registrationCategories[0].fee,
-    includeWorkshop: false,
+    category: initialCategory,
+    baseFee: initialBase,
     workshopFee: 0,
+    subtotalFee: initialBase,
+    gstFee: initialGst,
+    fee: initialBase + initialGst,
+    includeWorkshop: false,
     transactionId: '',
     paymentScreenshot: null
   });
@@ -59,18 +67,30 @@ export const RegistrationPage: React.FC = () => {
   const [lookupResult, setLookupResult] = useState<any | null>(null);
   const [lookupError, setLookupError] = useState('');
 
-  // Synchronize category fee and workshop add-on
+  // Synchronize category fee, specialty-gated workshop add-on, and 18% GST
   useEffect(() => {
     const found = registrationCategories.find(c => c.name === formData.category) || registrationCategories[0];
     const base = found.fee;
-    const workshop = (formData.includeWorkshop && found.workshopAvailable) ? 5500 : 0;
+    
+    // Per organizing guidelines: Only Neurosurgery is eligible for Hands-on Workshop
+    const canHaveWorkshop = found.workshopAvailable && formData.speciality === 'Neurosurgery';
+    const willIncludeWorkshop = canHaveWorkshop && formData.includeWorkshop;
+    const workshop = willIncludeWorkshop ? (found.workshopFee || 6000) : 0;
+    
+    const subtotal = base + workshop;
+    const gst = Math.round(subtotal * 0.18); // 18% GST
+    const total = subtotal + gst;
+
     setFormData(prev => ({
       ...prev,
       baseFee: base,
       workshopFee: workshop,
-      fee: base + workshop
+      subtotalFee: subtotal,
+      gstFee: gst,
+      fee: total,
+      includeWorkshop: formData.speciality === 'Neurology' ? false : willIncludeWorkshop
     }));
-  }, [formData.category, formData.includeWorkshop]);
+  }, [formData.category, formData.speciality, formData.includeWorkshop]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -305,12 +325,62 @@ export const RegistrationPage: React.FC = () => {
                             <span className="text-sm font-bold text-[#182230] block">{c.name}</span>
                             <span className="text-[11px] text-[#556070] mt-1 block leading-snug">{c.description}</span>
                           </div>
+                          <span className="text-[9.5px] text-[#556070] mt-2 block font-medium">
+                            + 18% GST at checkout
+                          </span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Pre-Conference Workshop Option (Available for Delegate & Resident) */}
-                    {formData.category !== 'Accompany Person' && (
+                    {/* 2. Medical Speciality Selection (Gating Workshop) */}
+                    <div className="pt-2">
+                      <label className="block text-xs uppercase font-bold tracking-wider text-[#182230] mb-1.5">
+                        2. Medical Speciality *
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {[
+                          {
+                            id: 'Neurosurgery',
+                            title: 'Neurosurgery',
+                            tag: 'Workshop Eligible',
+                            desc: 'Surgical corridors, cranial & spine masterclasses, neuro-trauma'
+                          },
+                          {
+                            id: 'Neurology',
+                            title: 'Neurology',
+                            tag: 'Plenary Masterclasses',
+                            desc: 'Clinical stroke plenaries, EEG/EMG masterclasses, neuromuscular'
+                          }
+                        ].map((spec) => (
+                          <div
+                            key={spec.id}
+                            onClick={() => setFormData(prev => ({
+                              ...prev,
+                              speciality: spec.id,
+                              includeWorkshop: spec.id === 'Neurology' ? false : prev.includeWorkshop
+                            }))}
+                            className={`p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
+                              formData.speciality === spec.id
+                                ? 'border-[#003399] bg-[#EBF1FA] ring-1 ring-[#003399]'
+                                : 'border-[#E5DCCB] hover:border-[#003399] bg-[#FFFDF9]'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm font-bold text-[#182230]">{spec.title}</span>
+                              <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                                spec.id === 'Neurosurgery' ? 'bg-[#D49B00]/15 text-[#8B6508]' : 'bg-[#003399]/10 text-[#003399]'
+                              }`}>
+                                {spec.tag}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-[#556070] mt-1">{spec.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Pre-Conference Workshop Option (Available exclusively for Neurosurgery) */}
+                    {formData.speciality === 'Neurosurgery' && formData.category !== 'Accompanying Person' && (
                       <div 
                         onClick={() => setFormData(prev => ({ ...prev, includeWorkshop: !prev.includeWorkshop }))}
                         className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center justify-between mt-3 ${
@@ -329,33 +399,59 @@ export const RegistrationPage: React.FC = () => {
                           />
                           <div>
                             <label htmlFor="workshopAddon" className="block text-xs font-bold text-[#182230] cursor-pointer">
-                              Add Pre-Conference Hands-on Workshop (+ ₹5,500)
+                              Add Pre-Conference Hands-on Neurosurgery Workshop (+ ₹6,000 + 18% GST)
                             </label>
                             <span className="block text-[11px] text-[#556070] mt-0.5">
-                              Hands-on masterclasses in surgical corridors & neuro-navigation (12 March 2027).
+                              Hands-on masterclasses in surgical corridors, neuro-navigation & cranial/spinal access (12 March 2027).
                             </span>
                           </div>
                         </div>
                         <div className="text-right flex-shrink-0 ml-3">
                           <span className="font-manrope font-extrabold text-sm text-[#D49B00] block">
-                            + ₹5,500
+                            + ₹6,000
                           </span>
                           <span className="text-[9.5px] uppercase font-bold tracking-wider text-[#556070] block">
-                            Workshop Add-on
+                            Workshop (+ 18% GST)
                           </span>
                         </div>
                       </div>
                     )}
 
-                    {/* Live Tariff Summary Banner */}
-                    <div className="p-3.5 bg-[#FAF5ED] border border-[#E5DCCB] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#182230]">
-                      <span>
-                        Slab: <strong>Early Bird</strong> · {formData.category} (₹{(formData.baseFee || formData.fee).toLocaleString('en-IN')})
-                        {formData.includeWorkshop ? ' + Workshop (₹5,500)' : ''}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[#556070]">Total Payable:</span>
-                        <strong className="font-manrope text-base text-[#003399] font-extrabold">₹{formData.fee.toLocaleString('en-IN')}/-</strong>
+                    {/* Informative Notice when Neurology is Selected */}
+                    {formData.speciality === 'Neurology' && formData.category !== 'Accompanying Person' && (
+                      <div className="p-3.5 rounded-xl border border-sky-200 bg-sky-50/70 text-xs text-sky-900 flex items-start gap-2.5 mt-2">
+                        <span className="text-base flex-shrink-0">ℹ️</span>
+                        <div>
+                          <strong className="font-semibold block text-sky-950">Hands-on Workshop is exclusive to Neurosurgery</strong>
+                          <span className="text-[11px] text-sky-800 leading-relaxed block mt-0.5">
+                            The Pre-Conference Hands-on Workshop covers surgical corridors and neuro-navigation. For Neurology delegates, dedicated clinical stroke plenaries, EEG/EMG masterclasses, and case presentations are fully included in your registration.
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Live Tariff Summary Banner with 18% GST Computation */}
+                    <div className="p-4 bg-[#FAF5ED] border border-[#E5DCCB] rounded-xl space-y-2 text-xs text-[#182230]">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E5DCCB] pb-2">
+                        <span>
+                          Slab: <strong>Early Bird</strong> · {formData.category} (₹{(formData.baseFee || 0).toLocaleString('en-IN')})
+                          {formData.includeWorkshop ? ` + Neurosurgery Workshop (₹${(formData.workshopFee || 6000).toLocaleString('en-IN')})` : ''}
+                        </span>
+                        <span className="text-[#556070]">
+                          Taxable Subtotal: <strong className="font-manrope font-bold text-[#182230]">₹{(formData.subtotalFee || 0).toLocaleString('en-IN')}</strong>
+                          <span className="text-[11px] text-[#556070] ml-1.5">+ 18% GST (₹{(formData.gstFee || 0).toLocaleString('en-IN')})</span>
+                        </span>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
+                        <div className="text-[11px] text-[#556070]">
+                          <span className="font-bold text-red-700 block">*Above registration fee are excluding of 18% GST</span>
+                          <span className="text-[10.5px]">Exact remittance payable at checkout is displayed on the payment step.</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#556070] text-xs">Total Exact Payable:</span>
+                          <strong className="font-manrope text-xl text-[#003399] font-extrabold">₹{formData.fee.toLocaleString('en-IN')}/-</strong>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -559,56 +655,127 @@ export const RegistrationPage: React.FC = () => {
               {currentStep === 2 && (
                 <form onSubmit={handleFinalSubmit} className="space-y-6">
                   
-                  {/* Summary Bar */}
-                  <div className="p-4 rounded-xl bg-[#EBF1FA] border border-[#D49B00]/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <span className="text-xs text-[#556070] block">Registration Particulars:</span>
-                      <strong className="text-sm text-[#003399] block">{formData.category} Registration (Early Bird)</strong>
-                      {formData.includeWorkshop && (
-                        <span className="text-xs text-[#D49B00] font-medium block mt-0.5">
-                          + Hands-on Pre-Conference Workshop Included (₹5,500)
+                  {/* Summary Bar with Exact Figure & 18% GST Breakdown */}
+                  <div className="p-5 rounded-2xl bg-[#EBF1FA] border-2 border-[#003399]/30 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#003399]/20 pb-3">
+                      <div>
+                        <span className="text-[11px] uppercase tracking-wider font-bold text-[#003399] block">
+                          Registration Particulars
                         </span>
-                      )}
+                        <strong className="text-base text-[#182230] font-bold block">
+                          {formData.category} Registration (Early Bird) • {formData.speciality}
+                        </strong>
+                        {formData.includeWorkshop && (
+                          <span className="text-xs text-[#D49B00] font-semibold block mt-0.5">
+                            + Hands-on Neurosurgery Workshop Included (12 March 2027)
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-left sm:text-right">
+                        <span className="text-[11px] uppercase tracking-wider font-bold text-[#556070] block">
+                          Exact Net Remittance Required:
+                        </span>
+                        <strong className="font-manrope text-2xl text-[#003399] font-extrabold">
+                          ₹{formData.fee.toLocaleString('en-IN')}/-
+                        </strong>
+                        <span className="text-[10px] text-emerald-700 font-semibold block">
+                          (Inclusive of 18% GST)
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-left sm:text-right">
-                      <span className="text-xs text-[#556070] block">Total Amount Payable:</span>
-                      <strong className="font-manrope text-2xl text-[#003399] font-extrabold">₹{formData.fee.toLocaleString('en-IN')}/-</strong>
+
+                    {/* Exact Breakdown Table */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                      <div className="bg-[#FFFDF9] p-3 rounded-xl border border-[#E5DCCB]">
+                        <span className="text-[#556070] block text-[10px] uppercase font-bold">Base Tariff</span>
+                        <strong className="text-[#182230] font-manrope text-sm font-bold">
+                          ₹{(formData.baseFee || 0).toLocaleString('en-IN')}
+                        </strong>
+                      </div>
+                      <div className="bg-[#FFFDF9] p-3 rounded-xl border border-[#E5DCCB]">
+                        <span className="text-[#556070] block text-[10px] uppercase font-bold">Workshop</span>
+                        <strong className="text-[#182230] font-manrope text-sm font-bold">
+                          {formData.includeWorkshop ? `₹${(formData.workshopFee || 6000).toLocaleString('en-IN')}` : '₹0'}
+                        </strong>
+                      </div>
+                      <div className="bg-[#FFFDF9] p-3 rounded-xl border border-[#E5DCCB]">
+                        <span className="text-[#556070] block text-[10px] uppercase font-bold">GST (18%)</span>
+                        <strong className="text-[#003399] font-manrope text-sm font-bold">
+                          + ₹{(formData.gstFee || 0).toLocaleString('en-IN')}
+                        </strong>
+                      </div>
+                      <div className="bg-[#003399] text-white p-3 rounded-xl border border-[#003399]">
+                        <span className="text-white/80 block text-[10px] uppercase font-bold">Total Payable</span>
+                        <strong className="text-[#FFCC00] font-manrope text-sm font-bold">
+                          ₹{formData.fee.toLocaleString('en-IN')}/-
+                        </strong>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Official Bank Account Details */}
-                  <div className="p-5 rounded-xl bg-[#FAF5ED] border border-[#E5DCCB] space-y-4">
-                    <div className="flex items-center gap-2 border-b border-[#E5DCCB] pb-3">
-                      <Building className="w-5 h-5 text-[#003399]" />
-                      <h4 className="font-bold text-sm text-[#182230]">
-                        Official Society Bank Details (NEFT / RTGS / IMPS)
-                      </h4>
+                  {/* Payment Methods: Dynamic UPI QR & Society Bank Accounts */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Dynamic UPI QR Code Box */}
+                    <div className="p-4 rounded-xl bg-[#FFFDF9] border border-[#E5DCCB] text-center flex flex-col items-center justify-between shadow-xs">
+                      <span className="text-[10px] uppercase font-bold text-[#D49B00] tracking-wider block mb-1">
+                        Instant UPI Payment
+                      </span>
+                      <p className="text-[11px] text-[#556070] mb-2">
+                        Scan with GPay, PhonePe, Paytm, or BHIM
+                      </p>
+                      <div className="p-2 bg-white rounded-lg border border-[#E5DCCB] inline-block shadow-inner">
+                        <img
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(
+                            `upi://pay?pa=${conferenceInfo.bankDetails.upiId}&pn=Telangana%20Neurosciences%20Society&am=${formData.fee}&cu=INR&tn=TNSCON2027_${formData.category.replace(/\s+/g,'')}`
+                          )}`}
+                          alt="TNSCON 2027 UPI QR Code"
+                          className="w-32 h-32 object-contain"
+                        />
+                      </div>
+                      <div className="mt-2 text-center">
+                        <span className="text-[11px] font-bold text-[#003399] block font-manrope">
+                          Exact Amount: ₹{formData.fee.toLocaleString('en-IN')}/-
+                        </span>
+                        <span className="text-[10px] text-[#556070] block">
+                          UPI ID: {conferenceInfo.bankDetails.upiId}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                      <div>
-                        <span className="text-[#556070] block">Account Name:</span>
-                        <strong className="text-[#182230]">{conferenceInfo.bankDetails.accountName}</strong>
+                    {/* Official Society Bank Account Details */}
+                    <div className="md:col-span-2 p-5 rounded-xl bg-[#FAF5ED] border border-[#E5DCCB] space-y-3">
+                      <div className="flex items-center gap-2 border-b border-[#E5DCCB] pb-2.5">
+                        <Building className="w-5 h-5 text-[#003399]" />
+                        <h4 className="font-bold text-sm text-[#182230]">
+                          Official Society Bank Account (NEFT / RTGS / IMPS)
+                        </h4>
                       </div>
-                      <div>
-                        <span className="text-[#556070] block">Bank Name:</span>
-                        <strong className="text-[#182230]">{conferenceInfo.bankDetails.bankName}</strong>
-                      </div>
-                      <div>
-                        <span className="text-[#556070] block">Account Number:</span>
-                        <strong className="text-[#003399] font-manrope font-bold text-sm">{conferenceInfo.bankDetails.accountNumber}</strong>
-                      </div>
-                      <div>
-                        <span className="text-[#556070] block">IFSC Code:</span>
-                        <strong className="text-[#003399] font-manrope font-bold text-sm">{conferenceInfo.bankDetails.ifscCode}</strong>
-                      </div>
-                      <div>
-                        <span className="text-[#556070] block">Branch:</span>
-                        <strong className="text-[#182230]">{conferenceInfo.bankDetails.branch}</strong>
-                      </div>
-                      <div>
-                        <span className="text-[#556070] block">UPI ID:</span>
-                        <strong className="text-[#D49B00] font-manrope font-bold">{conferenceInfo.bankDetails.upiId}</strong>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div>
+                          <span className="text-[#556070] block text-[11px]">Account Name:</span>
+                          <strong className="text-[#182230]">{conferenceInfo.bankDetails.accountName}</strong>
+                        </div>
+                        <div>
+                          <span className="text-[#556070] block text-[11px]">Bank Name:</span>
+                          <strong className="text-[#182230]">{conferenceInfo.bankDetails.bankName}</strong>
+                        </div>
+                        <div>
+                          <span className="text-[#556070] block text-[11px]">Account Number:</span>
+                          <strong className="text-[#003399] font-manrope font-bold text-sm">{conferenceInfo.bankDetails.accountNumber}</strong>
+                        </div>
+                        <div>
+                          <span className="text-[#556070] block text-[11px]">IFSC Code:</span>
+                          <strong className="text-[#003399] font-manrope font-bold text-sm">{conferenceInfo.bankDetails.ifscCode}</strong>
+                        </div>
+                        <div>
+                          <span className="text-[#556070] block text-[11px]">Branch:</span>
+                          <strong className="text-[#182230]">{conferenceInfo.bankDetails.branch}</strong>
+                        </div>
+                        <div>
+                          <span className="text-[#556070] block text-[11px]">Remit Exact Amount:</span>
+                          <strong className="text-[#D49B00] font-manrope font-extrabold text-sm">₹{formData.fee.toLocaleString('en-IN')}/-</strong>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -716,9 +883,9 @@ export const RegistrationPage: React.FC = () => {
                     </div>
 
                     <div className="flex items-center justify-between border-b border-[#E5DCCB] pb-2">
-                      <span className="text-xs text-[#556070]">Category:</span>
+                      <span className="text-xs text-[#556070]">Category & Speciality:</span>
                       <span className="text-xs font-semibold text-[#003399]">
-                        {completedRegistration.category}
+                        {completedRegistration.category} ({formData.speciality})
                       </span>
                     </div>
 
@@ -726,6 +893,13 @@ export const RegistrationPage: React.FC = () => {
                       <span className="text-xs text-[#556070]">UTR Reference:</span>
                       <span className="text-xs font-manrope font-semibold text-[#182230]">
                         {completedRegistration.transactionId}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between border-b border-[#E5DCCB] pb-2">
+                      <span className="text-xs text-[#556070]">Exact Amount Remitted:</span>
+                      <span className="text-xs font-manrope font-extrabold text-[#003399]">
+                        ₹{(completedRegistration.fee || formData.fee).toLocaleString('en-IN')}/- (incl. 18% GST)
                       </span>
                     </div>
 
@@ -840,19 +1014,18 @@ export const RegistrationPage: React.FC = () => {
                             from 26th feb
                           </span>
                         </th>
-                        <th className="py-4 px-6 font-bold uppercase tracking-wider text-xs text-[#003399] bg-[#FFF8E7]">
-                          Workshop
-                          <span className="block text-[11px] font-normal text-[#556070] lowercase mt-0.5">
-                            pre-conference
-                          </span>
-                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#E5DCCB]">
                       {registrationTariffGrid.rows.map((row) => (
                         <tr key={row.category} className="hover:bg-[#FAF5ED]/60 transition-colors">
-                          <td className="py-4 px-6 font-bold text-[#182230]">
-                            {row.category}
+                          <td className="py-4 px-6 font-bold text-[#182230] flex items-center gap-2">
+                            <span>{row.category}</span>
+                            {row.category === 'Hands-on Workshop' && (
+                              <span className="text-[9.5px] uppercase font-bold px-1.5 py-0.5 rounded bg-[#D49B00]/15 text-[#8B6508]">
+                                Neurosurgery
+                              </span>
+                            )}
                           </td>
                           <td className="py-4 px-6 font-manrope font-extrabold text-base text-[#003399] bg-[#EBF1FA]/60 border-x border-[#E5DCCB]">
                             ₹{row.earlyBird.toLocaleString('en-IN')}
@@ -863,18 +1036,23 @@ export const RegistrationPage: React.FC = () => {
                           <td className="py-4 px-6 font-manrope font-bold text-sm text-[#556070]">
                             ₹{row.spot.toLocaleString('en-IN')}
                           </td>
-                          <td className="py-4 px-6 font-manrope font-bold text-sm text-[#D49B00] bg-[#FFF8E7]/60">
-                            {row.workshop ? `₹${row.workshop.toLocaleString('en-IN')}` : <span className="text-gray-400 font-normal">—</span>}
-                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
 
-                <div className="p-4 bg-[#FAF5ED] border-t border-[#E5DCCB] text-[11.5px] text-[#556070] flex flex-wrap items-center justify-between gap-2">
-                  <span>* All tariffs listed in Indian Rupees (INR). Early Bird rate valid till 15th January 2027.</span>
-                  <span className="font-semibold text-[#003399]">Workshop fee: ₹5,500 per delegate / resident.</span>
+                {/* Mandatory GST Note Below Table */}
+                <div className="p-4 bg-[#FFF8E7] border-t-2 border-[#D49B00] text-xs text-[#182230] space-y-1">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-[#D49B00] flex-shrink-0" />
+                    <strong className="text-sm text-red-700 font-bold">
+                      *Above registration fee are excluding of 18% GST
+                    </strong>
+                  </div>
+                  <p className="text-[11.5px] text-[#556070] pl-6">
+                    An 18% Goods & Services Tax (GST) will be calculated and added to the final payable remittance at checkout. Delegates will view the complete itemized breakdown and exact payable figure prior to payment.
+                  </p>
                 </div>
               </div>
 

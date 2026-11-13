@@ -153,7 +153,11 @@ app.post('/api/registrations', upload.single('paymentScreenshot'), async (req, r
       mobile,
       email,
       category,
+      speciality,
       fee,
+      baseFee,
+      workshopFee,
+      gstFee,
       transactionId
     } = req.body;
 
@@ -191,6 +195,7 @@ app.post('/api/registrations', upload.single('paymentScreenshot'), async (req, r
       gender,
       designation,
       qualification,
+      speciality,
       medicalCouncilNo,
       hospital,
       address,
@@ -201,6 +206,9 @@ app.post('/api/registrations', upload.single('paymentScreenshot'), async (req, r
       email,
       category,
       fee: parseFloat(fee) || 0,
+      baseFee: baseFee ? parseFloat(baseFee) : null,
+      workshopFee: workshopFee ? parseFloat(workshopFee) : null,
+      gstFee: gstFee ? parseFloat(gstFee) : null,
       transactionId,
       paymentScreenshot: paymentScreenshotUrl
     });

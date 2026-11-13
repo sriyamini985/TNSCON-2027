@@ -78,7 +78,7 @@ export const generateRegistrationReceiptPDF = (data: {
   
   const fields = [
     { label: 'Full Name:', value: fullName },
-    { label: 'Category:', value: data.formData.category },
+    { label: 'Category & Speciality:', value: `${data.formData.category} — ${data.formData.speciality || 'Neurosurgery'}` },
     { label: 'Institution / Hospital:', value: data.formData.hospital },
     { label: 'Designation / Qualification:', value: `${data.formData.designation || 'Consultant'} ${data.formData.qualification ? '(' + data.formData.qualification + ')' : ''}` },
     { label: 'Medical Council Reg. No:', value: data.formData.medicalCouncilNo || 'Provided on File' },
@@ -103,45 +103,54 @@ export const generateRegistrationReceiptPDF = (data: {
   // Payment Details Box
   doc.setFillColor(...softBg);
   doc.setDrawColor(...logoGold);
-  doc.roundedRect(20, 162, 170, 48, 3, 3, 'FD');
+  doc.roundedRect(20, 160, 170, 56, 3, 3, 'FD');
 
   doc.setTextColor(...logoBlue);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  doc.text('PAYMENT & TRANSACTION PARTICULARS', 26, 172);
+  doc.text('PAYMENT & TRANSACTION PARTICULARS', 26, 169);
+
+  const baseFee = data.formData.baseFee || (data.formData.category === 'Resident' ? 4500 : data.formData.category === 'Accompanying Person' ? 4000 : 6500);
+  const workshopFee = data.formData.includeWorkshop ? (data.formData.workshopFee || 6000) : 0;
+  const subtotal = data.formData.subtotalFee || (baseFee + workshopFee);
+  const gst = data.formData.gstFee || Math.round(subtotal * 0.18);
+  const totalFee = data.formData.fee || (subtotal + gst);
 
   const paymentFields = [
-    { label: 'Registration Category Fee:', value: `INR ${(data.formData.baseFee || (data.formData.includeWorkshop ? data.formData.fee - 5500 : data.formData.fee)).toLocaleString('en-IN')}/-` },
-    ...(data.formData.includeWorkshop ? [{ label: 'Pre-Conference Workshop:', value: 'INR 5,500/- (Included)' }] : []),
-    { label: 'Total Amount Remitted:', value: `INR ${data.formData.fee.toLocaleString('en-IN')}/-` },
+    { label: 'Registration Category Fee:', value: `INR ${baseFee.toLocaleString('en-IN')}/-` },
+    ...(data.formData.includeWorkshop ? [{ label: 'Pre-Conference Workshop:', value: `INR ${workshopFee.toLocaleString('en-IN')}/- (Hands-on Neurosurgery)` }] : []),
+    { label: 'Subtotal (Excl. GST):', value: `INR ${subtotal.toLocaleString('en-IN')}/-` },
+    { label: 'Goods & Services Tax (18%):', value: `INR ${gst.toLocaleString('en-IN')}/-` },
+    { label: 'Total Amount Remitted:', value: `INR ${totalFee.toLocaleString('en-IN')}/-` },
     { label: 'Transaction Reference / UTR:', value: data.formData.transactionId },
-    { label: 'Payment Mode:', value: 'Bank Transfer / NEFT / RTGS / UPI' },
-    { label: 'Account Payee:', value: 'Telangana Neurosciences Society' },
     { label: 'Current Status:', value: 'Pending Accounts Bank Reconciliation' }
   ];
 
-  let pyPos = 180;
+  let pyPos = 176;
   paymentFields.forEach(field => {
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
+    doc.setFontSize(8.5);
     doc.setTextColor(field.label === 'Current Status:' ? logoBlue[0] : mutedText[0], field.label === 'Current Status:' ? logoBlue[1] : mutedText[1], field.label === 'Current Status:' ? logoBlue[2] : mutedText[2]);
     doc.text(field.label, 26, pyPos);
 
     doc.setFont('helvetica', field.label === 'Current Status:' ? 'bold' : 'normal');
     if (field.label === 'Current Status:') {
       doc.setTextColor(212, 155, 0); // #D49B00 gold
+    } else if (field.label === 'Total Amount Remitted:') {
+      doc.setTextColor(...logoBlue);
+      doc.setFont('helvetica', 'bold');
     } else {
       doc.setTextColor(...textDark);
     }
     doc.text(field.value, 80, pyPos);
-    pyPos += 6.5;
+    pyPos += 5.8;
   });
 
   // Venue & Important Instructions
   doc.setTextColor(...logoBlue);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
-  doc.text('IMPORTANT CONFERENCE INFORMATION', 20, 220);
+  doc.text('IMPORTANT CONFERENCE INFORMATION', 20, 224);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
@@ -154,7 +163,7 @@ export const generateRegistrationReceiptPDF = (data: {
     '• For queries or assistance, contact: secretariat@tnscon2027hyd.com | +91 40 2345 6789.'
   ];
 
-  let iyPos = 227;
+  let iyPos = 230;
   instructions.forEach(inst => {
     doc.text(inst, 20, iyPos);
     iyPos += 5.5;

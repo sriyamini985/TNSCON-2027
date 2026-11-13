@@ -16,6 +16,7 @@ model Registration {
   gender             String?
   designation        String?
   qualification      String?
+  speciality         String?   @default("Neurosurgery")
   medicalCouncilNo   String?
   hospital           String
   address            String?
@@ -26,6 +27,9 @@ model Registration {
   email              String    @unique
   category           String
   fee                Float
+  baseFee            Float?
+  workshopFee        Float?
+  gstFee             Float?
   transactionId      String    @unique
   paymentScreenshot  String    @db.Text
   registrationStatus String    @default("Pending Verification")

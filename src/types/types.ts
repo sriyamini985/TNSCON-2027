@@ -3,6 +3,7 @@ export interface RegistrationFormData {
   firstName: string;
   lastName: string;
   gender: string;
+  speciality?: 'Neurosurgery' | 'Neurology' | string;
   designation: string;
   qualification: string;
   medicalCouncilNo: string;
@@ -18,6 +19,8 @@ export interface RegistrationFormData {
   includeWorkshop?: boolean;
   workshopFee?: number;
   baseFee?: number;
+  subtotalFee?: number;
+  gstFee?: number;
   transactionId: string;
   paymentScreenshot?: File | null;
   paymentScreenshotBase64?: string;
@@ -30,6 +33,7 @@ export interface RegistrationRecord {
   firstName: string;
   lastName?: string;
   gender?: string;
+  speciality?: string;
   designation?: string;
   qualification?: string;
   medicalCouncilNo?: string;
@@ -45,6 +49,8 @@ export interface RegistrationRecord {
   includeWorkshop?: boolean;
   workshopFee?: number;
   baseFee?: number;
+  subtotalFee?: number;
+  gstFee?: number;
   transactionId: string;
   paymentScreenshot?: string;
   registrationStatus: 'Pending Verification' | 'Verified' | 'Rejected';
