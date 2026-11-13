@@ -46,21 +46,21 @@ export const AboutPage: React.FC = () => {
                 ))}
               </div>
 
-              <div className="pt-8 border-t border-[#E5DCCB] grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="pt-8 border-t border-[#E5DCCB] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
-                  <h4 className="font-serif text-lg font-bold text-[#003399]">
+                  <h4 className="font-serif text-base font-bold text-[#003399]">
                     Dr. R T S Naik
                   </h4>
                   <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
                     Organizing Chairman
                   </p>
                   <p className="text-xs text-[#556070] mt-0.5">
-                    Consultant Neurosurgeon
+                    Senior Consultant Neurosurgeon
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-serif text-lg font-bold text-[#003399]">
+                  <h4 className="font-serif text-base font-bold text-[#003399]">
                     Dr. Chandrakanth Tapsi
                   </h4>
                   <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
@@ -68,6 +68,30 @@ export const AboutPage: React.FC = () => {
                   </p>
                   <p className="text-xs text-[#556070] mt-0.5">
                     Consultant Neurophysician
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-serif text-base font-bold text-[#003399]">
+                    Dr. G. Venu Gopal
+                  </h4>
+                  <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
+                    Joint Organizing Secretary
+                  </p>
+                  <p className="text-xs text-[#556070] mt-0.5">
+                    Consultant Neurospecialist
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-serif text-base font-bold text-[#003399]">
+                    Scientific Chairs
+                  </h4>
+                  <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
+                    Neurosurgery & Neurology
+                  </p>
+                  <p className="text-xs text-[#556070] mt-0.5">
+                    Dr. T V Ramakrishna Murthy & Dr. G Subbaiah Choudary
                   </p>
                 </div>
               </div>
@@ -122,6 +146,61 @@ export const AboutPage: React.FC = () => {
                   Fostering next-generation neuroscientists through the prestigious Dr. R T S Naik Award Paper session, resident symposia, and operative video review sessions.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Statewide Neuroscience Network Across Telangana Districts */}
+          <div className="space-y-6">
+            <div className="border-b border-[#E5DCCB] pb-3">
+              <span className="text-xs uppercase tracking-widest font-bold text-[#003399]">
+                Statewide Presence
+              </span>
+              <h2 className="font-serif text-2xl sm:text-3xl text-[#003399] mt-1 font-bold">
+                Telangana Neurosciences Network
+              </h2>
+              <p className="text-xs text-[#556070] mt-1">
+                Connecting clinicians, academic medical colleges, and specialty neuroscience centers across Telangana districts.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
+              {[
+                { name: 'Hyderabad', file: 'Hyderabad.png', tag: 'State Capital & Conference Hub' },
+                { name: 'Warangal', file: 'Warangal.png', tag: 'Kakatiya Medical Region' },
+                { name: 'Khammam', file: 'Khammam.png', tag: 'Eastern Telangana Center' },
+                { name: 'Karimnagar', file: 'Karimnagar.png', tag: 'Northern Regional Hub' },
+                { name: 'Nizamabad', file: 'Nizamabad.png', tag: 'North-Western Network' },
+                { name: 'Mahbubnagar', file: 'Mahbubnagar.png', tag: 'Southern Telangana Network' },
+                { name: 'Nalgonda', file: 'Nalagonda.png', tag: 'Central-South Regional Center' },
+                { name: 'Medak', file: 'Medak.png', tag: 'Medak & Sangareddy Region' },
+                { name: 'Adilabad', file: 'Adilabad.png', tag: 'Northern Frontier Medical Outreach' },
+              ].map((district) => (
+                <div
+                  key={district.name}
+                  className="bg-[#FFFDF9] rounded-xl overflow-hidden border border-[#E5DCCB] shadow-xs hover:border-[#003399] hover:shadow-md transition-all group text-left"
+                >
+                  <div className="aspect-[16/10] overflow-hidden bg-stone-100 relative">
+                    <img
+                      src={`/assets/images/districts/${district.file}`}
+                      alt={`${district.name} Telangana District`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <span className="absolute bottom-2 left-2 text-white font-serif font-bold text-sm drop-shadow">
+                      {district.name}
+                    </span>
+                  </div>
+                  <div className="p-3">
+                    <span className="text-[10px] uppercase font-bold text-[#D49B00] block tracking-wider">
+                      Telangana District
+                    </span>
+                    <p className="text-[11px] text-[#556070] truncate mt-0.5 font-medium">
+                      {district.tag}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

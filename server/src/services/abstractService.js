@@ -10,19 +10,21 @@ export const generateSubmissionId = async () => {
     orderBy: { id: 'desc' },
     select: { id: true }
   });
-  let nextNum = 101 + (highest ? highest.id : 0);
-  while (await prisma.abstractSubmission.findUnique({ where: { submissionId: `ABS-TNS27-${nextNum}` } })) {
+  let nextNum = (highest ? highest.id : 0) + 1;
+  let formatted = `ABS-${String(nextNum).padStart(3, '0')}`;
+  while (await prisma.abstractSubmission.findUnique({ where: { submissionId: formatted } })) {
     nextNum++;
+    formatted = `ABS-${String(nextNum).padStart(3, '0')}`;
   }
-  return `ABS-TNS27-${nextNum}`;
+  return formatted;
 };
 
 export const createAbstractSubmission = async (data) => {
   const submissionId = await generateSubmissionId();
   const words = countWords(data.fullAbstractText);
 
-  if (words > 250) {
-    throw new Error(`Abstract exceeds the 250-word limit (current count: ${words} words).`);
+  if (words > 300) {
+    throw new Error(`Abstract exceeds the 300-word limit (current count: ${words} words).`);
   }
 
   return prisma.abstractSubmission.create({

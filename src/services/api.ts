@@ -89,7 +89,7 @@ if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
   setLocalData(STORAGE_KEYS.ABSTRACTS, [
     {
       id: 1,
-      submissionId: 'ABS-TNS27-101',
+      submissionId: 'ABS-001',
       category: 'Award Paper Presentation',
       specialty: 'Neurosurgery',
       subTopic: 'Skull Base Surgery',
@@ -107,13 +107,13 @@ if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
       methods: 'Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center.',
       results: 'Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically.',
       conclusion: 'Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
-      fullAbstractText: 'Introduction: Endoscopic endonasal transsphenoidal surgery has revolutionized surgical outcomes in suprasellar lesions. Methods: Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center. Results: Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically. Conclusion: Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
+      fullAbstractText: 'Purpose: Endoscopic endonasal transsphenoidal surgery has revolutionized surgical outcomes in suprasellar lesions. Methods: Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center. Results: Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically. Conclusion: Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
       status: 'Accepted',
       createdAt: '2026-11-02T17:00:00Z'
     },
     {
       id: 2,
-      submissionId: 'ABS-TNS27-102',
+      submissionId: 'ABS-002',
       category: 'Free Paper Presentation',
       specialty: 'Neurology',
       subTopic: 'Stroke & Vascular Neurology',
@@ -131,13 +131,13 @@ if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
       methods: 'Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion.',
       results: 'Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients.',
       conclusion: 'Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
-      fullAbstractText: 'Introduction: Extended window mechanical thrombectomy in wake-up and delayed stroke presentations remains pivotal in clinical triage. Methods: Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion. Results: Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients. Conclusion: Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
+      fullAbstractText: 'Purpose: Extended window mechanical thrombectomy in wake-up and delayed stroke presentations remains pivotal in clinical triage. Methods: Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion. Results: Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients. Conclusion: Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
       status: 'Accepted',
       createdAt: '2026-11-03T11:20:00Z'
     },
     {
       id: 3,
-      submissionId: 'ABS-TNS27-103',
+      submissionId: 'ABS-003',
       category: 'Poster Presentation',
       specialty: 'Neurosurgery',
       subTopic: 'Neuro-Oncology & Molecular Genetics',
@@ -155,7 +155,7 @@ if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
       methods: 'Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens.',
       results: 'BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants.',
       conclusion: 'Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
-      fullAbstractText: 'Introduction: BRAF alterations represent key therapeutic and prognostic targets in pediatric low-grade neuro-epithelial neoplasms. Methods: Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens. Results: BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants. Conclusion: Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
+      fullAbstractText: 'Purpose: BRAF alterations represent key therapeutic and prognostic targets in pediatric low-grade neuro-epithelial neoplasms. Methods: Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens. Results: BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants. Conclusion: Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
       status: 'Accepted',
       createdAt: '2026-11-03T14:15:00Z'
     }
@@ -285,7 +285,7 @@ export const api = {
       console.warn('Backend abstract route offline, using resilient local storage:', err.message);
 
       const abstracts = getLocalData<any[]>(STORAGE_KEYS.ABSTRACTS, []);
-      const newId = `ABS-TNS27-${100 + abstracts.length + 1}`;
+      const newId = `ABS-${String(abstracts.length + 1).padStart(3, '0')}`;
       const newRecord = {
         id: Date.now(),
         submissionId: newId,

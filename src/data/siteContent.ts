@@ -257,11 +257,11 @@ export const siteContent = {
 
   // Organizing Committee Hierarchy (Source of truth: Official TNS Letterhead & Reference Structure)
   organizingCommittee: {
-    // Starting 4 Core Organizing Committee Members (with Photo Holder)
+    // Starting Core Organizing Committee Members (with Photo Holder)
     coreLeadership: [
       {
         name: 'Dr. R.T.S. Naik',
-        role: 'Organizing Chairman',
+        role: 'Organising Chairman',
         designation: 'Senior Consultant Neurosurgeon',
         societyRole: 'President, Telangana Neurosciences Society',
         initials: 'RN',
@@ -272,7 +272,7 @@ export const siteContent = {
       },
       {
         name: 'Dr. Chandrakanth Tapsi',
-        role: 'Organizing Secretary',
+        role: 'Organising Secretary',
         designation: 'Consultant Neurophysician',
         societyRole: 'Treasurer, Telangana Neurosciences Society',
         initials: 'CT',
@@ -282,24 +282,35 @@ export const siteContent = {
         photoPlaceholder: true,
       },
       {
-        name: 'Dr. N. Pratap Kumar',
-        role: 'Scientific Committee — Neurosurgery',
-        designation: 'Consultant Neurosurgeon',
-        societyRole: 'General Secretary, Telangana Neurosciences Society',
-        initials: 'PK',
-        specialty: 'Neurosurgery',
-        department: 'Scientific Committee Chair',
-        bio: 'Leading the neurosurgical scientific curriculum, operative masterclass selection, skull base papers, and peer review for TNSCON 2027.',
+        name: 'Dr. G. Venu Gopal',
+        role: 'Joint Organising Secretary',
+        designation: 'Consultant Neurospecialist',
+        societyRole: 'Telangana Neurosciences Society',
+        initials: 'VG',
+        specialty: 'Neurosciences',
+        department: 'Organising Secretariat',
+        bio: 'Joint Organising Secretary coordinating conference operations, academic scheduling, venue logistics, and delegate facilitation for TNSCON 2027.',
         photoPlaceholder: true,
       },
       {
-        name: 'Dr. G.V. Subbaiah Choudary',
-        role: 'Scientific Committee — Neurology',
-        designation: 'Consultant Neurophysician',
-        societyRole: 'Ex-Officio Member, Telangana Neurosciences Society',
+        name: 'Dr. T.V. Ramakrishna Murthy',
+        role: 'Scientific Chair, Neurosurgery',
+        designation: 'Senior Consultant Neurosurgeon',
+        societyRole: 'Scientific Committee Chair, Telangana Neurosciences Society',
+        initials: 'RM',
+        specialty: 'Neurosurgery',
+        department: 'Department of Neurosurgery',
+        bio: 'Leading the neurosurgical scientific curriculum, operative masterclass selection, microvascular skull base papers, and peer review for TNSCON 2027.',
+        photoPlaceholder: true,
+      },
+      {
+        name: 'Dr. G. Subbaiah Choudary',
+        role: 'Scientific Chair, Neurology',
+        designation: 'Senior Consultant Neurologist',
+        societyRole: 'Scientific Committee Chair, Telangana Neurosciences Society',
         initials: 'SC',
         specialty: 'Neurology',
-        department: 'Scientific Committee Chair',
+        department: 'Department of Neurology',
         bio: 'Overseeing neurology didactic symposia, stroke intervention masterclasses, epilepsy trajectory evaluations, and award paper colloquia.',
         photoPlaceholder: true,
       },

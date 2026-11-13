@@ -56,7 +56,7 @@ export const AbstractSubmissionPage: React.FC = () => {
   // Live Word Count calculation
   const fullText = `${introduction} ${methods} ${results} ${conclusion}`.trim();
   const wordCount = fullText ? fullText.split(/\s+/).filter(Boolean).length : 0;
-  const isWordLimitExceeded = wordCount > 250;
+  const isWordLimitExceeded = wordCount > 300;
 
   const handleSpecialtyChange = (spec: 'Neurosurgery' | 'Neurology') => {
     setSpecialty(spec);
@@ -84,7 +84,7 @@ export const AbstractSubmissionPage: React.FC = () => {
     setErrorMessage('');
 
     if (isWordLimitExceeded) {
-      setErrorMessage(`Your abstract currently contains ${wordCount} words. The strict limit is 250 words.`);
+      setErrorMessage(`Your abstract currently contains ${wordCount} words. The strict limit is 300 words.`);
       return;
     }
 
@@ -258,7 +258,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-[#556070]">Word Count:</span>
-                      <span className="font-bold text-emerald-700">{submitSuccess.wordCount} words (Passes &le;250)</span>
+                      <span className="font-bold text-emerald-700">{submitSuccess.wordCount} words (Passes &le;300)</span>
                     </div>
                   </div>
 
@@ -504,23 +504,23 @@ export const AbstractSubmissionPage: React.FC = () => {
                       <div className={`px-3 py-1.5 rounded-lg font-manrope font-bold text-xs border ${
                         isWordLimitExceeded
                           ? 'bg-red-50 text-red-700 border-red-300 animate-pulse'
-                          : wordCount > 220
+                          : wordCount > 270
                           ? 'bg-amber-50 text-amber-700 border-amber-300'
                           : 'bg-emerald-50 text-emerald-800 border-emerald-300'
                       }`}>
-                        Word Count: {wordCount} / 250 max
+                        Word Count: {wordCount} / 300 max
                       </div>
                     </div>
 
                     <div className="space-y-3">
                       <div>
-                        <label className="block text-xs font-semibold text-[#182230] mb-1">Introduction & Objective *</label>
+                        <label className="block text-xs font-semibold text-[#182230] mb-1">Purpose & Objective *</label>
                         <textarea
                           rows={2}
                           required
                           value={introduction}
                           onChange={(e) => setIntroduction(e.target.value)}
-                          placeholder="Brief background and the aim of the study..."
+                          placeholder="Purpose of the research, clinical background, and the aim of the study..."
                           className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
                         />
                       </div>
@@ -583,7 +583,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                           className="text-xs text-[#556070] file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#003399] file:text-white hover:file:bg-[#002266]"
                         />
                         <p className="text-[10px] text-[#556070]">
-                          Must not exceed 250 words. Double spaced, 12pt font.
+                          Must not exceed 300 words. Double spaced, 12pt font.
                         </p>
                       </div>
 
@@ -648,6 +648,23 @@ export const AbstractSubmissionPage: React.FC = () => {
           {activeTab === 'guidelines' && (
             <div className="space-y-8 max-w-4xl mx-auto text-left">
               
+              {/* Official Call for Abstracts Flyer */}
+              <div className="bg-[#FFFDF9] p-4 sm:p-6 rounded-2xl border border-[#E5DCCB] shadow-sm text-center">
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E5DCCB]">
+                  <span className="text-xs uppercase font-bold tracking-wider text-[#003399]">
+                    Official Conference Announcement
+                  </span>
+                  <span className="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                    Deadline: 31st January 2027
+                  </span>
+                </div>
+                <img
+                  src="/assets/images/tnscon_call_for_abstracts_poster.jpg"
+                  alt="TNSCON 2027 Call for Abstracts Official Announcement Flyer"
+                  className="w-full max-w-2xl mx-auto rounded-xl shadow-md border border-[#E5DCCB] object-contain"
+                />
+              </div>
+
               {/* Category Rules Overview */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
@@ -662,8 +679,8 @@ export const AbstractSubmissionPage: React.FC = () => {
                     <li>Presenter must be a resident / trainee.</li>
                     <li>Must be accompanied by a bonafide letter from HOD.</li>
                     <li>Full paper submitted if selected.</li>
-                    <li>Strict 250 words limit in 12pt font.</li>
-                    <li>Structured: Intro, Methods, Results, Conclusion.</li>
+                    <li>Strict 300 words limit in 12pt font.</li>
+                    <li>Structured: Purpose, Methods, Results, Conclusion.</li>
                     <li>One author = one Award presentation.</li>
                     <li>Mandatory conference delegate registration.</li>
                   </ul>
@@ -678,7 +695,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                   </h3>
                   <ul className="text-xs text-[#556070] space-y-1.5 list-disc pl-4">
                     <li>Original, unpublished work of authors.</li>
-                    <li>Must not exceed 250 words.</li>
+                    <li>Must not exceed 300 words.</li>
                     <li>Upload in DOC or DOCX format.</li>
                     <li>No identifying names in text.</li>
                     <li>Free papers may be converted to E-Posters by committee.</li>
@@ -750,7 +767,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                   Check Abstract Acceptance Status
                 </h2>
                 <p className="text-xs text-[#556070] mt-1">
-                  Enter your assigned Submission ID (e.g. <code>ABS-TNS27-101</code>) or the registered Presenting Author email address.
+                  Enter your assigned Submission ID (e.g. <code>ABS-001</code>) or the registered Presenting Author email address.
                 </p>
               </div>
 
@@ -760,7 +777,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                   required
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Enter Submission ID or Email..."
+                  placeholder="e.g. ABS-001 or author@hospital.org"
                   className="flex-1 p-3 rounded-lg border border-[#E5DCCB] text-xs focus:outline-none focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
                 />
                 <button

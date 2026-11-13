@@ -290,9 +290,9 @@ app.post('/api/abstracts', abstractUploadFields, async (req, res) => {
     const textToEvaluate = fullAbstractText || `${introduction || ''} ${methods || ''} ${results || ''} ${conclusion || ''}`;
     const wordCount = countWords(textToEvaluate);
 
-    if (wordCount > 250) {
+    if (wordCount > 300) {
       return res.status(400).json({
-        error: `Word count limit exceeded. Maximum allowed is 250 words; your abstract is ${wordCount} words.`
+        error: `Word count limit exceeded. Maximum allowed is 300 words; your abstract is ${wordCount} words.`
       });
     }
 

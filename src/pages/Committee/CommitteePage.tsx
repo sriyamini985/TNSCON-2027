@@ -89,7 +89,7 @@ export const CommitteePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {committee.coreLeadership.map((leader) => (
               <div
                 key={leader.name}
@@ -97,18 +97,18 @@ export const CommitteePage: React.FC = () => {
               >
                 {/* Photo Frame */}
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-br from-[#001A4D] to-[#003399] border border-[#E5DCCB] shadow-inner flex items-center justify-center mx-auto mb-4 group-hover:scale-[1.01] transition-transform duration-200">
-                  <div className="w-24 h-24 rounded-full bg-white/10 border-2 border-[#D49B00]/50 text-[#FFCC00] font-serif text-3xl font-bold flex items-center justify-center shadow-md">
+                  <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-[#D49B00]/50 text-[#FFCC00] font-serif text-2xl font-bold flex items-center justify-center shadow-md">
                     {leader.initials}
                   </div>
                 </div>
 
                 {/* Name */}
-                <h3 className="font-serif text-xl font-bold text-[#182230] leading-snug group-hover:text-[#003399] transition-colors">
+                <h3 className="font-serif text-lg font-bold text-[#182230] leading-snug group-hover:text-[#003399] transition-colors">
                   {leader.name}
                 </h3>
 
                 {/* Designation */}
-                <p className="text-xs font-bold text-[#D49B00] uppercase tracking-wider mt-1.5">
+                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wider mt-1.5">
                   {leader.role}
                 </p>
                 <p className="text-xs text-[#556070] mt-0.5 font-medium">
@@ -117,6 +117,41 @@ export const CommitteePage: React.FC = () => {
 
               </div>
             ))}
+          </div>
+
+          {/* Official Announcement Poster Feature */}
+          <div className="bg-[#FFFDF9] p-6 sm:p-8 rounded-2xl border border-[#E5DCCB] shadow-xs flex flex-col md:flex-row items-center gap-8 text-left mt-8">
+            <div className="w-full md:w-1/3 max-w-sm mx-auto">
+              <img
+                src="/assets/images/tnscon_diwali_committee_poster.jpg"
+                alt="TNSCON 2027 Official Leadership Announcement"
+                className="rounded-xl shadow-md border border-[#E5DCCB] w-full object-contain"
+              />
+            </div>
+            <div className="w-full md:w-2/3 space-y-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#D49B00] px-3 py-1 rounded-full bg-[#FFF8E7] border border-[#D49B00]/30 inline-block">
+                Official Society Confirmation
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-[#003399]">
+                Organising & Scientific Leadership for TNSCON 2027
+              </h3>
+              <p className="text-xs sm:text-sm text-[#556070] leading-relaxed">
+                Confirmed by the Telangana Neurosciences Society executive council for the 11th Annual State Conference scheduled on 12th–14th March 2027 at Begumpet Airport, Hyderabad.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
+                <div className="p-3 rounded-lg bg-[#FAF5ED] border border-[#E5DCCB]">
+                  <strong className="text-[#003399] block font-serif text-sm">Organising Committee</strong>
+                  <p className="text-[#182230] mt-1">Dr. R T S Naik (Chairman)</p>
+                  <p className="text-[#182230]">Dr. Chandrakanth Tapsi (Secretary)</p>
+                  <p className="text-[#182230]">Dr. G. Venu Gopal (Joint Secretary)</p>
+                </div>
+                <div className="p-3 rounded-lg bg-[#FAF5ED] border border-[#E5DCCB]">
+                  <strong className="text-[#003399] block font-serif text-sm">Scientific Committee</strong>
+                  <p className="text-[#182230] mt-1">Dr. T V Ramakrishna Murthy (Neurosurgery Chair)</p>
+                  <p className="text-[#182230]">Dr. G Subbaiah Choudary (Neurology Chair)</p>
+                </div>
+              </div>
+            </div>
           </div>
 
         </section>

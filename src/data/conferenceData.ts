@@ -47,19 +47,26 @@ export const leadershipData = {
     institution: 'Telangana Neurosciences Society',
     bio: 'Distinguished neurologist specializing in comprehensive clinical neurology, electrophysiology, and advancing scientific research initiatives in Telangana.'
   },
+  jointOrganizingSecretary: {
+    name: 'Dr. G. Venu Gopal',
+    role: 'Joint Organising Secretary',
+    designation: 'Consultant Neurospecialist',
+    institution: 'Telangana Neurosciences Society',
+    bio: 'Key member of the conference leadership coordinating operations, academic schedules, and delegate facilitation for TNSCON 2027.'
+  },
   scientificCommittee: [
     {
       specialty: 'Neurosurgery',
-      name: 'Dr. N Pratap Kumar',
-      role: 'Scientific Committee — Neurosurgery',
-      designation: 'Consultant Neurosurgeon',
+      name: 'Dr. T V Ramakrishna Murthy',
+      role: 'Scientific Chair, Neurosurgery',
+      designation: 'Senior Consultant Neurosurgeon',
       institution: 'Telangana Neurosciences Society'
     },
     {
       specialty: 'Neurology',
-      name: 'Dr. Subbaiah Choudary',
-      role: 'Scientific Committee — Neurology',
-      designation: 'Consultant Neurophysician',
+      name: 'Dr. G Subbaiah Choudary',
+      role: 'Scientific Chair, Neurology',
+      designation: 'Senior Consultant Neurologist',
       institution: 'Telangana Neurosciences Society'
     }
   ]
@@ -119,20 +126,48 @@ export const importantDates = [
 ];
 
 export const abstractTopics = {
+  officialFlyerTopics: [
+    'Anterior Circulation Aneurysms',
+    'Posterior Circulation Aneurysms',
+    'Arteriovenous Malformations (AVMs)',
+    'Bypass Augmentation',
+    'Cavernomas / Haemangiomas',
+    'Endovascular Strategies',
+    'Microsurgical Approaches',
+    'Moyamoya Disease',
+    'Subarachnoid Haemorrhage (SAH) & Vasospasm',
+    'Spinal Vascular Anomalies',
+    'Stroke',
+    'Trigeminal Neuralgia',
+    'Vascular Basics',
+    'Venous Anomalies',
+    'Unusual Vascular Lesions'
+  ],
   neurosurgery: [
+    'Anterior Circulation Aneurysms',
+    'Posterior Circulation Aneurysms',
+    'Arteriovenous Malformations (AVMs)',
+    'Microsurgical Approaches',
+    'Endovascular Strategies',
+    'Bypass Augmentation',
+    'Cavernomas / Haemangiomas',
+    'Moyamoya Disease',
+    'Spinal Vascular Anomalies',
     'Skull Base Surgery',
-    'Vascular Neurosurgery',
     'Neuro Oncology',
     'Paediatric Neurosurgery',
     'Spine Surgery',
-    'Functional & Stereotactic Neurosurgery',
+    'Trigeminal Neuralgia',
     'General Neurosurgery',
-    'Miscellaneous Neurosurgery'
+    'Unusual Vascular Lesions'
   ],
   neurology: [
+    'Stroke & Cerebrovascular Disorders',
+    'Subarachnoid Haemorrhage (SAH) & Vasospasm',
+    'Vascular Basics',
+    'Venous Anomalies',
     'General Neurology',
     'Neuroimmunology',
-    'Stroke & Cerebrovascular Disorders',
     'Neuromuscular Disorders',
     'Epilepsy & EEG',
     'Therapeutics in Neurology',
