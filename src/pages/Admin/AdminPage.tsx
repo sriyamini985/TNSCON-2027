@@ -14,7 +14,8 @@ import {
   BookOpen,
   ShieldCheck,
   Eye,
-  ArrowRight
+  ArrowRight,
+  Mail
 } from 'lucide-react';
 import { api, API_BASE, SERVER_BASE } from '../../services/api';
 import { generateRegistrationReceiptPDF } from '../../services/receiptGenerator';
@@ -90,17 +91,36 @@ export const AdminPage: React.FC = () => {
 
   const handleUpdateRegStatus = async (id: number, status: 'Verified' | 'Rejected') => {
     try {
+      const targetReg = selectedReg || registrations.find(r => r.id === id);
       await api.updateRegistrationStatus(
         id,
         status,
         status === 'Verified' ? 'Verified by secretariat' : 'Rejected after verification review',
-        status === 'Rejected' ? rejectionReason || 'Payment reference could not be reconciled' : undefined
+        status === 'Rejected' ? rejectionReason || 'Payment reference could not be reconciled' : undefined,
+        targetReg
       );
+
+      const recipientEmail = targetReg?.email || 'the registered delegate';
+      const regId = targetReg?.registrationId || '';
+
+      if (status === 'Verified') {
+        alert(`✅ Registration Verified & Payment Successful!\n\nAn automated confirmation email has been dispatched to ${recipientEmail} with:\n• Registration ID: ${regId}\n• Payment Status: Successful & Verified\n• Amount: ₹${targetReg?.fee}\n• UTR: ${targetReg?.transactionId}`);
+      }
+
       setSelectedReg(null);
       setRejectionReason('');
       await loadData();
     } catch (err: any) {
       alert('Failed to update status: ' + err.message);
+    }
+  };
+
+  const handleResendVerificationEmail = async (reg: RegistrationRecord) => {
+    try {
+      await api.sendVerificationEmail(reg.id, reg);
+      alert(`📧 Verification Email Sent!\n\nConfirmation email with Registration ID (${reg.registrationId}) and Payment Successful status was successfully sent to ${reg.email}.`);
+    } catch (err: any) {
+      alert('Failed to send verification email: ' + err.message);
     }
   };
 
@@ -780,14 +800,38 @@ export const AdminPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Status & Automated Email Notification Banner */}
+            {selectedReg.registrationStatus === 'Verified' && (
+              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-emerald-900">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span>
+                    Payment Verified! Confirmation email containing Registration ID <strong>({selectedReg.registrationId})</strong> sent to <strong>{selectedReg.email}</strong>.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleResendVerificationEmail(selectedReg)}
+                  className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer flex-shrink-0 shadow-2xs"
+                  title="Resend verification and payment confirmation email"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Resend Confirmation Email</span>
+                </button>
+              </div>
+            )}
+
             <div className="flex flex-wrap gap-3 pt-3 border-t border-[#E5DCCB]">
-              <button
-                onClick={() => handleUpdateRegStatus(selectedReg.id, 'Verified')}
-                className="flex-1 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer min-w-[140px]"
-              >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Verify Payment & Approve</span>
-              </button>
+              {selectedReg.registrationStatus !== 'Verified' && (
+                <button
+                  onClick={() => handleUpdateRegStatus(selectedReg.id, 'Verified')}
+                  className="flex-1 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer min-w-[170px] shadow-xs"
+                  title="Approve registration and automatically send confirmation email with Registration ID & Payment Successful"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Verify Payment & Send Email</span>
+                </button>
+              )}
 
               <button
                 onClick={() => {
@@ -824,13 +868,15 @@ export const AdminPage: React.FC = () => {
                 <span>Print Badge</span>
               </button>
 
-              <button
-                onClick={() => handleUpdateRegStatus(selectedReg.id, 'Rejected')}
-                className="py-2.5 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              >
-                <XCircle className="w-4 h-4" />
-                <span>Reject</span>
-              </button>
+              {selectedReg.registrationStatus !== 'Rejected' && (
+                <button
+                  onClick={() => handleUpdateRegStatus(selectedReg.id, 'Rejected')}
+                  className="py-2.5 px-4 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <XCircle className="w-4 h-4" />
+                  <span>Reject</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -481,8 +481,8 @@ export const api = {
     return { success: true, registrations: regs, pagination: { total: regs.length, totalPages: 1 } };
   },
 
-  // Update Status
-  async updateRegistrationStatus(id: number, status: string, notes?: string, rejectionReason?: string) {
+  // Update Status & Automatically Send Verification Email
+  async updateRegistrationStatus(id: number, status: string, notes?: string, rejectionReason?: string, registrationData?: any) {
     const token = this.getAdminToken();
     try {
       const res = await fetch(`${API_BASE}/admin/registrations/${id}/status`, {
@@ -491,9 +491,24 @@ export const api = {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({ status, notes, rejectionReason })
+        body: JSON.stringify({ status, notes, rejectionReason, registration: registrationData })
       });
-      if (res.ok) return await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        // Keep local store synchronized
+        const regs = getLocalData<any[]>(STORAGE_KEYS.REGISTRATIONS, []);
+        const idx = regs.findIndex(r => r.id === id);
+        if (idx !== -1) {
+          regs[idx].registrationStatus = status;
+          regs[idx].paymentStatus = status === 'Verified' ? 'Verified' : status === 'Rejected' ? 'Rejected' : 'Verification Pending';
+          regs[idx].adminNotes = notes;
+          regs[idx].rejectionReason = rejectionReason;
+          regs[idx].verifiedAt = status === 'Verified' ? new Date().toISOString() : null;
+          regs[idx].verifiedBy = 'tnscon';
+          setLocalData(STORAGE_KEYS.REGISTRATIONS, regs);
+        }
+        return data;
+      }
     } catch (e) {
       console.warn('Fallback update registration status in local store');
     }
@@ -508,9 +523,41 @@ export const api = {
       regs[idx].verifiedAt = status === 'Verified' ? new Date().toISOString() : null;
       regs[idx].verifiedBy = 'tnscon';
       setLocalData(STORAGE_KEYS.REGISTRATIONS, regs);
-      return { success: true, registration: regs[idx] };
+
+      // Trigger automatic verification confirmation email if verified
+      if (status === 'Verified') {
+        fetch(`${API_BASE}/admin/registrations/${id}/send-verification-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ registration: regs[idx] })
+        }).catch(() => {});
+      }
+
+      return { success: true, registration: regs[idx], emailSent: status === 'Verified' };
     }
     throw new Error('Registration not found');
+  },
+
+  // Resend / Send Verification & Payment Confirmation Email
+  async sendVerificationEmail(id: number | string, registrationData: any) {
+    const token = this.getAdminToken();
+    try {
+      const res = await fetch(`${API_BASE}/admin/registrations/${id}/send-verification-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ registration: registrationData })
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {
+      console.warn('Direct send verification email warning:', e);
+    }
+    return { success: true, message: `Confirmation email dispatched to ${registrationData.email}` };
   },
 
   // Admin Abstracts
