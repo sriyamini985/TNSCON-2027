@@ -35,14 +35,26 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // CORS Configuration (Configurable for Production Deployment)
+const defaultOrigins = [
+  'https://www.tnscon2027hyd.com',
+  'https://tnscon2027hyd.com',
+  'https://tnscon-2027.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:5001'
+];
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
-  : ['https://www.tnscon2027hyd.com', 'https://tnscon2027hyd.com', 'http://localhost:5173', 'http://localhost:5001'];
+  : defaultOrigins;
 
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.tnscon2027hyd.com') ||
+      process.env.NODE_ENV !== 'production'
+    ) {
       return callback(null, true);
     }
     return callback(new Error('CORS policy: This origin is not authorized.'));

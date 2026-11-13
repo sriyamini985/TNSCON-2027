@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -27,7 +27,7 @@ model Registration {
   category           String
   fee                Float
   transactionId      String    @unique
-  paymentScreenshot  String    @db.LongText
+  paymentScreenshot  String    @db.Text
   registrationStatus String    @default("Pending Verification")
   paymentStatus      String    @default("Verification Pending")
   exportStatus       String    @default("Pending")

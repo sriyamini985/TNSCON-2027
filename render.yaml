@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: tnscon-2027-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install && npx prisma generate && npx prisma db push
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        value: tnscon2027_prestigious_academic_jwt_secret_hyd
+      - key: ADMIN_USER
+        value: tnscon
+      - key: ADMIN_PASS
+        value: tnscon@2027
+      - key: SMTP_HOST
+        value: smtp.titan.email
+      - key: SMTP_PORT
+        value: 465
+      - key: SMTP_USER
+        value: info@tnscon2027hyd.com
+      - key: SMTP_PASS
+        value: Tnscon2027@hyd
+      - key: SMTP_FROM
+        value: info@tnscon2027hyd.com
+      - key: SMTP_FROM_NAME
+        value: TNSCON 2027 Secretariat
