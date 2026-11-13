@@ -28,6 +28,15 @@ export const AboutPage: React.FC = () => {
       <section className="py-16 text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           
+          {/* Official Society Banner */}
+          <div className="rounded-2xl overflow-hidden border border-[#E5DCCB] shadow-sm bg-[#FFFDF9]">
+            <img
+              src="/assets/images/districts/Hyderabad.png"
+              alt="Telangana Neurosciences Society (TNS) Official Banner"
+              className="w-full h-auto object-cover max-h-[240px]"
+            />
+          </div>
+
           {/* Welcome Message Section */}
           <div className="bg-[#FFFDF9] rounded-2xl p-8 sm:p-12 border border-[#E5DCCB] shadow-xs">
             <div className="max-w-3xl space-y-6">

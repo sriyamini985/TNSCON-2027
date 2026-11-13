@@ -97,9 +97,17 @@ export const CommitteePage: React.FC = () => {
               >
                 {/* Photo Frame */}
                 <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-br from-[#001A4D] to-[#003399] border border-[#E5DCCB] shadow-inner flex items-center justify-center mx-auto mb-4 group-hover:scale-[1.01] transition-transform duration-200">
-                  <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-[#D49B00]/50 text-[#FFCC00] font-serif text-2xl font-bold flex items-center justify-center shadow-md">
-                    {leader.initials}
-                  </div>
+                  {leader.photo ? (
+                    <img
+                      src={leader.photo}
+                      alt={leader.name}
+                      className="w-full h-full object-cover object-top"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-[#D49B00]/50 text-[#FFCC00] font-serif text-2xl font-bold flex items-center justify-center shadow-md">
+                      {leader.initials}
+                    </div>
+                  )}
                 </div>
 
                 {/* Name */}
