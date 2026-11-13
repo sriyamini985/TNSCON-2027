@@ -58,6 +58,12 @@ export interface RegistrationRecord {
   updatedAt?: string;
 }
 
+export interface CoAuthor {
+  name: string;
+  institution?: string;
+  email?: string;
+}
+
 export interface AbstractSubmissionData {
   category: 'Award Paper Presentation' | 'Free Paper Presentation' | 'Poster Presentation';
   specialty: 'Neurosurgery' | 'Neurology';
@@ -72,6 +78,7 @@ export interface AbstractSubmissionData {
   presentingAuthorInstitution: string;
   isResident: boolean;
   coAuthors: string;
+  coAuthorsList?: CoAuthor[];
   introduction: string;
   methods: string;
   results: string;
@@ -97,6 +104,7 @@ export interface AbstractRecord {
   presentingAuthorInstitution: string;
   isResident: boolean;
   coAuthors?: string;
+  coAuthorsList?: CoAuthor[];
   introduction?: string;
   methods?: string;
   results?: string;

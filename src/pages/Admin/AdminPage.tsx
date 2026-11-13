@@ -657,6 +657,12 @@ export const AdminPage: React.FC = () => {
                       Presenter: <strong>{abs.presentingAuthorTitle || ''} {abs.presentingAuthorName}</strong> ({abs.presentingAuthorInstitution}) • Word Count: {abs.wordCount} words
                     </p>
 
+                    {abs.coAuthors && (
+                      <p className="text-xs text-[#556070]">
+                        Co-Authors: <span className="text-[#003399] font-medium">{abs.coAuthors}</span>
+                      </p>
+                    )}
+
                     <div className="pt-2 text-xs text-[#182230]/85 line-clamp-2">
                       {abs.fullAbstractText}
                     </div>
@@ -859,6 +865,13 @@ export const AdminPage: React.FC = () => {
                   <strong className="text-[#182230]">{selectedAbs.presentingAuthorInstitution}</strong>
                 </div>
               </div>
+
+              {selectedAbs.coAuthors && (
+                <div className="text-xs pt-1 border-t border-[#E5DCCB]/60">
+                  <span className="text-[#556070] block">Co-Authors / Co-Investigators:</span>
+                  <strong className="text-[#003399] font-medium">{selectedAbs.coAuthors}</strong>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-2 pt-3 border-t border-[#E5DCCB]">

@@ -8,12 +8,14 @@ import {
   Award,
   Users,
   Send,
-  Eye
+  Eye,
+  Plus,
+  Trash2
 } from 'lucide-react';
 import { abstractTopics } from '../../data/conferenceData';
 import { ClientAdvisoryNotice } from '../../components/ui/ClientAdvisoryNotice';
 import { api } from '../../services/api';
-import { AbstractSubmissionData } from '../../types/types';
+import { AbstractSubmissionData, CoAuthor } from '../../types/types';
 
 export const AbstractSubmissionPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'guidelines' | 'submit' | 'status'>('submit');
@@ -30,7 +32,9 @@ export const AbstractSubmissionPage: React.FC = () => {
   const [presentingAuthorDesignation, setPresentingAuthorDesignation] = useState('Senior Resident / Consultant');
   const [presentingAuthorInstitution, setPresentingAuthorInstitution] = useState('');
   const [isResident, setIsResident] = useState(false);
-  const [coAuthors, setCoAuthors] = useState('');
+  const [coAuthorsList, setCoAuthorsList] = useState<CoAuthor[]>([
+    { name: '', institution: '', email: '' }
+  ]);
 
   // Structured Abstract Sections
   const [introduction, setIntroduction] = useState('');
@@ -79,6 +83,25 @@ export const AbstractSubmissionPage: React.FC = () => {
     }
   };
 
+  const handleAddCoAuthor = () => {
+    setCoAuthorsList(prev => [...prev, { name: '', institution: '', email: '' }]);
+  };
+
+  const handleRemoveCoAuthor = (index: number) => {
+    setCoAuthorsList(prev => {
+      if (prev.length <= 1) {
+        return [{ name: '', institution: '', email: '' }];
+      }
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const handleCoAuthorChange = (index: number, field: keyof CoAuthor, value: string) => {
+    setCoAuthorsList(prev =>
+      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
@@ -98,6 +121,18 @@ export const AbstractSubmissionPage: React.FC = () => {
       return;
     }
 
+    const validCoAuthors = coAuthorsList.filter(a => a.name.trim().length > 0);
+    const formattedCoAuthors = validCoAuthors
+      .map(a => {
+        const details: string[] = [];
+        if (a.institution?.trim()) details.push(a.institution.trim());
+        if (a.email?.trim()) details.push(a.email.trim());
+        return details.length > 0
+          ? `${a.name.trim()} (${details.join(' - ')})`
+          : a.name.trim();
+      })
+      .join(', ');
+
     try {
       setIsSubmitting(true);
       const submissionData: AbstractSubmissionData = {
@@ -113,7 +148,8 @@ export const AbstractSubmissionPage: React.FC = () => {
         presentingAuthorDesignation,
         presentingAuthorInstitution,
         isResident,
-        coAuthors,
+        coAuthors: formattedCoAuthors,
+        coAuthorsList: validCoAuthors,
         introduction,
         methods,
         results,
@@ -272,6 +308,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                         setResults('');
                         setConclusion('');
                         setAbstractFile(null);
+                        setCoAuthorsList([{ name: '', institution: '', email: '' }]);
                       }}
                       className="px-5 py-2.5 rounded-lg bg-[#003399] text-white font-bold text-xs hover:bg-[#002266] transition-colors cursor-pointer"
                     >
@@ -448,29 +485,121 @@ export const AbstractSubmissionPage: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-medium text-[#556070] mb-1">Institution / Medical College / Hospital *</label>
-                        <input
-                          type="text"
-                          required
-                          value={presentingAuthorInstitution}
-                          onChange={(e) => setPresentingAuthorInstitution(e.target.value)}
-                          placeholder="e.g. Nizam's Institute of Medical Sciences, Hyderabad"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
-                        />
+                    <div>
+                      <label className="block text-xs font-medium text-[#556070] mb-1">
+                        Institution / Medical College / Hospital *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={presentingAuthorInstitution}
+                        onChange={(e) => setPresentingAuthorInstitution(e.target.value)}
+                        placeholder="e.g. Nizam's Institute of Medical Sciences (NIMS), Hyderabad"
+                        className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
+                      />
+                    </div>
+
+                    {/* Co-Authors Mini-Form Section */}
+                    <div className="pt-3 border-t border-[#E5DCCB] space-y-3">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <Users className="w-3.5 h-3.5 text-[#003399]" />
+                            <h4 className="text-xs font-bold text-[#003399] uppercase tracking-wider">
+                              Co-Authors / Co-Investigators (Optional)
+                            </h4>
+                          </div>
+                          <p className="text-[11px] text-[#556070] mt-0.5">
+                            Add collaborating authors, co-investigators, or faculty members with their institution and email.
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleAddCoAuthor}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EBF1FA] hover:bg-[#003399] text-[#003399] hover:text-white border border-[#003399]/30 text-xs font-bold transition-all self-start sm:self-auto cursor-pointer shadow-2xs"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Add Co-Author</span>
+                        </button>
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-medium text-[#556070] mb-1">Co-Authors (comma-separated)</label>
-                        <input
-                          type="text"
-                          value={coAuthors}
-                          onChange={(e) => setCoAuthors(e.target.value)}
-                          placeholder="Dr. K. Rao, Dr. S. Naik, etc."
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
-                        />
+                      {/* Co-Authors Mini-Card Entries */}
+                      <div className="space-y-3">
+                        {coAuthorsList.map((author, index) => (
+                          <div
+                            key={index}
+                            className="p-3.5 rounded-xl bg-[#FAF5ED]/80 border border-[#E5DCCB] space-y-2.5 relative transition-all hover:border-[#003399]/40"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="text-[11px] font-bold text-[#003399] uppercase tracking-wide">
+                                Co-Author #{index + 1}
+                              </span>
+                              {coAuthorsList.length > 1 && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveCoAuthor(index)}
+                                  className="text-red-600 hover:text-red-800 text-[11px] font-semibold flex items-center gap-1 px-2 py-0.5 rounded hover:bg-red-50 transition-colors cursor-pointer"
+                                  title="Remove this co-author"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                  <span>Remove</span>
+                                </button>
+                              )}
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                              <div>
+                                <label className="block text-[10.5px] font-medium text-[#556070] mb-1">
+                                  Co-Author Full Name
+                                </label>
+                                <input
+                                  type="text"
+                                  value={author.name}
+                                  onChange={(e) => handleCoAuthorChange(index, 'name', e.target.value)}
+                                  placeholder="e.g. Dr. K. Srinivas Rao"
+                                  className="w-full p-2 rounded-lg border border-[#E5DCCB] text-xs bg-white text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-[10.5px] font-medium text-[#556070] mb-1">
+                                  Institution / Hospital
+                                </label>
+                                <input
+                                  type="text"
+                                  value={author.institution || ''}
+                                  onChange={(e) => handleCoAuthorChange(index, 'institution', e.target.value)}
+                                  placeholder="e.g. NIMS Hyderabad"
+                                  className="w-full p-2 rounded-lg border border-[#E5DCCB] text-xs bg-white text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-[10.5px] font-medium text-[#556070] mb-1">
+                                  Email Address
+                                </label>
+                                <input
+                                  type="email"
+                                  value={author.email || ''}
+                                  onChange={(e) => handleCoAuthorChange(index, 'email', e.target.value)}
+                                  placeholder="e.g. coauthor@hospital.org"
+                                  className="w-full p-2 rounded-lg border border-[#E5DCCB] text-xs bg-white text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
+
+                      {/* Bottom Quick Mini Button */}
+                      <button
+                        type="button"
+                        onClick={handleAddCoAuthor}
+                        className="w-full py-2 border border-dashed border-[#003399]/30 hover:border-[#003399] rounded-xl text-xs font-bold text-[#003399] hover:bg-[#EBF1FA] transition-colors flex items-center justify-center gap-1.5 cursor-pointer bg-white/40"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>+ Add Another Co-Author</span>
+                      </button>
                     </div>
 
                     {/* Resident Checkbox */}
