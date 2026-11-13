@@ -15,7 +15,16 @@ const STORAGE_KEYS = {
 const getLocalData = <T>(key: string, defaultVal: T): T => {
   try {
     const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : defaultVal;
+    if (!raw) return defaultVal;
+    const parsed = JSON.parse(raw);
+    if (key === STORAGE_KEYS.REGISTRATIONS && Array.isArray(parsed)) {
+      parsed.forEach((r: any) => {
+        if (r && typeof r.paymentScreenshot !== 'string') {
+          r.paymentScreenshot = typeof r.paymentScreenshotBase64 === 'string' ? r.paymentScreenshotBase64 : '';
+        }
+      });
+    }
+    return parsed;
   } catch {
     return defaultVal;
   }
@@ -207,6 +216,9 @@ export const api = {
         id: Date.now(),
         registrationId: newId,
         ...formData,
+        paymentScreenshot: typeof formData.paymentScreenshot === 'string'
+          ? formData.paymentScreenshot
+          : (formData.paymentScreenshotBase64 || ''),
         registrationStatus: 'Pending Verification',
         paymentStatus: 'Verification Pending',
         exportStatus: 'Pending',
@@ -441,7 +453,10 @@ export const api = {
       const res = await fetch(`${API_BASE}/admin/registrations?${params.toString()}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (res.ok) return await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        if (data.registrations && data.registrations.length > 0) return data;
+      }
     } catch (e) {
       console.warn('Using local store for admin registrations');
     }
@@ -505,7 +520,10 @@ export const api = {
       const res = await fetch(`${API_BASE}/admin/abstracts`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (res.ok) return await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        if (data.abstracts && data.abstracts.length > 0) return data;
+      }
     } catch (e) {
       console.warn('Fallback admin abstracts');
     }

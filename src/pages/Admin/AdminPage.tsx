@@ -742,18 +742,31 @@ export const AdminPage: React.FC = () => {
                 </div>
               </div>
 
-              {selectedReg.paymentScreenshot && (
-                <div>
-                  <span className="font-bold text-[#003399] block mb-1">Attached Payment Proof:</span>
-                  <div className="p-2 bg-[#FAF5ED] rounded border border-[#E5DCCB] text-center">
-                    <img
-                      src={selectedReg.paymentScreenshot.startsWith('http') || selectedReg.paymentScreenshot.startsWith('data:') ? selectedReg.paymentScreenshot : `${SERVER_BASE}${selectedReg.paymentScreenshot}`}
-                      alt="Payment Proof"
-                      className="max-h-56 mx-auto object-contain rounded"
-                    />
+              {(() => {
+                const raw = selectedReg.paymentScreenshot;
+                const rawBase64 = (selectedReg as any).paymentScreenshotBase64;
+                const src = (typeof raw === 'string' && raw.trim() !== '')
+                  ? (raw.startsWith('http') || raw.startsWith('data:') ? raw : `${SERVER_BASE}${raw}`)
+                  : (typeof rawBase64 === 'string' && rawBase64.trim() !== '' ? rawBase64 : null);
+
+                if (!src) return null;
+
+                return (
+                  <div>
+                    <span className="font-bold text-[#003399] block mb-1">Attached Payment Proof:</span>
+                    <div className="p-2 bg-[#FAF5ED] rounded border border-[#E5DCCB] text-center">
+                      <img
+                        src={src}
+                        alt="Payment Proof"
+                        className="max-h-56 mx-auto object-contain rounded"
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = 'none';
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               <div>
                 <label className="block font-semibold text-[#182230] mb-1">Rejection Reason (if rejecting):</label>
