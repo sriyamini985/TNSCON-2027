@@ -18,9 +18,25 @@ const getLocalData = <T>(key: string, defaultVal: T): T => {
     if (!raw) return defaultVal;
     const parsed = JSON.parse(raw);
     if (key === STORAGE_KEYS.REGISTRATIONS && Array.isArray(parsed)) {
-      parsed.forEach((r: any) => {
+      parsed.forEach((r: any, idx: number) => {
         if (r && typeof r.paymentScreenshot !== 'string') {
           r.paymentScreenshot = typeof r.paymentScreenshotBase64 === 'string' ? r.paymentScreenshotBase64 : '';
+        }
+        // Normalize any old format IDs to TNS-000 standard
+        if (r && r.registrationId && (r.registrationId.startsWith('TNS27-') || r.registrationId.startsWith('TNS2027-'))) {
+          const match = r.registrationId.match(/(\d+)$/);
+          const num = match ? (parseInt(match[1], 10) > 1000 ? parseInt(match[1], 10) - 1000 : parseInt(match[1], 10)) : (idx + 1);
+          r.registrationId = `TNS-${String(Math.max(1, num)).padStart(3, '0')}`;
+        }
+      });
+    }
+    if (key === STORAGE_KEYS.ABSTRACTS && Array.isArray(parsed)) {
+      parsed.forEach((a: any, idx: number) => {
+        // Normalize any old format IDs to ABS-000 standard
+        if (a && a.submissionId && !a.submissionId.startsWith('ABS-')) {
+          const match = a.submissionId.match(/(\d+)$/);
+          const num = match ? parseInt(match[1], 10) : (idx + 1);
+          a.submissionId = `ABS-${String(Math.max(1, num)).padStart(3, '0')}`;
         }
       });
     }
@@ -43,7 +59,7 @@ if (!localStorage.getItem(STORAGE_KEYS.REGISTRATIONS)) {
   setLocalData(STORAGE_KEYS.REGISTRATIONS, [
     {
       id: 1,
-      registrationId: 'TNS27-1001',
+      registrationId: 'TNS-001',
       title: 'Dr.',
       firstName: 'Vikram',
       lastName: 'Reddy',
@@ -69,7 +85,7 @@ if (!localStorage.getItem(STORAGE_KEYS.REGISTRATIONS)) {
     },
     {
       id: 2,
-      registrationId: 'TNS27-1002',
+      registrationId: 'TNS-002',
       title: 'Dr.',
       firstName: 'Ananya',
       lastName: 'Sarma',
@@ -211,7 +227,17 @@ export const api = {
         throw new Error('This Transaction / UTR reference has already been submitted.');
       }
 
-      const newId = `TNS27-${1000 + regs.length + 1}`;
+      let maxNum = 0;
+      regs.forEach(r => {
+        const m = (r.registrationId || '').match(/TNS-(\d+)/i) || (r.registrationId || '').match(/TNS27-(\d+)/i);
+        if (m) {
+          const num = parseInt(m[1], 10);
+          const normalized = num > 1000 ? num - 1000 : num;
+          if (normalized > maxNum) maxNum = normalized;
+        }
+      });
+      const nextNum = Math.max(maxNum + 1, regs.length + 1);
+      const newId = `TNS-${String(nextNum).padStart(3, '0')}`;
       const newRecord = {
         id: Date.now(),
         registrationId: newId,

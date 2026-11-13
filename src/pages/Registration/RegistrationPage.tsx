@@ -938,7 +938,7 @@ export const RegistrationPage: React.FC = () => {
                   Delegate Pass Verification Lookup
                 </h2>
                 <p className="text-xs text-[#556070] mt-1">
-                  Enter your assigned Registration ID (e.g. <code>TNS27-1001</code>), registered email, or mobile number.
+                  Enter your assigned Registration ID (e.g. <code>TNS-001</code>), registered email, or mobile number.
                 </p>
               </div>
 

@@ -50,11 +50,13 @@ export const generateRegistrationId = async () => {
     orderBy: { id: 'desc' },
     select: { id: true }
   });
-  let nextNum = 1001 + (highest ? highest.id : 0);
-  while (await prisma.registration.findUnique({ where: { registrationId: `TNS27-${nextNum}` } })) {
+  let nextNum = (highest ? highest.id : 0) + 1;
+  let formatted = `TNS-${String(nextNum).padStart(3, '0')}`;
+  while (await prisma.registration.findUnique({ where: { registrationId: formatted } })) {
     nextNum++;
+    formatted = `TNS-${String(nextNum).padStart(3, '0')}`;
   }
-  return `TNS27-${nextNum}`;
+  return formatted;
 };
 
 export const createRegistration = async (data) => {
