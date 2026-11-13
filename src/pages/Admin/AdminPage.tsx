@@ -92,7 +92,7 @@ export const AdminPage: React.FC = () => {
   const handleUpdateRegStatus = async (id: number, status: 'Verified' | 'Rejected') => {
     try {
       const targetReg = selectedReg || registrations.find(r => r.id === id);
-      await api.updateRegistrationStatus(
+      const res = await api.updateRegistrationStatus(
         id,
         status,
         status === 'Verified' ? 'Verified by secretariat' : 'Rejected after verification review',
@@ -104,7 +104,11 @@ export const AdminPage: React.FC = () => {
       const regId = targetReg?.registrationId || '';
 
       if (status === 'Verified') {
-        alert(`✅ Registration Verified & Payment Successful!\n\nAn automated confirmation email has been dispatched to ${recipientEmail} with:\n• Registration ID: ${regId}\n• Payment Status: Successful & Verified\n• Amount: ₹${targetReg?.fee}\n• UTR: ${targetReg?.transactionId}`);
+        if (res.emailSent) {
+          alert(`✅ Registration Verified & Payment Successful!\n\nAn automated confirmation email has been successfully delivered to ${recipientEmail} with:\n• Registration ID: ${regId}\n• Payment Status: Successful & Verified\n• Amount: ₹${targetReg?.fee}\n• UTR: ${targetReg?.transactionId}`);
+        } else {
+          alert(`⚠️ Registration Verified as Successful!\n\nHowever, the real confirmation email could not be delivered to ${recipientEmail}.\nReason: ${res.emailError || 'SMTP server rejected login'}\n\nNote: Please configure valid SMTP mail credentials in server/.env (e.g. Gmail App Password) so emails can reach real inboxes.`);
+        }
       }
 
       setSelectedReg(null);
@@ -117,8 +121,12 @@ export const AdminPage: React.FC = () => {
 
   const handleResendVerificationEmail = async (reg: RegistrationRecord) => {
     try {
-      await api.sendVerificationEmail(reg.id, reg);
-      alert(`📧 Verification Email Sent!\n\nConfirmation email with Registration ID (${reg.registrationId}) and Payment Successful status was successfully sent to ${reg.email}.`);
+      const res = await api.sendVerificationEmail(reg.id, reg);
+      if (res.emailSent || res.result?.success) {
+        alert(`📧 Verification Email Delivered!\n\nConfirmation email with Registration ID (${reg.registrationId}) and Payment Successful status was successfully delivered to ${reg.email}.`);
+      } else {
+        alert(`⚠️ Email Failed to Deliver!\n\nCould not send email to ${reg.email}.\nReason: ${res.emailError || res.result?.error || 'Invalid SMTP credentials'}.\n\nPlease provide valid SMTP mail credentials in server/.env.`);
+      }
     } catch (err: any) {
       alert('Failed to send verification email: ' + err.message);
     }

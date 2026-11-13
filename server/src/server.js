@@ -630,20 +630,27 @@ app.patch('/api/admin/registrations/:id/status', authenticateAdmin, async (req, 
     }
 
     // Automatically send verification & payment successful confirmation email
-    let emailDispatched = false;
+    let emailResult = null;
     if (status === 'Verified' && updated && updated.email) {
-      emailDispatched = true;
-      sendRegistrationApprovedEmail(updated)
-        .then(() => console.log(`[VERIFICATION EMAIL SENT] Automatically sent to ${updated.email} for ID: ${updated.registrationId}`))
-        .catch(err => console.error('Failed to send verification approval email:', err));
+      try {
+        emailResult = await sendRegistrationApprovedEmail(updated);
+      } catch (e) {
+        emailResult = { success: false, error: e.message };
+      }
     }
+
+    const emailSent = Boolean(emailResult && emailResult.success);
+    const emailError = emailResult && !emailResult.success ? emailResult.error : null;
 
     return res.json({ 
       success: true, 
       registration: updated,
-      emailSent: emailDispatched,
+      emailSent,
+      emailError,
       message: status === 'Verified' 
-        ? `Registration ${updated?.registrationId || id} verified. Automatic confirmation email sent to ${updated?.email}.` 
+        ? (emailSent 
+            ? `Registration ${updated?.registrationId || id} verified. Automatic confirmation email sent to ${updated?.email}.` 
+            : `Registration ${updated?.registrationId || id} verified. Email delivery to ${updated?.email} failed (${emailError || 'SMTP delivery issue'}).`)
         : `Registration updated to ${status}.`
     });
   } catch (error) {
@@ -675,9 +682,15 @@ app.post('/api/admin/registrations/:id/send-verification-email', authenticateAdm
     }
 
     const emailResult = await sendRegistrationApprovedEmail(registration);
+    const emailSent = Boolean(emailResult && emailResult.success);
+
     return res.json({
-      success: true,
-      message: `Verification and payment confirmation email successfully sent to ${registration.email}.`,
+      success: emailSent,
+      emailSent,
+      emailError: !emailSent ? emailResult?.error : null,
+      message: emailSent
+        ? `Verification and payment confirmation email successfully delivered to ${registration.email}.`
+        : `Email delivery to ${registration.email} failed: ${emailResult?.error || 'Invalid SMTP credentials'}.`,
       registrationId: registration.registrationId,
       result: emailResult
     });

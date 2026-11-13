@@ -177,8 +177,8 @@ export const sendRegistrationApprovedEmail = async (reg) => {
   );
 
   if (!transporter) {
-    console.log(`[EMAIL DISPATCHED] Registration verified & payment successful email sent to: ${reg.email} (Registration ID: ${reg.registrationId}, Amount: ₹${reg.fee}, UTR: ${reg.transactionId})`);
-    return { simulated: true, to: reg.email, registrationId: reg.registrationId, status: 'Verified' };
+    console.warn(`[EMAIL WARNING] No SMTP transporter configured. Registration verified for: ${reg.email}`);
+    return { success: false, simulated: true, error: 'SMTP server not configured in server/.env', to: reg.email };
   }
 
   try {
@@ -191,8 +191,8 @@ export const sendRegistrationApprovedEmail = async (reg) => {
     console.log(`[EMAIL DELIVERED] Verification email sent to ${reg.email} (MessageId: ${info.messageId})`);
     return { success: true, messageId: info.messageId, to: reg.email };
   } catch (smtpErr) {
-    console.warn(`[EMAIL NOTICE] SMTP delivery attempted (${smtpErr.message}). Verified confirmation registered for: ${reg.email}`);
-    return { simulated: true, fallback: true, error: smtpErr.message, to: reg.email };
+    console.error(`[EMAIL ERROR] SMTP delivery failed (${smtpErr.message}) for: ${reg.email}`);
+    return { success: false, error: smtpErr.message, to: reg.email };
   }
 };
 
