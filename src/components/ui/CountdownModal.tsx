@@ -77,25 +77,31 @@ export const CountdownModal: React.FC<CountdownModalProps> = ({ isOpen, onClose 
       aria-modal="true"
       aria-labelledby="countdown-modal-title"
     >
-      {/* Modal Container: 2-column side-by-side on desktop without vertical scrolling */}
+      {/* Modal Container: Warm Ivory & Gold Brand Palette (replaces monotone all-blue background) */}
       <div 
-        className="relative w-full max-w-4xl lg:max-w-5xl max-h-[92vh] md:max-h-[85vh] lg:max-h-[600px] overflow-y-auto md:overflow-hidden rounded-3xl bg-gradient-to-br from-[#001A4D] via-[#002266] to-[#003399] p-4 sm:p-6 md:p-6 text-white border border-white/20 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.7)] animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-4xl lg:max-w-5xl max-h-[92vh] md:max-h-[85vh] lg:max-h-[600px] overflow-y-auto md:overflow-hidden rounded-3xl bg-[#FAF5ED] p-4 sm:p-6 md:p-6 text-[#182230] border-2 border-[#D49B00]/60 shadow-[0_25px_80px_-15px_rgba(0,26,77,0.45)] animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Ambient Gold & Blue Glow Effects */}
+        {/* Top Gold Gradient Accent Trim */}
         <div 
-          className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-[#D49B00]/20 blur-3xl pointer-events-none" 
+          className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#D49B00] via-[#FFCC00] to-[#D49B00] rounded-t-3xl" 
+          aria-hidden="true"
+        />
+
+        {/* Ambient Warm Glow Effects */}
+        <div 
+          className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[#D49B00]/15 blur-3xl pointer-events-none" 
           aria-hidden="true" 
         />
         <div 
-          className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-[#003399]/40 blur-3xl pointer-events-none" 
+          className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full bg-[#003399]/10 blur-3xl pointer-events-none" 
           aria-hidden="true" 
         />
 
-        {/* Absolute Close Button [X] - does not displace content */}
+        {/* Absolute Close Button [X] */}
         <button
           onClick={onClose}
-          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer shadow-md"
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 p-2 rounded-full bg-[#001A4D]/5 hover:bg-[#001A4D]/15 text-[#001A4D] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#003399] cursor-pointer shadow-xs border border-[#001A4D]/10"
           aria-label="Close Announcement Dialog"
         >
           <X className="w-5 h-5" />
@@ -104,21 +110,21 @@ export const CountdownModal: React.FC<CountdownModalProps> = ({ isOpen, onClose 
         {/* 2-Column Side-by-Side Layout: Poster on Left, Content on Right */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 lg:gap-6 items-center">
           
-          {/* Left Side: Call for Abstracts Announcement Poster */}
+          {/* Left Side: Highlighted Gold-Framed Call for Abstracts Poster */}
           <div className="md:col-span-5 flex flex-col items-center justify-center">
             <Link
               to="/abstract-submission"
               onClick={onClose}
-              className="relative w-full rounded-2xl overflow-hidden border border-[#D49B00]/40 shadow-2xl bg-black/40 group flex items-center justify-center cursor-pointer block focus:outline-none focus:ring-2 focus:ring-[#FFCC00]"
+              className="relative w-full rounded-2xl overflow-hidden border-[3px] border-[#D49B00] ring-2 sm:ring-[3px] ring-[#FFCC00] shadow-[0_8px_30px_rgba(212,155,0,0.4)] bg-white p-1 sm:p-1.5 group flex items-center justify-center cursor-pointer block focus:outline-none focus:ring-2 focus:ring-[#003399] transition-all hover:shadow-[0_12px_40px_rgba(212,155,0,0.55)]"
               title="Click to Submit Abstract"
             >
               <img
                 src="/assets/images/tnscon_call_for_abstracts_poster.jpg"
                 alt="TNSCON 2027 Official Call for Abstracts Announcement Flyer"
-                className="w-full h-auto max-h-[320px] sm:max-h-[380px] md:max-h-[420px] lg:max-h-[460px] object-contain mx-auto rounded-xl group-hover:scale-[1.015] transition-transform duration-300"
+                className="w-full h-auto max-h-[320px] sm:max-h-[380px] md:max-h-[420px] lg:max-h-[455px] object-contain mx-auto rounded-xl group-hover:scale-[1.015] transition-transform duration-300"
               />
               {/* Urgent Deadline Badge Overlay */}
-              <div className="absolute top-2.5 right-2.5 bg-[#001A4D]/90 backdrop-blur-md border border-[#D49B00] px-2.5 py-1 rounded-full text-[10.5px] font-bold text-[#FFCC00] shadow-md flex items-center gap-1.5 pointer-events-none">
+              <div className="absolute top-3 right-3 bg-[#001A4D] text-[#FFCC00] border-2 border-[#D49B00] px-2.5 py-1 rounded-full text-[10.5px] font-bold shadow-lg flex items-center gap-1.5 pointer-events-none">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                 <span>Deadline: 31 Jan 2027</span>
               </div>
@@ -130,39 +136,41 @@ export const CountdownModal: React.FC<CountdownModalProps> = ({ isOpen, onClose 
             
             {/* Top Announcement Badge */}
             <div className="flex items-center justify-between gap-2 mb-2 pr-10 md:pr-0">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-semibold text-white">
-                <Sparkles className="w-3.5 h-3.5 text-[#FFCC00]" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#003399]/10 border border-[#003399]/25 text-[11px] font-bold text-[#003399]">
+                <Sparkles className="w-3.5 h-3.5 text-[#D49B00]" />
                 <span id="countdown-modal-title">Official Conference Announcement</span>
               </div>
-              <span className="text-[10.5px] text-[#FFCC00] font-mono hidden sm:inline">11th Edition</span>
+              <span className="text-[11px] font-mono font-bold text-[#D49B00] px-2 py-0.5 rounded-full bg-[#D49B00]/10 border border-[#D49B00]/30 hidden sm:inline">
+                11th Edition · 2027
+              </span>
             </div>
 
             {/* Conference Title & Begumpet Venue */}
             <div className="mb-2.5">
               <div className="flex items-baseline gap-2 flex-wrap">
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#001A4D] tracking-tight">
                   TNSCON 2027
                 </h2>
-                <span className="text-xs text-[#FFCC00] font-semibold uppercase tracking-wider">
+                <span className="text-xs text-[#D49B00] font-bold uppercase tracking-wider">
                   Telangana Neurosciences Society
                 </span>
               </div>
-              <p className="text-xs sm:text-[13px] text-white/85 mt-0.5 leading-snug">
+              <p className="text-xs sm:text-[13px] text-[#556070] font-medium mt-0.5 leading-snug">
                 12th–14th March 2027 · Begumpet Airport, Hyderabad
               </p>
             </div>
 
-            {/* Compact Live Countdown Timer Frame */}
-            <div className="bg-white/10 border border-white/15 rounded-2xl p-2.5 sm:p-3 mb-2.5 backdrop-blur-xs shadow-inner">
-              <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-white/10">
+            {/* Compact Live Countdown Timer Frame (Crisp White & Gold Accent Frame) */}
+            <div className="bg-white border-2 border-[#D49B00]/40 rounded-2xl p-2.5 sm:p-3 mb-2.5 shadow-xs">
+              <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#E5DCCB]">
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-[#D49B00]" />
-                  <span className="text-[10.5px] sm:text-[11px] uppercase tracking-wider font-bold text-[#FFCC00]">
+                  <span className="text-[10.5px] sm:text-[11px] uppercase tracking-wider font-bold text-[#003399]">
                     Conference Begins In
                   </span>
                 </div>
-                <span className="text-[10px] text-white/60 tracking-wider font-mono">
-                  Live Countdown
+                <span className="text-[10px] text-[#556070] font-mono font-medium">
+                  Begumpet Airport · Live
                 </span>
               </div>
 
@@ -170,58 +178,58 @@ export const CountdownModal: React.FC<CountdownModalProps> = ({ isOpen, onClose 
               <div className="grid grid-cols-7 items-center text-center py-0.5">
                 {/* Days */}
                 <div className="col-span-1 flex flex-col items-center">
-                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-white leading-tight">
+                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-[#001A4D] leading-tight">
                     {timeLeft.days}
                   </span>
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 font-medium mt-0.5">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#667085] font-semibold mt-0.5">
                     Days
                   </span>
                 </div>
-                <span className="col-span-1 text-[#D49B00] text-xl sm:text-2xl font-serif font-light pb-2 select-none">:</span>
+                <span className="col-span-1 text-[#D49B00] text-xl sm:text-2xl font-serif font-bold pb-2 select-none">:</span>
 
                 {/* Hours */}
                 <div className="col-span-1 flex flex-col items-center">
-                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-white leading-tight">
+                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-[#001A4D] leading-tight">
                     {formatUnit(timeLeft.hours)}
                   </span>
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 font-medium mt-0.5">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#667085] font-semibold mt-0.5">
                     Hours
                   </span>
                 </div>
-                <span className="col-span-1 text-[#D49B00] text-xl sm:text-2xl font-serif font-light pb-2 select-none">:</span>
+                <span className="col-span-1 text-[#D49B00] text-xl sm:text-2xl font-serif font-bold pb-2 select-none">:</span>
 
                 {/* Minutes */}
                 <div className="col-span-1 flex flex-col items-center">
-                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-white leading-tight">
+                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-[#001A4D] leading-tight">
                     {formatUnit(timeLeft.minutes)}
                   </span>
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 font-medium mt-0.5">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#667085] font-semibold mt-0.5">
                     Mins
                   </span>
                 </div>
-                <span className="col-span-1 text-[#D49B00] text-xl sm:text-2xl font-serif font-light pb-2 select-none">:</span>
+                <span className="col-span-1 text-[#D49B00] text-xl sm:text-2xl font-serif font-bold pb-2 select-none">:</span>
 
                 {/* Seconds */}
                 <div className="col-span-1 flex flex-col items-center">
-                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-[#FFCC00] leading-tight">
+                  <span className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tabular-nums text-[#D49B00] leading-tight">
                     {formatUnit(timeLeft.seconds)}
                   </span>
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-white/70 font-medium mt-0.5">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#D49B00] font-semibold mt-0.5">
                     Secs
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Official Association Website Pill */}
-            <div className="bg-white/10 border border-[#D49B00]/40 rounded-xl px-3 py-2 mb-2.5 flex items-center justify-between gap-2.5 text-xs">
+            {/* Official Society Website Pill (Warm Amber Tint) */}
+            <div className="bg-[#FFF9EE] border-2 border-[#D49B00]/45 rounded-xl px-3 py-2 mb-2.5 flex items-center justify-between gap-2.5 text-xs shadow-2xs">
               <div className="flex items-center gap-2 min-w-0">
-                <Globe className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
+                <Globe className="w-4 h-4 text-[#D49B00] flex-shrink-0" />
                 <div className="truncate">
-                  <span className="text-[9.5px] uppercase font-bold text-[#FFCC00] tracking-wider block">
+                  <span className="text-[9.5px] uppercase font-bold text-[#D49B00] tracking-wider block">
                     Official Society Website
                   </span>
-                  <span className="text-white/90 text-xs font-medium truncate block">
+                  <span className="text-[#001A4D] text-xs font-bold truncate block">
                     telangananeuro.com
                   </span>
                 </div>
@@ -238,35 +246,35 @@ export const CountdownModal: React.FC<CountdownModalProps> = ({ isOpen, onClose 
             </div>
 
             {/* Abstract Track Summary Chip */}
-            <div className="bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 mb-3 flex items-center justify-between gap-2 text-xs">
+            <div className="bg-white border border-[#E5DCCB] rounded-xl px-3 py-1.5 mb-3 flex items-center justify-between gap-2 text-xs shadow-2xs">
               <div className="text-left min-w-0">
-                <span className="text-[9.5px] uppercase font-bold text-[#FFCC00] tracking-wider block">
+                <span className="text-[9.5px] uppercase font-bold text-[#003399] tracking-wider block">
                   Call For Abstracts
                 </span>
-                <span className="text-white/80 text-[11px] truncate block">
+                <span className="text-[#556070] text-[11px] font-medium truncate block">
                   Award Papers · Free Oral Papers · E-Posters
                 </span>
               </div>
-              <span className="px-2 py-0.5 rounded bg-red-500/20 border border-red-400/40 text-[10px] text-red-200 font-bold whitespace-nowrap">
+              <span className="px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200 text-[10px] font-bold whitespace-nowrap">
                 Deadline: 31 Jan
               </span>
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-white/15">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-[#E5DCCB]">
               <InteractiveHoverButton
                 to="/abstract-submission"
                 onClick={onClose}
                 text="Submit Abstract"
                 variant="gold"
-                className="py-2.5 px-4 text-xs font-bold w-full"
+                className="py-2.5 px-4 text-xs font-bold w-full shadow-sm"
               />
               <InteractiveHoverButton
                 to="/registration"
                 onClick={onClose}
                 text="Register as Delegate"
-                variant="dark"
-                className="py-2.5 px-4 text-xs font-semibold w-full"
+                variant="blue"
+                className="py-2.5 px-4 text-xs font-semibold w-full shadow-sm"
               />
             </div>
 
