@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Clock, Sparkles } from 'lucide-react';
+import { X, Clock, Sparkles, Globe, ExternalLink } from 'lucide-react';
 import { InteractiveHoverButton } from './InteractiveHoverButton';
 import { siteContent } from '../../data/siteContent';
 
@@ -184,16 +184,47 @@ export const CountdownModal: React.FC<CountdownModalProps> = ({ isOpen, onClose 
             </div>
           </div>
 
-          {/* Official Domain Line */}
-          <div className="pt-3 mt-3 border-t border-white/10 text-center">
-            <span className="text-xs text-white/75 tracking-wide font-normal">
-              Official website:{' '}
-              <strong className="text-white font-medium hover:text-[#FFCC00] transition-colors">
-                {siteContent.conference.officialDomain}
-              </strong>
+          {/* Official Domain & Society Links */}
+          <div className="pt-3 mt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
+            <span className="text-white/75 text-[11px] sm:text-xs text-center sm:text-left">
+              Conference: <strong className="text-white font-medium">{siteContent.conference.officialDomain}</strong>
             </span>
+            <a
+              href="https://www.telangananeuro.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D49B00] hover:bg-[#FFCC00] text-[#001A4D] font-bold text-[11px] shadow-xs transition-colors"
+            >
+              <Globe className="w-3 h-3" />
+              <span>Visit telangananeuro.com</span>
+              <ExternalLink className="w-2.5 h-2.5" />
+            </a>
           </div>
 
+        </div>
+
+        {/* Association Society Feature Pill */}
+        <div className="relative z-10 bg-white/10 border border-[#D49B00]/40 rounded-xl px-3.5 py-2.5 mb-4 flex items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2 text-left min-w-0">
+            <Globe className="w-4 h-4 text-[#FFCC00] flex-shrink-0" />
+            <div className="truncate">
+              <span className="text-[10px] uppercase font-bold text-[#FFCC00] tracking-wider block">
+                Official Association Portal
+              </span>
+              <span className="text-white/90 text-xs font-medium truncate block">
+                Telangana Neurosciences Society (TNS)
+              </span>
+            </div>
+          </div>
+          <a
+            href="https://www.telangananeuro.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/15 hover:bg-[#D49B00] hover:text-[#001A4D] text-[#FFCC00] font-bold text-xs border border-white/20 transition-all"
+          >
+            <span>Society Website</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
         </div>
 
         {/* 3 Small Floating Stat Chips */}

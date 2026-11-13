@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Globe, ExternalLink } from 'lucide-react';
 import { conferenceInfo, leadershipData } from '../../data/conferenceData';
 
 export const ContactPage: React.FC = () => {
@@ -94,6 +94,22 @@ export const ContactPage: React.FC = () => {
                       <p className="text-[#556070] mt-0.5">
                         {conferenceInfo.domain}
                       </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <ExternalLink className="w-5 h-5 text-[#D49B00] flex-shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="block text-[#003399] font-bold">Parent Association Portal</strong>
+                      <a
+                        href={conferenceInfo.societyWebsite}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#003399] hover:underline font-semibold mt-0.5 inline-flex items-center gap-1"
+                      >
+                        <span>telangananeuro.com</span>
+                        <ExternalLink className="w-3 h-3 text-[#D49B00]" />
+                      </a>
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, HeartPulse, Shield } from 'lucide-react';
+import { Award, HeartPulse, Shield, Globe, ExternalLink } from 'lucide-react';
 import { InteractiveHoverButton } from '../../components/ui/InteractiveHoverButton';
 import { welcomeMessage } from '../../data/conferenceData';
 
@@ -28,13 +28,36 @@ export const AboutPage: React.FC = () => {
       <section className="py-12 sm:py-16 text-left">
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
           
-          {/* Official Society Banner */}
+          {/* Official Society Banner & Association Link */}
           <div className="rounded-2xl overflow-hidden border border-[#E5DCCB] shadow-sm bg-[#FFFDF9]">
             <img
               src="/assets/images/districts/Hyderabad.png"
               alt="Telangana Neurosciences Society (TNS) Official Banner"
               className="w-full h-auto object-cover max-h-[260px]"
             />
+            <div className="p-4 sm:p-5 bg-[#FAF5ED] border-t border-[#E5DCCB] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+              <div>
+                <span className="text-[10px] uppercase font-bold text-[#D49B00] tracking-wider block">
+                  Parent Medical Society
+                </span>
+                <strong className="text-sm text-[#003399] font-serif block">
+                  Telangana Neurosciences Society (TNS)
+                </strong>
+                <p className="text-[#556070] text-[11px] mt-0.5">
+                  State apex medical society fostering academic exchange, surgical advancement, and neurological research across Telangana.
+                </p>
+              </div>
+              <a
+                href="https://www.telangananeuro.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-xs shadow-xs transition-colors flex-shrink-0"
+              >
+                <Globe className="w-3.5 h-3.5 text-[#FFCC00]" />
+                <span>Visit Association Website</span>
+                <ExternalLink className="w-3 h-3 text-white/80" />
+              </a>
+            </div>
           </div>
 
           {/* Welcome Message Section */}

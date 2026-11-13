@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Calendar, Phone, ArrowRight } from 'lucide-react';
+import { MapPin, Mail, Calendar, Phone, ArrowRight, Globe, ExternalLink } from 'lucide-react';
 import { siteContent } from '../../data/siteContent';
 
 export const Footer: React.FC = () => {
@@ -48,6 +48,17 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-2.5 text-xs text-[#FAF5ED]/60">
+              <a
+                href="https://www.telangananeuro.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FFCC00] hover:text-white transition-colors inline-flex items-center gap-1 font-semibold"
+              >
+                <Globe className="w-3.5 h-3.5 text-[#FFCC00]" />
+                <span>telangananeuro.com</span>
+                <ExternalLink className="w-3 h-3 text-[#FFCC00]/80" />
+              </a>
+              <span>•</span>
               <Link
                 to="/venue"
                 className="hover:text-[#FFCC00] transition-colors inline-flex items-center gap-1 underline underline-offset-4"
@@ -57,17 +68,10 @@ export const Footer: React.FC = () => {
               </Link>
               <span>•</span>
               <Link
-                to="/admin"
-                className="hover:text-[#FFCC00] transition-colors inline-flex items-center gap-1"
-              >
-                <span>Admin Portal</span>
-              </Link>
-              <span>•</span>
-              <Link
                 to="/abstract-viewer"
                 className="hover:text-[#FFCC00] transition-colors inline-flex items-center gap-1"
               >
-                <span>Abstract Viewer (Public)</span>
+                <span>Abstract Viewer</span>
               </Link>
             </div>
           </div>
@@ -214,7 +218,17 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright Strip */}
         <div className="mt-14 pt-8 border-t border-[#FAF5ED]/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FAF5ED]/60">
-          <p>© 2027 Telangana Neurosciences Society. All rights reserved.</p>
+          <p>
+            © 2027 Telangana Neurosciences Society. All rights reserved. ·{' '}
+            <a
+              href="https://www.telangananeuro.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FFCC00] hover:underline"
+            >
+              telangananeuro.com
+            </a>
+          </p>
           <div className="flex items-center gap-4 text-[11px]">
             <span>11th Annual Conference</span>
             <span>•</span>

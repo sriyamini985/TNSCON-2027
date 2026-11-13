@@ -50,6 +50,7 @@ export const siteContent = {
     venue: 'Conference Hall, Rajiv Gandhi Terminal, Begumpet Airport, Hyderabad',
     venueShort: 'Rajiv Gandhi Terminal, Begumpet Airport',
     officialDomain: 'tnscon2027hyd.com',
+    societyWebsite: 'https://www.telangananeuro.com/',
     tagline: 'The Neural Atlas — Mapping the Future of Neuroscience',
     heroDescription:
       "Three days of scientific sessions, live neurosurgery discussions, and hands-on workshops bringing together India's leading neurologists, neurosurgeons and researchers.",

@@ -20,6 +20,7 @@ export const conferenceInfo = {
   },
   domain: 'tnscon2027hyd.com',
   officialUrl: 'https://www.tnscon2027hyd.com',
+  societyWebsite: 'https://www.telangananeuro.com/',
   contactEmail: 'secretariat@tnscon2027hyd.com',
   contactPhone: '+91 40 2345 6789 / +91 98490 12345',
   bankDetails: {

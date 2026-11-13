@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Globe, ExternalLink } from 'lucide-react';
 import { InteractiveHoverButton } from '../ui/InteractiveHoverButton';
 import { siteContent } from '../../data/siteContent';
 
@@ -114,8 +114,20 @@ export const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right: Single Primary CTA Button (Desktop) */}
-        <div className="hidden lg:flex items-center flex-shrink-0">
+        {/* Right: Society Portal Link & Primary CTA Button (Desktop) */}
+        <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+          <a
+            href="https://www.telangananeuro.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-[#003399] hover:bg-[#EBF1FA] border border-[#003399]/20 transition-colors shadow-2xs"
+            title="Visit Telangana Neurosciences Society Official Website"
+          >
+            <Globe className="w-3.5 h-3.5 text-[#D49B00]" />
+            <span>TNS Society</span>
+            <ExternalLink className="w-3 h-3 text-[#556070]" />
+          </a>
+
           <InteractiveHoverButton
             to={siteContent.navbarCta.path}
             text={siteContent.navbarCta.label}
@@ -206,7 +218,20 @@ export const Navbar: React.FC = () => {
                   </NavLink>
                 ))}
 
-                <div className="pt-3 border-t border-[#E5DCCB] mt-2 space-y-1">
+                <div className="pt-3 border-t border-[#E5DCCB] mt-2 space-y-2">
+                  <a
+                    href="https://www.telangananeuro.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-bold text-[#003399] bg-[#EBF1FA] border border-[#003399]/20 hover:bg-[#003399] hover:text-white transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Globe className="w-3.5 h-3.5 text-[#D49B00]" />
+                      <span>Telangana Neuro Association</span>
+                    </span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+
                   <NavLink
                     to="/abstract-viewer"
                     className="flex items-center justify-between px-3.5 py-2 rounded-lg text-sm font-semibold text-[#003399] hover:bg-[#F2EAE0]"
