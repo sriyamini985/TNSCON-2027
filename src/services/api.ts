@@ -16,29 +16,43 @@ const getLocalData = <T>(key: string, defaultVal: T): T => {
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return defaultVal;
-    const parsed = JSON.parse(raw);
+    let parsed = JSON.parse(raw);
     if (key === STORAGE_KEYS.REGISTRATIONS && Array.isArray(parsed)) {
+      // Remove mock/demo registrations so only real delegate submissions remain
+      parsed = parsed.filter((r: any) =>
+        r &&
+        r.email !== 'vikram.reddy@nims.edu.in' &&
+        r.email !== 'dr.ananya.sarma@gmail.com' &&
+        !(r.firstName === 'Vikram' && r.lastName === 'Reddy') &&
+        !(r.firstName === 'Ananya' && r.lastName === 'Sarma')
+      );
+
       parsed.forEach((r: any, idx: number) => {
         if (r && typeof r.paymentScreenshot !== 'string') {
           r.paymentScreenshot = typeof r.paymentScreenshotBase64 === 'string' ? r.paymentScreenshotBase64 : '';
         }
-        // Normalize any old format IDs to TNS-000 standard
-        if (r && r.registrationId && (r.registrationId.startsWith('TNS27-') || r.registrationId.startsWith('TNS2027-'))) {
-          const match = r.registrationId.match(/(\d+)$/);
-          const num = match ? (parseInt(match[1], 10) > 1000 ? parseInt(match[1], 10) - 1000 : parseInt(match[1], 10)) : (idx + 1);
-          r.registrationId = `TNS-${String(Math.max(1, num)).padStart(3, '0')}`;
+        // Normalize registration IDs to clean sequence starting from TNS-001
+        if (r && (!r.registrationId || r.registrationId.startsWith('TNS27-') || r.registrationId.startsWith('TNS2027-') || r.registrationId === 'TNS-003')) {
+          r.registrationId = `TNS-${String(idx + 1).padStart(3, '0')}`;
         }
       });
+      try { localStorage.setItem(key, JSON.stringify(parsed)); } catch (e) {}
     }
     if (key === STORAGE_KEYS.ABSTRACTS && Array.isArray(parsed)) {
+      // Remove mock/demo abstracts so only real submissions remain
+      parsed = parsed.filter((a: any) =>
+        a &&
+        a.presentingAuthorEmail !== 'dr.ananya.sarma@gmail.com' &&
+        a.presentingAuthorEmail !== 'kv.ramana@nims.edu.in' &&
+        a.presentingAuthorEmail !== 'dr.sneha.reddy@apollohospitals.com' &&
+        a.presentingAuthorName !== 'Ananya Sarma'
+      );
       parsed.forEach((a: any, idx: number) => {
-        // Normalize any old format IDs to ABS-000 standard
-        if (a && a.submissionId && !a.submissionId.startsWith('ABS-')) {
-          const match = a.submissionId.match(/(\d+)$/);
-          const num = match ? parseInt(match[1], 10) : (idx + 1);
-          a.submissionId = `ABS-${String(Math.max(1, num)).padStart(3, '0')}`;
+        if (a && (!a.submissionId || !a.submissionId.startsWith('ABS-'))) {
+          a.submissionId = `ABS-${String(idx + 1).padStart(3, '0')}`;
         }
       });
+      try { localStorage.setItem(key, JSON.stringify(parsed)); } catch (e) {}
     }
     return parsed;
   } catch {
@@ -54,137 +68,13 @@ const setLocalData = <T>(key: string, data: T) => {
   }
 };
 
-// Initialize initial seed data in local storage if empty
+// Initialize clean empty data in local storage (demo data removed)
 if (!localStorage.getItem(STORAGE_KEYS.REGISTRATIONS)) {
-  setLocalData(STORAGE_KEYS.REGISTRATIONS, [
-    {
-      id: 1,
-      registrationId: 'TNS-001',
-      title: 'Dr.',
-      firstName: 'Vikram',
-      lastName: 'Reddy',
-      gender: 'Male',
-      designation: 'Associate Professor & Neurosurgeon',
-      qualification: 'MCh Neurosurgery',
-      medicalCouncilNo: 'TSMC-64821',
-      hospital: 'Nizam\'s Institute of Medical Sciences (NIMS), Hyderabad',
-      city: 'Hyderabad',
-      state: 'Telangana',
-      mobile: '9849011223',
-      email: 'vikram.reddy@nims.edu.in',
-      category: 'TNS Member Delegate',
-      fee: 6500,
-      transactionId: 'UTR94827103847',
-      paymentScreenshot: '',
-      registrationStatus: 'Verified',
-      paymentStatus: 'Verified',
-      exportStatus: 'Pending',
-      createdAt: '2026-11-01T10:30:00Z',
-      verifiedAt: '2026-11-01T14:15:00Z',
-      verifiedBy: 'tnscon'
-    },
-    {
-      id: 2,
-      registrationId: 'TNS-002',
-      title: 'Dr.',
-      firstName: 'Ananya',
-      lastName: 'Sarma',
-      gender: 'Female',
-      designation: 'Senior Resident in Neurology',
-      qualification: 'DM Neurology',
-      medicalCouncilNo: 'TSMC-88129',
-      hospital: 'Osmania Medical College / General Hospital',
-      city: 'Hyderabad',
-      state: 'Telangana',
-      mobile: '9701044556',
-      email: 'dr.ananya.sarma@gmail.com',
-      category: 'PG Resident / Fellow',
-      fee: 4500,
-      transactionId: 'UPI202611029871',
-      paymentScreenshot: '',
-      registrationStatus: 'Pending Verification',
-      paymentStatus: 'Verification Pending',
-      exportStatus: 'Pending',
-      createdAt: '2026-11-02T16:45:00Z'
-    }
-  ]);
+  setLocalData(STORAGE_KEYS.REGISTRATIONS, []);
 }
 
 if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
-  setLocalData(STORAGE_KEYS.ABSTRACTS, [
-    {
-      id: 1,
-      submissionId: 'ABS-001',
-      category: 'Award Paper Presentation',
-      specialty: 'Neurosurgery',
-      subTopic: 'Skull Base Surgery',
-      title: 'Endoscopic Endonasal Approach for Giant Pituitary Macroadenomas: A 5-Year Single-Center Surgical Cohort from Hyderabad',
-      wordCount: 238,
-      presentingAuthorTitle: 'Dr.',
-      presentingAuthorName: 'Ananya Sarma',
-      presentingAuthorEmail: 'dr.ananya.sarma@gmail.com',
-      presentingAuthorPhone: '9701044556',
-      presentingAuthorDesignation: 'Senior Resident in Neurosurgery',
-      presentingAuthorInstitution: 'Osmania Medical College, Hyderabad',
-      isResident: true,
-      coAuthors: 'Dr. K. Srinivas, Dr. R. T. S. Naik',
-      introduction: 'Endoscopic endonasal transsphenoidal surgery has revolutionized surgical outcomes in suprasellar lesions.',
-      methods: 'Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center.',
-      results: 'Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically.',
-      conclusion: 'Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
-      fullAbstractText: 'Purpose: Endoscopic endonasal transsphenoidal surgery has revolutionized surgical outcomes in suprasellar lesions. Methods: Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center. Results: Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically. Conclusion: Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
-      status: 'Accepted',
-      createdAt: '2026-11-02T17:00:00Z'
-    },
-    {
-      id: 2,
-      submissionId: 'ABS-002',
-      category: 'Free Paper Presentation',
-      specialty: 'Neurology',
-      subTopic: 'Stroke & Vascular Neurology',
-      title: 'Mechanical Thrombectomy Beyond 6 Hours in Acute Ischemic Stroke: A Multicentric Telangana Cohort Study',
-      wordCount: 242,
-      presentingAuthorTitle: 'Dr.',
-      presentingAuthorName: 'K. V. Ramana Rao',
-      presentingAuthorEmail: 'kv.ramana@nims.edu.in',
-      presentingAuthorPhone: '9848123456',
-      presentingAuthorDesignation: 'Assistant Professor of Neurology',
-      presentingAuthorInstitution: "Nizam's Institute of Medical Sciences (NIMS), Hyderabad",
-      isResident: false,
-      coAuthors: 'Dr. Chandrakanth Tapsi, Dr. V. S. R. Krishna',
-      introduction: 'Extended window mechanical thrombectomy in wake-up and delayed stroke presentations remains pivotal in clinical triage.',
-      methods: 'Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion.',
-      results: 'Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients.',
-      conclusion: 'Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
-      fullAbstractText: 'Purpose: Extended window mechanical thrombectomy in wake-up and delayed stroke presentations remains pivotal in clinical triage. Methods: Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion. Results: Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients. Conclusion: Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
-      status: 'Accepted',
-      createdAt: '2026-11-03T11:20:00Z'
-    },
-    {
-      id: 3,
-      submissionId: 'ABS-003',
-      category: 'Poster Presentation',
-      specialty: 'Neurosurgery',
-      subTopic: 'Neuro-Oncology & Molecular Genetics',
-      title: 'Pediatric Low-Grade Gliomas: Correlation of BRAF V600E Mutation Status with Progression-Free Survival',
-      wordCount: 220,
-      presentingAuthorTitle: 'Dr.',
-      presentingAuthorName: 'Sneha Latha Reddy',
-      presentingAuthorEmail: 'dr.sneha.reddy@apollohospitals.com',
-      presentingAuthorPhone: '9989012345',
-      presentingAuthorDesignation: 'Fellow in Pediatric Neuro-Oncology',
-      presentingAuthorInstitution: 'Apollo Health City, Jubilee Hills, Hyderabad',
-      isResident: true,
-      coAuthors: 'Dr. M. S. Phanindra, Dr. P. Rajesh Kumar',
-      introduction: 'BRAF alterations represent key therapeutic and prognostic targets in pediatric low-grade neuro-epithelial neoplasms.',
-      methods: 'Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens.',
-      results: 'BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants.',
-      conclusion: 'Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
-      fullAbstractText: 'Purpose: BRAF alterations represent key therapeutic and prognostic targets in pediatric low-grade neuro-epithelial neoplasms. Methods: Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens. Results: BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants. Conclusion: Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
-      status: 'Accepted',
-      createdAt: '2026-11-03T14:15:00Z'
-    }
-  ]);
+  setLocalData(STORAGE_KEYS.ABSTRACTS, []);
 }
 
 export const api = {
@@ -586,6 +476,24 @@ export const api = {
     return { success: true, message: `Confirmation email dispatched to ${registrationData.email}` };
   },
 
+  // Delete Registration
+  async deleteRegistration(id: number | string) {
+    const token = this.getAdminToken();
+    try {
+      await fetch(`${API_BASE}/admin/registrations/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch (e) {
+      console.warn('Delete registration fallback to local storage');
+    }
+
+    const regs = getLocalData<any[]>(STORAGE_KEYS.REGISTRATIONS, []);
+    const filtered = regs.filter(r => r.id !== id && r.registrationId !== id);
+    setLocalData(STORAGE_KEYS.REGISTRATIONS, filtered);
+    return { success: true, message: 'Registration deleted successfully.' };
+  },
+
   // Admin Abstracts
   async getAdminAbstracts() {
     const token = this.getAdminToken();
@@ -632,5 +540,23 @@ export const api = {
       return { success: true, abstract: abstracts[idx] };
     }
     throw new Error('Abstract not found');
+  },
+
+  // Delete Abstract
+  async deleteAbstract(id: number | string) {
+    const token = this.getAdminToken();
+    try {
+      await fetch(`${API_BASE}/admin/abstracts/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch (e) {
+      console.warn('Delete abstract fallback to local storage');
+    }
+
+    const abstracts = getLocalData<any[]>(STORAGE_KEYS.ABSTRACTS, []);
+    const filtered = abstracts.filter(a => a.id !== id && a.submissionId !== id);
+    setLocalData(STORAGE_KEYS.ABSTRACTS, filtered);
+    return { success: true, message: 'Abstract deleted successfully.' };
   }
 };

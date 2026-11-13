@@ -15,7 +15,8 @@ import {
   ShieldCheck,
   Eye,
   ArrowRight,
-  Mail
+  Mail,
+  Trash2
 } from 'lucide-react';
 import { api, API_BASE, SERVER_BASE } from '../../services/api';
 import { generateRegistrationReceiptPDF } from '../../services/receiptGenerator';
@@ -139,6 +140,34 @@ export const AdminPage: React.FC = () => {
       await loadData();
     } catch (err: any) {
       alert('Failed to update abstract: ' + err.message);
+    }
+  };
+
+  const handleDeleteRegistration = async (id: number | string, identifier: string) => {
+    if (!window.confirm(`Are you sure you want to permanently delete registration ${identifier}? This action cannot be undone.`)) {
+      return;
+    }
+    try {
+      await api.deleteRegistration(id);
+      setSelectedReg(null);
+      await loadData();
+      alert(`Registration ${identifier} was permanently deleted.`);
+    } catch (err: any) {
+      alert('Failed to delete registration: ' + err.message);
+    }
+  };
+
+  const handleDeleteAbstract = async (id: number | string, identifier: string) => {
+    if (!window.confirm(`Are you sure you want to permanently delete abstract ${identifier}? This action cannot be undone.`)) {
+      return;
+    }
+    try {
+      await api.deleteAbstract(id);
+      setSelectedAbs(null);
+      await loadData();
+      alert(`Abstract ${identifier} was permanently deleted.`);
+    } catch (err: any) {
+      alert('Failed to delete abstract: ' + err.message);
     }
   };
 
@@ -605,12 +634,24 @@ export const AdminPage: React.FC = () => {
                             </span>
                           </td>
                           <td className="py-3 px-4 text-right">
-                            <button
-                              onClick={() => setSelectedReg(reg)}
-                              className="px-2.5 py-1 rounded bg-[#EBF1FA] text-[#003399] hover:bg-[#D49B00] hover:text-[#001A4D] font-bold text-[11px] border border-[#D49B00] transition-colors cursor-pointer"
-                            >
-                              Review & Verify
-                            </button>
+                            <div className="flex items-center justify-end gap-1.5">
+                              <button
+                                onClick={() => setSelectedReg(reg)}
+                                className="px-2.5 py-1 rounded bg-[#EBF1FA] text-[#003399] hover:bg-[#D49B00] hover:text-[#001A4D] font-bold text-[11px] border border-[#D49B00] transition-colors cursor-pointer"
+                              >
+                                Review & Verify
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteRegistration(reg.id, `${reg.registrationId} (${reg.firstName} ${reg.lastName || ''})`);
+                                }}
+                                className="p-1 rounded hover:bg-red-50 text-red-500 hover:text-red-700 transition-colors cursor-pointer"
+                                title="Delete duplicate / test registration"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))
@@ -707,12 +748,21 @@ export const AdminPage: React.FC = () => {
                       {abs.status}
                     </span>
 
-                    <button
-                      onClick={() => setSelectedAbs(abs)}
-                      className="px-3 py-1.5 rounded bg-[#003399] text-white text-xs font-semibold hover:bg-[#002266] cursor-pointer"
-                    >
-                      Scientific Review
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setSelectedAbs(abs)}
+                        className="px-3 py-1.5 rounded bg-[#003399] text-white text-xs font-semibold hover:bg-[#002266] cursor-pointer"
+                      >
+                        Scientific Review
+                      </button>
+                      <button
+                        onClick={() => handleDeleteAbstract(abs.id, abs.submissionId)}
+                        className="p-1.5 rounded hover:bg-red-50 text-red-500 hover:text-red-700 transition-colors cursor-pointer"
+                        title="Delete duplicate / test abstract"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -885,6 +935,15 @@ export const AdminPage: React.FC = () => {
                   <span>Reject</span>
                 </button>
               )}
+
+              <button
+                onClick={() => handleDeleteRegistration(selectedReg.id, `${selectedReg.registrationId} (${selectedReg.firstName})`)}
+                className="py-2.5 px-3 rounded-lg border border-red-300 bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer ml-auto"
+                title="Permanently remove duplicate or test registration"
+              >
+                <Trash2 className="w-4 h-4 text-red-600" />
+                <span>Delete</span>
+              </button>
             </div>
           </div>
         </div>
@@ -965,6 +1024,15 @@ export const AdminPage: React.FC = () => {
                 className="px-4 py-2 rounded bg-red-600 text-white font-bold text-xs cursor-pointer"
               >
                 Reject Abstract
+              </button>
+
+              <button
+                onClick={() => handleDeleteAbstract(selectedAbs.id, selectedAbs.submissionId)}
+                className="px-3 py-2 rounded border border-red-300 bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs flex items-center gap-1.5 cursor-pointer ml-auto"
+                title="Permanently remove duplicate or test abstract"
+              >
+                <Trash2 className="w-3.5 h-3.5 text-red-600" />
+                <span>Delete</span>
               </button>
             </div>
           </div>

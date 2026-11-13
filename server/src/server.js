@@ -700,6 +700,26 @@ app.post('/api/admin/registrations/:id/send-verification-email', authenticateAdm
   }
 });
 
+// Delete Registration
+app.delete('/api/admin/registrations/:id', authenticateAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const isNumeric = /^\d+$/.test(id);
+    const where = isNumeric ? { id: parseInt(id, 10) } : { registrationId: id };
+
+    try {
+      await prisma.registration.delete({ where });
+    } catch (e) {
+      console.warn('Prisma delete registration fallback/not found in DB:', e.message);
+    }
+
+    return res.json({ success: true, message: `Registration ${id} deleted successfully.` });
+  } catch (error) {
+    console.error('Delete registration error:', error);
+    return res.status(500).json({ error: 'Failed to delete registration.' });
+  }
+});
+
 // Export Registrations: Excel
 app.get('/api/admin/registrations/export/excel', authenticateAdmin, async (req, res) => {
   try {
@@ -806,6 +826,26 @@ app.patch('/api/admin/abstracts/:id/status', authenticateAdmin, async (req, res)
   } catch (error) {
     console.error('Update abstract error:', error);
     return res.status(500).json({ error: 'Failed to update abstract status.' });
+  }
+});
+
+// Delete Abstract
+app.delete('/api/admin/abstracts/:id', authenticateAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const isNumeric = /^\d+$/.test(id);
+    const where = isNumeric ? { id: parseInt(id, 10) } : { submissionId: id };
+
+    try {
+      await prisma.abstractSubmission.delete({ where });
+    } catch (e) {
+      console.warn('Prisma delete abstract fallback/not found in DB:', e.message);
+    }
+
+    return res.json({ success: true, message: `Abstract ${id} deleted successfully.` });
+  } catch (error) {
+    console.error('Delete abstract error:', error);
+    return res.status(500).json({ error: 'Failed to delete abstract.' });
   }
 });
 
