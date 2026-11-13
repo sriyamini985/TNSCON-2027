@@ -332,51 +332,33 @@ export const RegistrationPage: React.FC = () => {
                       ))}
                     </div>
 
-                    {/* 2. Medical Speciality Selection (Gating Workshop) */}
-                    <div className="pt-2">
-                      <label className="block text-xs uppercase font-bold tracking-wider text-[#182230] mb-1.5">
-                        2. Medical Speciality *
-                      </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {[
-                          {
-                            id: 'Neurosurgery',
-                            title: 'Neurosurgery',
-                            tag: 'Workshop Eligible',
-                            desc: 'Surgical corridors, cranial & spine masterclasses, neuro-trauma'
-                          },
-                          {
-                            id: 'Neurology',
-                            title: 'Neurology',
-                            tag: 'Plenary Masterclasses',
-                            desc: 'Clinical stroke plenaries, EEG/EMG masterclasses, neuromuscular'
-                          }
-                        ].map((spec) => (
-                          <div
-                            key={spec.id}
-                            onClick={() => setFormData(prev => ({
-                              ...prev,
-                              speciality: spec.id,
-                              includeWorkshop: spec.id === 'Neurology' ? false : prev.includeWorkshop
-                            }))}
-                            className={`p-3.5 rounded-xl border-2 cursor-pointer transition-all ${
-                              formData.speciality === spec.id
-                                ? 'border-[#003399] bg-[#EBF1FA] ring-1 ring-[#003399]'
-                                : 'border-[#E5DCCB] hover:border-[#003399] bg-[#FFFDF9]'
-                            }`}
-                          >
-                            <div className="flex items-center justify-between">
-                              <span className="text-sm font-bold text-[#182230]">{spec.title}</span>
-                              <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-                                spec.id === 'Neurosurgery' ? 'bg-[#D49B00]/15 text-[#8B6508]' : 'bg-[#003399]/10 text-[#003399]'
-                              }`}>
-                                {spec.tag}
-                              </span>
-                            </div>
-                            <p className="text-[11px] text-[#556070] mt-1">{spec.desc}</p>
-                          </div>
-                        ))}
+                    {/* 2. Speciality Drop-Down (Official Organizing Directive) */}
+                    <div className="pt-2 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <label htmlFor="specialitySelect" className="block text-xs uppercase font-bold tracking-wider text-[#182230]">
+                          Speciality: *
+                        </label>
+                        <span className="text-[10.5px] font-semibold text-[#003399] bg-[#EBF1FA] px-2.5 py-0.5 rounded-full border border-[#003399]/20">
+                          {formData.speciality === 'Neurosurgery' ? 'Eligible for Handson Neurosurgery' : 'Dedicated Neurology Plenaries'}
+                        </span>
                       </div>
+                      <select
+                        id="specialitySelect"
+                        name="speciality"
+                        value={formData.speciality}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setFormData(prev => ({
+                            ...prev,
+                            speciality: val,
+                            includeWorkshop: val === 'Neurology' ? false : prev.includeWorkshop
+                          }));
+                        }}
+                        className="w-full p-3.5 rounded-xl border-2 border-[#003399]/30 focus:border-[#003399] bg-[#FFFDF9] text-sm font-bold text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 transition-all cursor-pointer shadow-xs"
+                      >
+                        <option value="Neurosurgery">Neurosurgery</option>
+                        <option value="Neurology">Neurology</option>
+                      </select>
                     </div>
 
                     {/* Pre-Conference Workshop Option (Available exclusively for Neurosurgery) */}
@@ -399,10 +381,10 @@ export const RegistrationPage: React.FC = () => {
                           />
                           <div>
                             <label htmlFor="workshopAddon" className="block text-xs font-bold text-[#182230] cursor-pointer">
-                              Add Pre-Conference Hands-on Neurosurgery Workshop (+ ₹6,000 + 18% GST)
+                              Handson Neurosurgery (+ ₹6,000 + 18% GST)
                             </label>
                             <span className="block text-[11px] text-[#556070] mt-0.5">
-                              Hands-on masterclasses in surgical corridors, neuro-navigation & cranial/spinal access (12 March 2027).
+                              Pre-Conference masterclass in surgical corridors, neuro-navigation & cranial/spinal access (12 March 2027).
                             </span>
                           </div>
                         </div>
