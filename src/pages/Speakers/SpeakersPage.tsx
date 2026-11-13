@@ -13,6 +13,7 @@ export const SpeakersPage: React.FC = () => {
       institution: 'Telangana Neurosciences Society',
       session: 'Presidential Address & Masterclass in Skull Base Surgery',
       initials: 'RN',
+      image: '/assets/images/committee/dr_rts_naik.png',
       isConfirmed: true
     },
     {
@@ -23,7 +24,7 @@ export const SpeakersPage: React.FC = () => {
       institution: 'Telangana Neurosciences Society',
       session: 'Acute Stroke Interventions & Telestroke Networks in Telangana',
       initials: 'CT',
-      image: (leadershipData.organizingSecretary as any).image,
+      image: '/assets/images/committee/dr_chandrakanth_tapsi.jpg',
       isConfirmed: true
     },
     {
@@ -34,16 +35,18 @@ export const SpeakersPage: React.FC = () => {
       institution: 'Telangana Neurosciences Society',
       session: 'Minimally Invasive Spinal Stabilization & Deformity Correction',
       initials: 'PK',
+      image: '/assets/images/committee/dr_n_pratap_kumar.jpg',
       isConfirmed: true
     },
     {
       name: 'Dr. Subbaiah Choudary',
-      role: 'Scientific Committee — Neurology',
+      role: 'Scientific Chair — Neurology',
       specialty: 'Neurology',
-      designation: 'Consultant Neurophysician',
+      designation: 'Senior Consultant Neurologist',
       institution: 'Telangana Neurosciences Society',
       session: 'Advances in Monoclonal Antibodies for Refractory Neuroimmunology',
       initials: 'SC',
+      image: '/assets/images/committee/dr_g_subbaiah_choudary.png',
       isConfirmed: true
     }
   ];

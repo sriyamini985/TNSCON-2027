@@ -207,8 +207,14 @@ export const CommitteePage: React.FC = () => {
                   className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex flex-col justify-between"
                 >
                   <div className="space-y-2">
-                    <div className="w-10 h-10 rounded-lg bg-[#FAF5ED] border border-[#E5DCCB] text-[#003399] flex items-center justify-center font-serif font-bold text-sm">
-                      {member.name.split(' ').slice(-1)[0][0]}
+                    <div className="w-14 h-14 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm flex items-center justify-center bg-[#FAF5ED]">
+                      {(member as any).photo ? (
+                        <img src={(member as any).photo} alt={member.name} className="w-full h-full object-cover object-top" />
+                      ) : (
+                        <span className="font-serif font-bold text-sm text-[#003399]">
+                          {member.name.split(' ').slice(-1)[0][0]}
+                        </span>
+                      )}
                     </div>
                     <span className="text-[10px] uppercase font-bold tracking-wider text-[#D49B00] block">
                       {member.designation}
@@ -246,8 +252,14 @@ export const CommitteePage: React.FC = () => {
                   key={adv.name}
                   className="bg-[#FFFDF9] p-6 rounded-2xl border border-[#E5DCCB] shadow-xs hover:border-[#003399] transition-all flex items-start gap-4"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#001A4D] text-[#FFCC00] flex items-center justify-center font-serif font-bold text-lg flex-shrink-0">
-                    {adv.name.split(' ').slice(-1)[0][0]}
+                  <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-[#D49B00] shadow-sm flex-shrink-0 flex items-center justify-center bg-[#001A4D]">
+                    {(adv as any).photo ? (
+                      <img src={(adv as any).photo} alt={adv.name} className="w-full h-full object-cover object-top" />
+                    ) : (
+                      <span className="font-serif font-bold text-lg text-[#FFCC00]">
+                        {adv.name.split(' ').slice(-1)[0][0]}
+                      </span>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <span className="text-[10px] uppercase tracking-wider font-bold text-[#D49B00] px-2 py-0.5 rounded bg-[#D49B00]/10">
@@ -287,6 +299,15 @@ export const CommitteePage: React.FC = () => {
                   className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex flex-col justify-between"
                 >
                   <div className="space-y-1.5">
+                    <div className="w-12 h-12 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm mb-2 flex items-center justify-center bg-[#FAF5ED]">
+                      {(ob as any).photo ? (
+                        <img src={(ob as any).photo} alt={ob.name} className="w-full h-full object-cover object-top" />
+                      ) : (
+                        <span className="font-serif font-bold text-sm text-[#003399]">
+                          {ob.name.split(' ').slice(-1)[0][0]}
+                        </span>
+                      )}
+                    </div>
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#003399] px-2 py-0.5 rounded bg-[#FAF5ED] border border-[#E5DCCB] inline-block">
                       {ob.role}
                     </span>
@@ -323,8 +344,12 @@ export const CommitteePage: React.FC = () => {
                   key={exec.name}
                   className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex items-center gap-3"
                 >
-                  <div className="w-9 h-9 rounded-full bg-[#FAF5ED] border border-[#E5DCCB] text-[#003399] flex items-center justify-center font-bold text-xs flex-shrink-0">
-                    ✓
+                  <div className="w-10 h-10 rounded-full overflow-hidden border border-[#D49B00] shadow-2xs text-[#003399] flex items-center justify-center font-bold text-xs flex-shrink-0 bg-[#FAF5ED]">
+                    {(exec as any).photo ? (
+                      <img src={(exec as any).photo} alt={exec.name} className="w-full h-full object-cover object-top" />
+                    ) : (
+                      <span>✓</span>
+                    )}
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-serif font-bold text-[#182230] text-sm truncate">

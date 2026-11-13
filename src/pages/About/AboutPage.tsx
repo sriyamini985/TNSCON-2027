@@ -80,16 +80,23 @@ export const AboutPage: React.FC = () => {
             </div>
 
             <div className="pt-8 border-t border-[#E5DCCB] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
-                <h4 className="font-serif text-base font-bold text-[#003399]">
-                  Dr. R T S Naik
-                </h4>
-                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
-                  Organizing Chairman
-                </p>
-                <p className="text-xs text-[#556070] mt-0.5">
-                  Senior Consultant Neurosurgeon
-                </p>
+              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70 flex items-start gap-3">
+                <img
+                  src="/assets/images/committee/dr_rts_naik.png"
+                  alt="Dr. R T S Naik"
+                  className="w-12 h-12 rounded-full object-cover object-top border-2 border-[#D49B00] shadow-sm flex-shrink-0"
+                />
+                <div>
+                  <h4 className="font-serif text-base font-bold text-[#003399]">
+                    Dr. R T S Naik
+                  </h4>
+                  <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-0.5">
+                    Organizing Chairman
+                  </p>
+                  <p className="text-xs text-[#556070] mt-0.5">
+                    Senior Consultant Neurosurgeon
+                  </p>
+                </div>
               </div>
 
               <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70 flex items-start gap-3">

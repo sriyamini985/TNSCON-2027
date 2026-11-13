@@ -269,7 +269,8 @@ export const siteContent = {
         specialty: 'Neurosurgery',
         department: 'Department of Neurosurgery',
         bio: 'Senior academic neurosurgeon with decades of operative leadership in complex skull base surgery, microvascular corridors, and postgraduate mentorship across Telangana.',
-        photoPlaceholder: true,
+        photo: '/assets/images/committee/dr_rts_naik.png',
+        photoPlaceholder: false,
       },
       {
         name: 'Dr. Chandrakanth Tapsi',
@@ -280,7 +281,7 @@ export const siteContent = {
         specialty: 'Neurology',
         department: 'Department of Neurology',
         bio: 'Consultant neurologist leading clinical neurology protocols, acute stroke pathways, and organizational excellence for the 11th Annual State Conference.',
-        photo: '/assets/images/dr_chandrakanth_tapsi.jpg',
+        photo: '/assets/images/committee/dr_chandrakanth_tapsi.jpg',
         photoPlaceholder: false,
       },
       {
@@ -303,7 +304,8 @@ export const siteContent = {
         specialty: 'Neurosurgery',
         department: 'Department of Neurosurgery',
         bio: 'Leading the neurosurgical scientific curriculum, operative masterclass selection, microvascular skull base papers, and peer review for TNSCON 2027.',
-        photoPlaceholder: true,
+        photo: '/assets/images/committee/dr_tv_ramakrishna_murthy.png',
+        photoPlaceholder: false,
       },
       {
         name: 'Dr. G. Subbaiah Choudary',
@@ -314,22 +316,23 @@ export const siteContent = {
         specialty: 'Neurology',
         department: 'Department of Neurology',
         bio: 'Overseeing neurology didactic symposia, stroke intervention masterclasses, epilepsy trajectory evaluations, and award paper colloquia.',
-        photoPlaceholder: true,
+        photo: '/assets/images/committee/dr_g_subbaiah_choudary.png',
+        photoPlaceholder: false,
       },
     ],
 
     // Patrons & Founder Members (from official letterhead)
     founderMembers: [
       { name: 'Prof. D. Raja Reddy', designation: 'Founder Member', specialty: 'Neurosurgery' },
-      { name: 'Prof. K. Satyanarayana', designation: 'Founder Member', specialty: 'Neurosciences' },
-      { name: 'Prof. P. Dhairyawan', designation: 'Founder Member', specialty: 'Neurology' },
-      { name: 'Prof. P. Govardhan Reddy', designation: 'Founder Member', specialty: 'Neurosurgery' },
-      { name: 'Prof. G. Prakash Rao', designation: 'Founder Member', specialty: 'Neurosciences' },
+      { name: 'Prof. K. Satyanarayana', designation: 'Founder Member', specialty: 'Neurosciences', photo: '/assets/images/committee/dr_g_sathyanarayana.jpg' },
+      { name: 'Prof. P. Dhairyawan', designation: 'Founder Member', specialty: 'Neurology', photo: '/assets/images/committee/prof_p_dhairyawan.jpg' },
+      { name: 'Prof. P. Govardhan Reddy', designation: 'Founder Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/prof_p_govardhan_reddy.png' },
+      { name: 'Prof. G. Prakash Rao', designation: 'Founder Member', specialty: 'Neurosciences', photo: '/assets/images/committee/dr_g_prakash_rao.png' },
     ],
 
     // Advisors & Immediate Past Leadership (from official letterhead)
     advisors: [
-      { name: 'Dr. G. Satyanarayana', designation: 'Immediate Past President', specialty: 'Neurology' },
+      { name: 'Dr. G. Satyanarayana', designation: 'Immediate Past President', specialty: 'Neurology', photo: '/assets/images/committee/dr_g_sathyanarayana.jpg' },
       { name: 'Dr. M.K. Singh', designation: 'Advisor', specialty: 'Neurosciences' },
       { name: 'Dr. Alok Ranjan', designation: 'Advisor', specialty: 'Neurosurgery' },
     ],
@@ -337,9 +340,9 @@ export const siteContent = {
     // Executive Office Bearers (from official letterhead)
     officeBearers: [
       { name: 'Dr. Srikanth Jawalkar', role: 'Vice President', specialty: 'Neurosurgery' },
-      { name: 'Dr. C. Rajesh Reddy', role: 'Joint Secretary', specialty: 'Neurology' },
-      { name: 'Prof. M. Vijaya Saradhi', role: 'Ex-Officio Member', specialty: 'Neurosurgery' },
-      { name: 'Dr. T.V. Ramakrishna Murthy', role: 'Ex-Officio Member', specialty: 'Neurosurgery' },
+      { name: 'Dr. C. Rajesh Reddy', role: 'Joint Secretary', specialty: 'Neurology', photo: '/assets/images/committee/dr_c_rajesh_reddy.jpg' },
+      { name: 'Prof. M. Vijaya Saradhi', role: 'Ex-Officio Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_vijaya_saradhi.png' },
+      { name: 'Dr. T.V. Ramakrishna Murthy', role: 'Ex-Officio Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_tv_ramakrishna_murthy.png' },
       { name: 'Prof. G. Sree Ranga Lakshmi', role: 'Ex-Officio Member', specialty: 'Neurology' },
     ],
 
@@ -347,7 +350,7 @@ export const siteContent = {
     executiveMembers: [
       { name: 'Dr. N. Veena', designation: 'Executive Member', specialty: 'Neurology' },
       { name: 'Dr. G. Venugopal', designation: 'Executive Member', specialty: 'Neurosurgery' },
-      { name: 'Dr. Sanjay Thumati', designation: 'Executive Member', specialty: 'Neurosurgery' },
+      { name: 'Dr. Sanjay Thumati', designation: 'Executive Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_t_sanjay.png' },
       { name: 'Dr. P.V.K. Kishore', designation: 'Executive Member', specialty: 'Neurology' },
       { name: 'Dr. Dasari Srinivas', designation: 'Executive Member', specialty: 'Neurosurgery' },
       { name: 'Dr. P. Ranjith', designation: 'Executive Member', specialty: 'Neurology' },
