@@ -4,7 +4,7 @@ import { siteContent } from '../../data/siteContent';
 export const StatsStrip: React.FC = () => {
   return (
     <section className="bg-[#FAF5ED] py-12 lg:py-16 border-b border-[#E5DCCB]">
-      <div className="max-w-[1240px] mx-auto px-6">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         
         {/* Four Stat Cards on an Ivory-tinted Row with Elegant Dividers */}
         <div className="bg-[#FFFDF9] rounded-2xl border border-[#E5DCCB] shadow-[0_4px_24px_-4px_rgba(0,51,153,0.04)] divide-y md:divide-y-0 md:divide-x divide-[#E5DCCB] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">

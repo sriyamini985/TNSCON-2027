@@ -26,7 +26,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCountdown }) => {
         <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#FAF5ED] via-[#FAF5ED]/60 to-transparent" />
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-6 w-full relative z-10">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 w-full relative z-10">
         <div className="max-w-2xl lg:max-w-3xl space-y-6 text-left">
           
           {/* Top Pill Badges Row */}

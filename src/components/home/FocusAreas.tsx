@@ -13,7 +13,7 @@ const iconMap = {
 export const FocusAreas: React.FC = () => {
   return (
     <section className="bg-[#F2EAE0] py-20 lg:py-28 border-b border-[#E5DCCB]">
-      <div className="max-w-[1240px] mx-auto px-6 text-left">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 text-left">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">

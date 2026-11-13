@@ -8,8 +8,8 @@ export const AboutPage: React.FC = () => {
     <div className="min-h-screen bg-transparent text-[#182230]">
       
       {/* Page Header Banner: Official Logo Deep Blue */}
-      <section className="bg-[#001A4D] text-white py-16 border-b border-[#003399]/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#001A4D] text-white py-14 sm:py-16 border-b border-[#003399]/40">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           <div className="max-w-3xl space-y-3 text-left">
             <span className="text-xs uppercase tracking-widest text-[#FFCC00] font-bold px-3 py-1 rounded-full bg-white/10 border border-[#D49B00]/40">
               About the Society & Conference
@@ -25,86 +25,85 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* Main Content Area */}
-      <section className="py-16 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <section className="py-12 sm:py-16 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
           
           {/* Official Society Banner */}
           <div className="rounded-2xl overflow-hidden border border-[#E5DCCB] shadow-sm bg-[#FFFDF9]">
             <img
               src="/assets/images/districts/Hyderabad.png"
               alt="Telangana Neurosciences Society (TNS) Official Banner"
-              className="w-full h-auto object-cover max-h-[240px]"
+              className="w-full h-auto object-cover max-h-[260px]"
             />
           </div>
 
           {/* Welcome Message Section */}
-          <div className="bg-[#FFFDF9] rounded-2xl p-8 sm:p-12 border border-[#E5DCCB] shadow-xs">
-            <div className="max-w-3xl space-y-6">
-              <span className="text-xs uppercase tracking-widest font-bold text-[#003399] px-3 py-1 rounded-full bg-[#EBF1FA] border border-[#003399]/20">
+          <div className="bg-[#FFFDF9] rounded-2xl p-6 sm:p-10 lg:p-12 border border-[#E5DCCB] shadow-xs space-y-8">
+            <div className="space-y-6">
+              <span className="inline-flex items-center text-xs uppercase tracking-widest font-bold text-[#003399] px-3.5 py-1 rounded-full bg-[#EBF1FA] border border-[#003399]/20">
                 Official Welcome Message
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl text-[#003399] font-bold">
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#003399] font-bold">
                 {welcomeMessage.salutation}
               </h2>
 
-              <div className="space-y-4 text-[#182230] text-base leading-relaxed">
+              <div className="space-y-4 text-[#182230] text-sm sm:text-base leading-relaxed max-w-4xl">
                 {welcomeMessage.body.map((p, i) => (
-                  <p key={i} className={i === 0 ? 'text-lg text-[#003399] font-medium' : ''}>
+                  <p key={i} className={i === 0 ? 'text-base sm:text-lg text-[#003399] font-medium leading-relaxed' : ''}>
                     {p}
                   </p>
                 ))}
               </div>
+            </div>
 
-              <div className="pt-8 border-t border-[#E5DCCB] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div>
-                  <h4 className="font-serif text-base font-bold text-[#003399]">
-                    Dr. R T S Naik
-                  </h4>
-                  <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
-                    Organizing Chairman
-                  </p>
-                  <p className="text-xs text-[#556070] mt-0.5">
-                    Senior Consultant Neurosurgeon
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-serif text-base font-bold text-[#003399]">
-                    Dr. Chandrakanth Tapsi
-                  </h4>
-                  <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
-                    Organizing Secretary
-                  </p>
-                  <p className="text-xs text-[#556070] mt-0.5">
-                    Consultant Neurophysician
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-serif text-base font-bold text-[#003399]">
-                    Dr. G. Venu Gopal
-                  </h4>
-                  <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
-                    Joint Organizing Secretary
-                  </p>
-                  <p className="text-xs text-[#556070] mt-0.5">
-                    Consultant Neurospecialist
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-serif text-base font-bold text-[#003399]">
-                    Scientific Chairs
-                  </h4>
-                  <p className="text-xs font-semibold text-[#D49B00] uppercase tracking-wide">
-                    Neurosurgery & Neurology
-                  </p>
-                  <p className="text-xs text-[#556070] mt-0.5">
-                    Dr. T V Ramakrishna Murthy & Dr. G Subbaiah Choudary
-                  </p>
-                </div>
+            <div className="pt-8 border-t border-[#E5DCCB] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
+                <h4 className="font-serif text-base font-bold text-[#003399]">
+                  Dr. R T S Naik
+                </h4>
+                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
+                  Organizing Chairman
+                </p>
+                <p className="text-xs text-[#556070] mt-0.5">
+                  Senior Consultant Neurosurgeon
+                </p>
               </div>
 
+              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
+                <h4 className="font-serif text-base font-bold text-[#003399]">
+                  Dr. Chandrakanth Tapsi
+                </h4>
+                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
+                  Organizing Secretary
+                </p>
+                <p className="text-xs text-[#556070] mt-0.5">
+                  Consultant Neurophysician
+                </p>
+              </div>
+
+              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
+                <h4 className="font-serif text-base font-bold text-[#003399]">
+                  Dr. G. Venu Gopal
+                </h4>
+                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
+                  Joint Organizing Secretary
+                </p>
+                <p className="text-xs text-[#556070] mt-0.5">
+                  Consultant Neurospecialist
+                </p>
+              </div>
+
+              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
+                <h4 className="font-serif text-base font-bold text-[#003399]">
+                  Scientific Chairs
+                </h4>
+                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
+                  Neurosurgery & Neurology
+                </p>
+                <p className="text-xs text-[#556070] mt-0.5">
+                  Dr. T V Ramakrishna Murthy & Dr. G Subbaiah Choudary
+                </p>
+              </div>
             </div>
           </div>
 
@@ -172,7 +171,7 @@ export const AboutPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               {[
                 { name: 'Hyderabad', file: 'Hyderabad.png', tag: 'State Capital & Conference Hub' },
                 { name: 'Warangal', file: 'Warangal.png', tag: 'Kakatiya Medical Region' },
@@ -214,7 +213,7 @@ export const AboutPage: React.FC = () => {
           </div>
 
           {/* Quick Stats & Info */}
-          <div className="bg-[#FFFDF9] rounded-2xl p-8 border border-[#E5DCCB] flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
+          <div className="bg-[#FFFDF9] rounded-2xl p-6 sm:p-8 border border-[#E5DCCB] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
             <div>
               <h3 className="font-serif text-2xl font-bold text-[#003399]">
                 Join the Conclave in Hyderabad

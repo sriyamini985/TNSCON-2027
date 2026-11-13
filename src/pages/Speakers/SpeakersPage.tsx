@@ -95,8 +95,8 @@ export const SpeakersPage: React.FC = () => {
     <div className="min-h-screen bg-transparent text-[#182230]">
       
       {/* Banner */}
-      <section className="bg-[#001A4D] text-white py-14 border-b border-[#003399]/40 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#001A4D] text-white py-12 sm:py-14 border-b border-[#003399]/40 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs uppercase tracking-widest text-[#FFCC00] font-bold px-3 py-1 rounded-full bg-white/10 border border-[#D49B00]/40">
               Distinguished Faculty
@@ -112,7 +112,7 @@ export const SpeakersPage: React.FC = () => {
       </section>
 
       {/* Advisory Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-5 relative z-10 text-left">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-5 relative z-10 text-left">
         <div className="bg-[#FFFDF9] border border-[#E5DCCB] rounded-xl p-4 flex items-start gap-3 text-xs text-[#182230] shadow-xs">
           <AlertCircle className="w-5 h-5 text-[#003399] flex-shrink-0 mt-0.5" />
           <div>
@@ -123,8 +123,8 @@ export const SpeakersPage: React.FC = () => {
       </div>
 
       {/* Main Grid */}
-      <section className="py-12 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-10 sm:py-12 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-12">
           
           {/* Confirmed Leadership Section */}
           <div className="space-y-6">
@@ -132,7 +132,7 @@ export const SpeakersPage: React.FC = () => {
               Confirmed Conference Leadership & Scientific Committee
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {confirmedLeaders.map((leader) => (
                 <div
                   key={leader.name}
@@ -183,7 +183,7 @@ export const SpeakersPage: React.FC = () => {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {placeholderFaculty.map((fac) => (
                 <div
                   key={fac.name}

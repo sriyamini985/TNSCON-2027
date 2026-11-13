@@ -162,12 +162,12 @@ export const RegistrationPage: React.FC = () => {
     <div className="min-h-screen bg-transparent text-[#182230]">
       
       {/* Banner */}
-      <section className="bg-[#001A4D] border-b border-[#003399]/40 text-white py-16 text-left relative overflow-hidden">
+      <section className="bg-[#001A4D] border-b border-[#003399]/40 text-white py-14 sm:py-16 text-left relative overflow-hidden">
         <div 
           className="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-[#D49B00]/15 blur-3xl pointer-events-none" 
           aria-hidden="true" 
         />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs uppercase tracking-widest text-[#FFCC00] font-bold px-3 py-1 rounded-full bg-white/10 border border-white/15">
               Official Conference Registration
@@ -183,14 +183,14 @@ export const RegistrationPage: React.FC = () => {
       </section>
 
       {/* Main Container */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-10 sm:py-12">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           
           {/* Top Tabs */}
-          <div className="flex border-b border-[#E5DCCB] mb-8">
+          <div className="flex overflow-x-auto no-scrollbar border-b border-[#E5DCCB] mb-8 gap-1 whitespace-nowrap">
             <button
               onClick={() => setActiveTab('register')}
-              className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+              className={`py-3 px-4 sm:px-6 font-bold text-xs sm:text-sm border-b-2 cursor-pointer transition-colors whitespace-nowrap ${
                 activeTab === 'register'
                   ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
                   : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -200,7 +200,7 @@ export const RegistrationPage: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('fees')}
-              className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+              className={`py-3 px-4 sm:px-6 font-bold text-xs sm:text-sm border-b-2 cursor-pointer transition-colors whitespace-nowrap ${
                 activeTab === 'fees'
                   ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
                   : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -210,7 +210,7 @@ export const RegistrationPage: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('lookup')}
-              className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+              className={`py-3 px-4 sm:px-6 font-bold text-xs sm:text-sm border-b-2 cursor-pointer transition-colors whitespace-nowrap ${
                 activeTab === 'lookup'
                   ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
                   : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -373,7 +373,7 @@ export const RegistrationPage: React.FC = () => {
                           name="title"
                           value={formData.title}
                           onChange={handleInputChange}
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         >
                           <option>Dr.</option>
                           <option>Prof.</option>
@@ -391,7 +391,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.firstName}
                           onChange={handleInputChange}
                           placeholder="e.g. Ramesh"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
@@ -405,7 +405,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.lastName}
                           onChange={handleInputChange}
                           placeholder="e.g. Rao"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -415,7 +415,7 @@ export const RegistrationPage: React.FC = () => {
                           name="gender"
                           value={formData.gender}
                           onChange={handleInputChange}
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         >
                           <option>Male</option>
                           <option>Female</option>
@@ -433,7 +433,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.designation}
                           onChange={handleInputChange}
                           placeholder="e.g. Consultant Neurosurgeon / Senior Resident"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -445,7 +445,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.medicalCouncilNo}
                           onChange={handleInputChange}
                           placeholder="e.g. TSMC-54321"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
@@ -459,7 +459,7 @@ export const RegistrationPage: React.FC = () => {
                         value={formData.hospital}
                         onChange={handleInputChange}
                         placeholder="e.g. Nizam's Institute of Medical Sciences (NIMS), Hyderabad"
-                        className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                        className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                       />
                     </div>
                   </div>
@@ -480,7 +480,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.mobile}
                           onChange={handleInputChange}
                           placeholder="9849012345"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -493,7 +493,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           placeholder="doctor@hospital.org"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
@@ -506,7 +506,7 @@ export const RegistrationPage: React.FC = () => {
                           name="city"
                           value={formData.city}
                           onChange={handleInputChange}
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -517,7 +517,7 @@ export const RegistrationPage: React.FC = () => {
                           name="state"
                           value={formData.state}
                           onChange={handleInputChange}
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -529,7 +529,7 @@ export const RegistrationPage: React.FC = () => {
                           value={formData.pinCode}
                           onChange={handleInputChange}
                           placeholder="500016"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
@@ -626,7 +626,7 @@ export const RegistrationPage: React.FC = () => {
                         value={formData.transactionId}
                         onChange={handleInputChange}
                         placeholder="e.g. UTR1234567890 or UPI Ref ID"
-                        className="w-full p-3 rounded-lg border border-[#E5DCCB] text-xs font-manrope font-semibold focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                        className="w-full p-3 rounded-lg border border-[#E5DCCB] text-xs font-manrope font-semibold focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] bg-[#FAF5ED] text-[#182230] transition-all"
                       />
                     </div>
 
@@ -949,7 +949,7 @@ export const RegistrationPage: React.FC = () => {
                   value={lookupQuery}
                   onChange={(e) => setLookupQuery(e.target.value)}
                   placeholder="Enter Registration ID, Email, or Mobile..."
-                  className="flex-1 p-3 rounded-lg border border-[#E5DCCB] text-xs focus:outline-none focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                  className="flex-1 p-3 rounded-lg border border-[#E5DCCB] text-xs focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] bg-[#FAF5ED] text-[#182230] transition-all"
                 />
                 <button
                   type="submit"

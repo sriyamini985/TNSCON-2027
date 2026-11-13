@@ -299,8 +299,8 @@ export const AdminPage: React.FC = () => {
     <div className="min-h-screen bg-[#FAF5ED]">
       
       {/* Top Admin Header */}
-      <div className="bg-[#001A4D] text-white border-b-2 border-[#D49B00] px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="bg-[#001A4D] text-white border-b-2 border-[#D49B00] px-4 sm:px-6 py-4">
+        <div className="max-w-[1240px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="bg-[#FFFDF9] px-2.5 py-1 rounded-md shadow-xs flex items-center justify-center">
               <img
@@ -319,7 +319,7 @@ export const AdminPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <Link
               to="/abstract-viewer"
               className="flex items-center gap-1.5 text-xs text-[#FAF5ED] hover:text-[#FFCC00] px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 transition-colors"
@@ -346,8 +346,8 @@ export const AdminPage: React.FC = () => {
       </div>
 
       {/* Admin Navigation Bar */}
-      <div className="bg-[#FFFDF9] border-b border-[#E5DCCB] px-6">
-        <div className="max-w-7xl mx-auto flex items-center gap-6">
+      <div className="bg-[#FFFDF9] border-b border-[#E5DCCB] px-4 sm:px-6">
+        <div className="max-w-[1240px] mx-auto flex items-center gap-4 sm:gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
           {[
             { id: 'overview', label: 'Executive Overview', icon: Users },
             { id: 'registrations', label: `Registrations (${totalRegs})`, icon: DollarSign },
@@ -358,7 +358,7 @@ export const AdminPage: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`py-3.5 px-2 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer ${
+                className={`py-3.5 px-2 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition-colors cursor-pointer whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'border-[#003399] text-[#003399]'
                     : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -373,7 +373,7 @@ export const AdminPage: React.FC = () => {
       </div>
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 py-8 space-y-8">
         
         {/* TAB 1: OVERVIEW METRICS */}
         {activeTab === 'overview' && (

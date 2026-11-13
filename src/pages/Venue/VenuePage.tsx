@@ -75,8 +75,8 @@ export const VenuePage: React.FC = () => {
     <div className="min-h-screen bg-transparent text-[#182230]">
       
       {/* Banner */}
-      <section className="bg-[#001A4D] text-white py-14 border-b border-[#003399]/40 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#001A4D] text-white py-12 sm:py-14 border-b border-[#003399]/40 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs uppercase tracking-widest text-[#FFCC00] font-bold px-3 py-1 rounded-full bg-white/10 border border-[#D49B00]/40">
               Conference Destination
@@ -92,8 +92,8 @@ export const VenuePage: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-12 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <section className="py-10 sm:py-12 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-12 sm:space-y-16">
           
           {/* Venue Profile Overview */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">

@@ -38,7 +38,7 @@ export const CommitteePage: React.FC = () => {
           aria-hidden="true" 
         />
 
-        <div className="max-w-[1240px] mx-auto px-6 relative z-10">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-3xl space-y-4">
             
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold text-[#FFCC00] backdrop-blur-xs">
@@ -68,7 +68,7 @@ export const CommitteePage: React.FC = () => {
       </section>
 
       {/* Main Content Area */}
-      <main className="max-w-[1240px] mx-auto px-6 py-14 lg:py-20 space-y-20">
+      <main className="max-w-[1240px] mx-auto px-4 sm:px-6 py-12 lg:py-20 space-y-16 lg:space-y-20">
 
         {/* ========================================================= */}
         {/* 1. STARTING 4 ORGANIZING COMMITTEE MEMBERS WITH PHOTO HOLDER */}

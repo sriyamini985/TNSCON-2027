@@ -152,8 +152,8 @@ export const AbstractSubmissionPage: React.FC = () => {
     <div className="min-h-screen bg-transparent text-[#182230]">
       
       {/* Banner */}
-      <section className="bg-[#001A4D] border-b border-[#003399]/40 text-white py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#001A4D] border-b border-[#003399]/40 text-white py-12 sm:py-14">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           <div className="max-w-3xl space-y-3 text-left">
             <span className="text-xs uppercase tracking-widest text-[#FFCC00] font-bold px-3 py-1 rounded-full bg-white/10 border border-[#D49B00]/40">
               Call For Papers & E-Posters
@@ -169,21 +169,21 @@ export const AbstractSubmissionPage: React.FC = () => {
       </section>
 
       {/* Discrepancy & Transparency Notice */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-5 relative z-10 space-y-3">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-5 relative z-10 space-y-3">
         <ClientAdvisoryNotice type="abstract" />
         <ClientAdvisoryNotice type="eposter" />
       </div>
 
       {/* Main Section */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-10 sm:py-12">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           
           {/* Navigation Tabs */}
-          <div className="flex flex-wrap items-center justify-between border-b border-[#E5DCCB] mb-8 gap-2">
-            <div className="flex flex-wrap items-center">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between border-b border-[#E5DCCB] mb-8 gap-4">
+            <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
               <button
                 onClick={() => setActiveTab('submit')}
-                className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+                className={`py-3 px-4 sm:px-6 font-bold text-xs sm:text-sm border-b-2 cursor-pointer transition-colors whitespace-nowrap ${
                   activeTab === 'submit'
                     ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
                     : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -193,7 +193,7 @@ export const AbstractSubmissionPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('guidelines')}
-                className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+                className={`py-3 px-4 sm:px-6 font-bold text-xs sm:text-sm border-b-2 cursor-pointer transition-colors whitespace-nowrap ${
                   activeTab === 'guidelines'
                     ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
                     : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -203,7 +203,7 @@ export const AbstractSubmissionPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('status')}
-                className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+                className={`py-3 px-4 sm:px-6 font-bold text-xs sm:text-sm border-b-2 cursor-pointer transition-colors whitespace-nowrap ${
                   activeTab === 'status'
                     ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
                     : 'border-transparent text-[#556070] hover:text-[#003399]'
@@ -215,7 +215,7 @@ export const AbstractSubmissionPage: React.FC = () => {
 
             <Link
               to="/abstract-viewer"
-              className="py-2.5 px-4 rounded-lg bg-[#FAF5ED] hover:bg-[#EBF1FA] border border-[#003399]/30 text-[#003399] font-bold text-xs flex items-center gap-1.5 transition-colors shadow-xs"
+              className="py-2.5 px-4 rounded-lg bg-[#FAF5ED] hover:bg-[#EBF1FA] border border-[#003399]/30 text-[#003399] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs self-start sm:self-auto"
             >
               <Eye className="w-3.5 h-3.5 text-[#003399]" />
               <span>Open Public Abstract Viewer →</span>
@@ -396,11 +396,11 @@ export const AbstractSubmissionPage: React.FC = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                       <div>
-                        <label className="block text-xs text-[#556070] mb-1">Title</label>
+                        <label className="block text-xs font-medium text-[#556070] mb-1">Title</label>
                         <select
                           value={authorTitle}
                           onChange={(e) => setAuthorTitle(e.target.value)}
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         >
                           <option>Dr.</option>
                           <option>Prof.</option>
@@ -410,65 +410,65 @@ export const AbstractSubmissionPage: React.FC = () => {
                       </div>
 
                       <div className="sm:col-span-3">
-                        <label className="block text-xs text-[#556070] mb-1">Full Name of Presenting Author *</label>
+                        <label className="block text-xs font-medium text-[#556070] mb-1">Full Name of Presenting Author *</label>
                         <input
                           type="text"
                           required
                           value={presentingAuthorName}
                           onChange={(e) => setPresentingAuthorName(e.target.value)}
                           placeholder="e.g. Ananya Sarma"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs text-[#556070] mb-1">Email Address *</label>
+                        <label className="block text-xs font-medium text-[#556070] mb-1">Email Address *</label>
                         <input
                           type="email"
                           required
                           value={presentingAuthorEmail}
                           onChange={(e) => setPresentingAuthorEmail(e.target.value)}
                           placeholder="presenter@hospital.org"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs text-[#556070] mb-1">Mobile / WhatsApp Number *</label>
+                        <label className="block text-xs font-medium text-[#556070] mb-1">Mobile / WhatsApp Number *</label>
                         <input
                           type="tel"
                           required
                           value={presentingAuthorPhone}
                           onChange={(e) => setPresentingAuthorPhone(e.target.value)}
                           placeholder="+91 98490 12345"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs text-[#556070] mb-1">Institution / Medical College / Hospital *</label>
+                        <label className="block text-xs font-medium text-[#556070] mb-1">Institution / Medical College / Hospital *</label>
                         <input
                           type="text"
                           required
                           value={presentingAuthorInstitution}
                           onChange={(e) => setPresentingAuthorInstitution(e.target.value)}
                           placeholder="e.g. Nizam's Institute of Medical Sciences, Hyderabad"
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs text-[#556070] mb-1">Co-Authors (comma-separated)</label>
+                        <label className="block text-xs font-medium text-[#556070] mb-1">Co-Authors (comma-separated)</label>
                         <input
                           type="text"
                           value={coAuthors}
                           onChange={(e) => setCoAuthors(e.target.value)}
                           placeholder="Dr. K. Rao, Dr. S. Naik, etc."
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
@@ -490,7 +490,7 @@ export const AbstractSubmissionPage: React.FC = () => {
 
                   {/* Structured Abstract Fields */}
                   <div className="space-y-4 pt-4 border-t border-[#E5DCCB]">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div>
                         <h3 className="text-sm font-bold text-[#003399] uppercase tracking-wider">
                           6. Structured Abstract Body
@@ -501,7 +501,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                       </div>
 
                       {/* Live Counter Badge */}
-                      <div className={`px-3 py-1.5 rounded-lg font-manrope font-bold text-xs border ${
+                      <div className={`self-start sm:self-auto px-3 py-1.5 rounded-lg font-manrope font-bold text-xs border ${
                         isWordLimitExceeded
                           ? 'bg-red-50 text-red-700 border-red-300 animate-pulse'
                           : wordCount > 270
@@ -521,7 +521,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                           value={introduction}
                           onChange={(e) => setIntroduction(e.target.value)}
                           placeholder="Purpose of the research, clinical background, and the aim of the study..."
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -533,7 +533,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                           value={methods}
                           onChange={(e) => setMethods(e.target.value)}
                           placeholder="Study design, patient cohort, inclusion criteria, statistical evaluation..."
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -545,7 +545,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                           value={results}
                           onChange={(e) => setResults(e.target.value)}
                           placeholder="Key clinical outcomes, quantitative data, complication rates..."
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
 
@@ -557,7 +557,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                           value={conclusion}
                           onChange={(e) => setConclusion(e.target.value)}
                           placeholder="Clinical significance, take-home recommendation..."
-                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                          className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                         />
                       </div>
                     </div>
@@ -778,7 +778,7 @@ export const AbstractSubmissionPage: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="e.g. ABS-001 or author@hospital.org"
-                  className="flex-1 p-3 rounded-lg border border-[#E5DCCB] text-xs focus:outline-none focus:border-[#003399] bg-[#FAF5ED] text-[#182230]"
+                  className="flex-1 p-3 rounded-lg border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 focus:border-[#003399] transition-all"
                 />
                 <button
                   type="submit"

@@ -5,7 +5,7 @@ import { siteContent, TimelineDateItem } from '../../data/siteContent';
 export const ImportantDates: React.FC = () => {
   return (
     <section className="bg-[#FAF5ED] py-20 lg:py-28 border-b border-[#E5DCCB]">
-      <div className="max-w-[1240px] mx-auto px-6 text-left">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 text-left">
         
         {/* Section Header */}
         <div className="max-w-2xl mb-14 space-y-3">

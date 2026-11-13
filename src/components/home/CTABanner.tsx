@@ -21,7 +21,7 @@ export const CTABanner: React.FC = () => {
         aria-hidden="true" 
       />
 
-      <div className="max-w-[1240px] mx-auto px-6 relative z-10 space-y-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 relative z-10 space-y-8">
         
         {/* Pill Tag */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold text-[#FFCC00] backdrop-blur-xs">

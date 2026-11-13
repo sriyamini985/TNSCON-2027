@@ -54,7 +54,7 @@ export const Navbar: React.FC = () => {
           : 'bg-[#FAF5ED] border-[#E5DCCB]'
       }`}
     >
-      <div className="max-w-[1240px] mx-auto px-6 h-[64px] lg:h-[76px] flex items-center justify-between gap-6">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 h-[64px] lg:h-[76px] flex items-center justify-between gap-4 sm:gap-6">
         
         {/* Left: Official Logo + Un-truncated Two-Line Wordmark */}
         <Link

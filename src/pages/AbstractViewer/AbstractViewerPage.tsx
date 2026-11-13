@@ -176,7 +176,7 @@ export const AbstractViewerPage: React.FC = () => {
     <div className="min-h-screen bg-[#FAF5ED]">
       {/* Top Header Bar */}
       <div className="bg-[#001A4D] text-white border-b-2 border-[#D49B00] px-4 sm:px-6 py-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-[1240px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="bg-[#FFFDF9] px-2.5 py-1 rounded-md shadow-xs flex items-center justify-center">
               <img
@@ -226,7 +226,7 @@ export const AbstractViewerPage: React.FC = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 py-8 space-y-8">
         
         {/* Banner with Metrics */}
         <div className="bg-[#FFFDF9] border border-[#E5DCCB] rounded-2xl p-6 shadow-sm">

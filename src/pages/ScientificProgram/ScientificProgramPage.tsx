@@ -19,8 +19,8 @@ export const ScientificProgramPage: React.FC = () => {
     <div className="min-h-screen bg-transparent text-[#182230]">
       
       {/* Banner */}
-      <section className="bg-[#001A4D] text-white py-14 border-b border-[#003399]/40 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-[#001A4D] text-white py-12 sm:py-14 border-b border-[#003399]/40 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
           <div className="max-w-3xl space-y-3">
             <span className="text-xs uppercase tracking-widest text-[#FFCC00] font-bold px-3 py-1 rounded-full bg-white/10 border border-[#D49B00]/40">
               Scientific Program Schedule
@@ -36,7 +36,7 @@ export const ScientificProgramPage: React.FC = () => {
       </section>
 
       {/* Advisory Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-5 relative z-10 text-left">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-5 relative z-10 text-left">
         <div className="bg-[#FFFDF9] border border-[#E5DCCB] rounded-xl p-4 flex items-start gap-3 text-xs text-[#182230] shadow-xs">
           <AlertCircle className="w-5 h-5 text-[#003399] flex-shrink-0 mt-0.5" />
           <div>
@@ -47,14 +47,14 @@ export const ScientificProgramPage: React.FC = () => {
       </div>
 
       {/* Schedule Interface */}
-      <section className="py-12 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="py-10 sm:py-12 text-left">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 space-y-8">
           
           {/* Day Selector & Category Filters */}
           <div className="bg-[#FFFDF9] p-5 rounded-2xl border border-[#E5DCCB] shadow-xs space-y-4">
             
             {/* Day Selector Tabs */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
               {sampleScientificProgram.map((item, idx) => (
                 <button
                   key={item.day}
