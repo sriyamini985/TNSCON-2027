@@ -280,7 +280,8 @@ export const siteContent = {
         specialty: 'Neurology',
         department: 'Department of Neurology',
         bio: 'Consultant neurologist leading clinical neurology protocols, acute stroke pathways, and organizational excellence for the 11th Annual State Conference.',
-        photoPlaceholder: true,
+        photo: '/assets/images/dr_chandrakanth_tapsi.jpg',
+        photoPlaceholder: false,
       },
       {
         name: 'Dr. G. Venu Gopal',

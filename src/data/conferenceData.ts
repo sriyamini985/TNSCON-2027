@@ -46,7 +46,8 @@ export const leadershipData = {
     role: 'Organising Secretary',
     designation: 'Consultant Neurophysician',
     institution: 'Telangana Neurosciences Society',
-    bio: 'Distinguished neurologist specializing in comprehensive clinical neurology, electrophysiology, and advancing scientific research initiatives in Telangana.'
+    bio: 'Distinguished neurologist specializing in comprehensive clinical neurology, electrophysiology, and advancing scientific research initiatives in Telangana.',
+    image: '/assets/images/dr_chandrakanth_tapsi.jpg'
   },
   jointOrganizingSecretary: {
     name: 'Dr. G. Venu Gopal',

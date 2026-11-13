@@ -23,6 +23,7 @@ export const SpeakersPage: React.FC = () => {
       institution: 'Telangana Neurosciences Society',
       session: 'Acute Stroke Interventions & Telestroke Networks in Telangana',
       initials: 'CT',
+      image: (leadershipData.organizingSecretary as any).image,
       isConfirmed: true
     },
     {
@@ -139,8 +140,18 @@ export const SpeakersPage: React.FC = () => {
                   className="relative overflow-hidden bg-[#FFFDF9] rounded-2xl p-6 border border-[#E5DCCB] hover:border-[#003399] transition-all shadow-xs flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-20 h-20 rounded-full bg-[#001A4D] text-[#FFCC00] font-serif text-2xl font-bold flex items-center justify-center mx-auto mb-4 ring-4 ring-[#EBF1FA]">
-                      {leader.initials}
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-[#D49B00] shadow-md mx-auto mb-4 bg-[#001A4D] flex items-center justify-center ring-4 ring-[#EBF1FA]">
+                      {(leader as any).image ? (
+                        <img
+                          src={(leader as any).image}
+                          alt={leader.name}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      ) : (
+                        <span className="font-serif text-2xl font-bold text-[#FFCC00]">
+                          {leader.initials}
+                        </span>
+                      )}
                     </div>
 
                     <div className="text-center space-y-1">

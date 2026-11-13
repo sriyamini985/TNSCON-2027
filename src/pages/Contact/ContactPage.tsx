@@ -125,9 +125,16 @@ export const ContactPage: React.FC = () => {
                     <p className="text-[#556070]">{leadershipData.organizingChairman.role} • {leadershipData.organizingChairman.designation}</p>
                   </div>
 
-                  <div className="text-xs space-y-1 pt-1">
-                    <strong className="text-[#003399] block">{leadershipData.organizingSecretary.name}</strong>
-                    <p className="text-[#556070]">{leadershipData.organizingSecretary.role} • {leadershipData.organizingSecretary.designation}</p>
+                  <div className="text-xs flex items-center gap-2.5 pt-1">
+                    <img
+                      src="/assets/images/dr_chandrakanth_tapsi.jpg"
+                      alt={leadershipData.organizingSecretary.name}
+                      className="w-10 h-10 rounded-full object-cover object-top border border-[#D49B00] shadow-2xs flex-shrink-0"
+                    />
+                    <div>
+                      <strong className="text-[#003399] block">{leadershipData.organizingSecretary.name}</strong>
+                      <p className="text-[#556070]">{leadershipData.organizingSecretary.role} • {leadershipData.organizingSecretary.designation}</p>
+                    </div>
                   </div>
                 </div>
 

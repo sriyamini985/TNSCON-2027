@@ -92,16 +92,23 @@ export const AboutPage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
-                <h4 className="font-serif text-base font-bold text-[#003399]">
-                  Dr. Chandrakanth Tapsi
-                </h4>
-                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
-                  Organizing Secretary
-                </p>
-                <p className="text-xs text-[#556070] mt-0.5">
-                  Consultant Neurophysician
-                </p>
+              <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70 flex items-start gap-3">
+                <img
+                  src="/assets/images/dr_chandrakanth_tapsi.jpg"
+                  alt="Dr. Chandrakanth Tapsi"
+                  className="w-12 h-12 rounded-full object-cover object-top border-2 border-[#D49B00] shadow-sm flex-shrink-0"
+                />
+                <div>
+                  <h4 className="font-serif text-base font-bold text-[#003399]">
+                    Dr. Chandrakanth Tapsi
+                  </h4>
+                  <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-0.5">
+                    Organizing Secretary
+                  </p>
+                  <p className="text-xs text-[#556070] mt-0.5">
+                    Consultant Neurophysician
+                  </p>
+                </div>
               </div>
 
               <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
