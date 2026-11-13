@@ -47,7 +47,7 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-2 flex items-center gap-3 text-xs text-[#FAF5ED]/60">
+            <div className="pt-2 flex flex-wrap items-center gap-2.5 text-xs text-[#FAF5ED]/60">
               <Link
                 to="/venue"
                 className="hover:text-[#FFCC00] transition-colors inline-flex items-center gap-1 underline underline-offset-4"
@@ -60,7 +60,14 @@ export const Footer: React.FC = () => {
                 to="/admin"
                 className="hover:text-[#FFCC00] transition-colors inline-flex items-center gap-1"
               >
-                <span>Secretariat Portal</span>
+                <span>Admin Portal</span>
+              </Link>
+              <span>•</span>
+              <Link
+                to="/abstract-viewer"
+                className="hover:text-[#FFCC00] transition-colors inline-flex items-center gap-1"
+              >
+                <span>Abstract Viewer (Public)</span>
               </Link>
             </div>
           </div>

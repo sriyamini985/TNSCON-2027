@@ -13,6 +13,7 @@ import { RegistrationPage } from './pages/Registration/RegistrationPage';
 import { VenuePage } from './pages/Venue/VenuePage';
 import { ContactPage } from './pages/Contact/ContactPage';
 import { AdminPage } from './pages/Admin/AdminPage';
+import { AbstractViewerPage } from './pages/AbstractViewer/AbstractViewerPage';
 
 // Scroll to top helper on route change
 function ScrollToTop() {
@@ -57,6 +58,8 @@ function AppContent() {
           <Route path="/venue" element={<VenuePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/abstract-viewer" element={<AbstractViewerPage />} />
+          <Route path="/abstracts" element={<AbstractViewerPage />} />
           {/* Catch-all fallback */}
           <Route path="*" element={<HomePage />} />
         </Routes>

@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   REGISTRATIONS: 'tnscon_registrations',
   ABSTRACTS: 'tnscon_abstracts',
   TOKEN: 'tnscon_admin_token',
+  VIEWER_TOKEN: 'tnscon_viewer_token',
   SETTINGS: 'tnscon_settings'
 };
 
@@ -98,13 +99,65 @@ if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
       presentingAuthorName: 'Ananya Sarma',
       presentingAuthorEmail: 'dr.ananya.sarma@gmail.com',
       presentingAuthorPhone: '9701044556',
-      presentingAuthorDesignation: 'Senior Resident',
+      presentingAuthorDesignation: 'Senior Resident in Neurosurgery',
       presentingAuthorInstitution: 'Osmania Medical College, Hyderabad',
       isResident: true,
       coAuthors: 'Dr. K. Srinivas, Dr. R. T. S. Naik',
+      introduction: 'Endoscopic endonasal transsphenoidal surgery has revolutionized surgical outcomes in suprasellar lesions.',
+      methods: 'Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center.',
+      results: 'Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically.',
+      conclusion: 'Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
       fullAbstractText: 'Introduction: Endoscopic endonasal transsphenoidal surgery has revolutionized surgical outcomes in suprasellar lesions. Methods: Retrospective evaluation of 86 patients undergoing endoscopic resection between 2021-2026 at tertiary center. Results: Gross total resection achieved in 79% with visual restoration in 84%. CSF leak occurred in 3.4% treated endoscopically. Conclusion: Endoscopic approach provides superior visualization and safety margin in complex skull base pathology.',
-      status: 'Under Review',
+      status: 'Accepted',
       createdAt: '2026-11-02T17:00:00Z'
+    },
+    {
+      id: 2,
+      submissionId: 'ABS-TNS27-102',
+      category: 'Free Paper Presentation',
+      specialty: 'Neurology',
+      subTopic: 'Stroke & Vascular Neurology',
+      title: 'Mechanical Thrombectomy Beyond 6 Hours in Acute Ischemic Stroke: A Multicentric Telangana Cohort Study',
+      wordCount: 242,
+      presentingAuthorTitle: 'Dr.',
+      presentingAuthorName: 'K. V. Ramana Rao',
+      presentingAuthorEmail: 'kv.ramana@nims.edu.in',
+      presentingAuthorPhone: '9848123456',
+      presentingAuthorDesignation: 'Assistant Professor of Neurology',
+      presentingAuthorInstitution: "Nizam's Institute of Medical Sciences (NIMS), Hyderabad",
+      isResident: false,
+      coAuthors: 'Dr. Chandrakanth Tapsi, Dr. V. S. R. Krishna',
+      introduction: 'Extended window mechanical thrombectomy in wake-up and delayed stroke presentations remains pivotal in clinical triage.',
+      methods: 'Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion.',
+      results: 'Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients.',
+      conclusion: 'Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
+      fullAbstractText: 'Introduction: Extended window mechanical thrombectomy in wake-up and delayed stroke presentations remains pivotal in clinical triage. Methods: Prospective observational registry of 114 patients treated with stent retriever and aspiration between 6-24 hours based on CT perfusion. Results: Successful recanalization (TICI 2b/3) achieved in 88.5%. 90-day functional independence (mRS 0-2) observed in 52.6% of patients. Conclusion: Perfusion-guided thrombectomy in extended windows is safe and demonstrates favorable neurological recovery in Telangana regional centers.',
+      status: 'Accepted',
+      createdAt: '2026-11-03T11:20:00Z'
+    },
+    {
+      id: 3,
+      submissionId: 'ABS-TNS27-103',
+      category: 'Poster Presentation',
+      specialty: 'Neurosurgery',
+      subTopic: 'Neuro-Oncology & Molecular Genetics',
+      title: 'Pediatric Low-Grade Gliomas: Correlation of BRAF V600E Mutation Status with Progression-Free Survival',
+      wordCount: 220,
+      presentingAuthorTitle: 'Dr.',
+      presentingAuthorName: 'Sneha Latha Reddy',
+      presentingAuthorEmail: 'dr.sneha.reddy@apollohospitals.com',
+      presentingAuthorPhone: '9989012345',
+      presentingAuthorDesignation: 'Fellow in Pediatric Neuro-Oncology',
+      presentingAuthorInstitution: 'Apollo Health City, Jubilee Hills, Hyderabad',
+      isResident: true,
+      coAuthors: 'Dr. M. S. Phanindra, Dr. P. Rajesh Kumar',
+      introduction: 'BRAF alterations represent key therapeutic and prognostic targets in pediatric low-grade neuro-epithelial neoplasms.',
+      methods: 'Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens.',
+      results: 'BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants.',
+      conclusion: 'Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
+      fullAbstractText: 'Introduction: BRAF alterations represent key therapeutic and prognostic targets in pediatric low-grade neuro-epithelial neoplasms. Methods: Immunohistochemical and PCR-based BRAF analysis conducted on 48 resected pediatric glioma specimens. Results: BRAF V600E was detected in 18.7% of pilocytic astrocytomas. Patients with wild-type had 3-year PFS of 81% vs 64% in mutated variants. Conclusion: Targeted molecular profiling aids individualized risk stratification and early adjuvant planning.',
+      status: 'Accepted',
+      createdAt: '2026-11-03T14:15:00Z'
     }
   ]);
 }
@@ -320,6 +373,60 @@ export const api = {
 
   logoutAdmin() {
     localStorage.removeItem(STORAGE_KEYS.TOKEN);
+  },
+
+  // Abstract Viewer (Public Viewing Auth & Access)
+  async viewerLogin(credentials?: { username?: string; email?: string; password?: string }) {
+    const userIdentifier = credentials?.email || credentials?.username || 'Public Viewer';
+    try {
+      const res = await fetch(`${API_BASE}/viewer/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials || { username: userIdentifier })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem(STORAGE_KEYS.VIEWER_TOKEN, data.token);
+        return data;
+      }
+    } catch {
+      // Resilient local fallback
+    }
+
+    const token = 'mock_viewer_token_tnscon2027';
+    localStorage.setItem(STORAGE_KEYS.VIEWER_TOKEN, token);
+    return {
+      success: true,
+      token,
+      user: {
+        username: userIdentifier,
+        role: 'Viewer'
+      }
+    };
+  },
+
+  getViewerToken() {
+    return localStorage.getItem(STORAGE_KEYS.VIEWER_TOKEN);
+  },
+
+  logoutViewer() {
+    localStorage.removeItem(STORAGE_KEYS.VIEWER_TOKEN);
+  },
+
+  // Public Abstracts for Viewing Portal
+  async getPublicAbstracts() {
+    try {
+      const res = await fetch(`${API_BASE}/abstracts/public`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.abstracts && data.abstracts.length > 0) return data;
+      }
+    } catch {
+      // Resilient fallback
+    }
+
+    const abstracts = getLocalData<any[]>(STORAGE_KEYS.ABSTRACTS, []);
+    return { success: true, abstracts };
   },
 
   // Admin Registrations

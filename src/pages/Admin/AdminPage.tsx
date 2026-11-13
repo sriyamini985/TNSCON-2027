@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Users,
   FileText,
@@ -8,9 +9,12 @@ import {
   CheckCircle2,
   XCircle,
   LogOut,
-  Sliders,
   AlertTriangle,
-  RefreshCw
+  RefreshCw,
+  BookOpen,
+  ShieldCheck,
+  Eye,
+  ArrowRight
 } from 'lucide-react';
 import { api, API_BASE, SERVER_BASE } from '../../services/api';
 import { generateRegistrationReceiptPDF } from '../../services/receiptGenerator';
@@ -22,9 +26,10 @@ export const AdminPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [loginPortal, setLoginPortal] = useState<'admin' | 'viewer'>('admin');
 
   // Active Dashboard Tab
-  const [activeTab, setActiveTab] = useState<'overview' | 'registrations' | 'abstracts' | 'settings'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'registrations' | 'abstracts'>('overview');
 
   // Dashboard Data
   const [registrations, setRegistrations] = useState<RegistrationRecord[]>([]);
@@ -44,12 +49,6 @@ export const AdminPage: React.FC = () => {
 
   // Rejection reason prompt state
   const [rejectionReason, setRejectionReason] = useState('');
-
-  // Configurable Settings State
-  const [submissionDestination, setSubmissionDestination] = useState<'INTERNAL' | 'EXTERNAL'>('INTERNAL');
-  const [externalUrl, setExternalUrl] = useState('https://www.neurovascon2026.com');
-  const [ePosterOrientation, setEPosterOrientation] = useState<'ADVISORY_PENDING' | 'PORTRAIT_ONLY' | 'LANDSCAPE_ONLY'>('ADVISORY_PENDING');
-  const [settingsSavedMessage, setSettingsSavedMessage] = useState('');
 
   useEffect(() => {
     if (token) {
@@ -161,11 +160,11 @@ export const AdminPage: React.FC = () => {
     window.open(`${API_BASE}/admin/registrations/export/regxperts?token=${token}`, '_blank');
   };
 
-  // If Not Authenticated, render Admin Login Card
+  // If Not Authenticated, render Dual Portal Login Card
   if (!token) {
     return (
       <div className="min-h-screen bg-[#FAF5ED] flex items-center justify-center p-4">
-        <div className="bg-[#FFFDF9] rounded-2xl p-8 sm:p-10 border border-[#E5DCCB] shadow-xl max-w-md w-full text-left space-y-6">
+        <div className="bg-[#FFFDF9] rounded-2xl p-6 sm:p-10 border border-[#E5DCCB] shadow-xl max-w-lg w-full text-left space-y-6">
           <div className="text-center space-y-2">
             <img
               src="/assets/images/tnscon_logo.png"
@@ -173,64 +172,123 @@ export const AdminPage: React.FC = () => {
               className="h-14 w-auto mx-auto object-contain mb-2"
             />
             <h2 className="font-serif text-2xl font-bold text-[#003399]">
-              TNSCON 2027 Secretariat
+              TNSCON 2027 Portal Access
             </h2>
             <p className="text-xs text-[#556070]">
-              Administrative access for conference organizing committee.
+              Select your destination portal below to sign in or view proceedings.
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-[#003399] mb-1">
-                Admin Username
-              </label>
-              <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="tnscon"
-                className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs font-medium bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-[#003399] mb-1">
-                Security Password
-              </label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••"
-                className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs font-medium bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
-              />
-              <p className="text-[10px] text-[#556070] mt-1">
-                Default credentials seeded: <code>tnscon</code> / <code>tnscon@2027</code>
-              </p>
-            </div>
-
-            {loginError && (
-              <div className="p-2.5 rounded bg-red-50 border border-red-200 text-red-700 text-xs">
-                {loginError}
-              </div>
-            )}
-
+          {/* Portal Switcher Tabs */}
+          <div className="grid grid-cols-2 p-1 rounded-xl bg-[#FAF5ED] border border-[#E5DCCB]">
             <button
-              type="submit"
-              disabled={isLoggingIn}
-              className="w-full py-3 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
+              type="button"
+              onClick={() => setLoginPortal('admin')}
+              className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                loginPortal === 'admin'
+                  ? 'bg-[#003399] text-white shadow-xs'
+                  : 'text-[#556070] hover:text-[#003399]'
+              }`}
             >
-              {isLoggingIn ? 'Authenticating...' : 'Sign In to Portal'}
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Admin Portal</span>
             </button>
-          </form>
+            <button
+              type="button"
+              onClick={() => setLoginPortal('viewer')}
+              className={`py-2 px-3 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                loginPortal === 'viewer'
+                  ? 'bg-[#003399] text-white shadow-xs'
+                  : 'text-[#556070] hover:text-[#003399]'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Abstract Viewer</span>
+            </button>
+          </div>
 
-          <div className="pt-2 text-center">
-            <a href="/" className="text-xs text-[#556070] hover:text-[#003399] underline">
-              ← Return to Conference Homepage
+          {loginPortal === 'admin' ? (
+            /* ADMIN LOGIN FORM */
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="p-3 rounded-lg bg-[#EBF1FA] border border-[#003399]/20 text-[11px] text-[#003399]">
+                <strong>Secretariat Admin:</strong> For organizing committee members to manage delegate registrations, verify payments, and oversee scientific reviews.
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-[#003399] mb-1">
+                  Admin Username
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="tnscon"
+                  className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs font-medium bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-[#003399] mb-1">
+                  Security Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full p-2.5 rounded-lg border border-[#E5DCCB] text-xs font-medium bg-[#FAF5ED] text-[#182230] focus:border-[#003399]"
+                />
+                <p className="text-[10px] text-[#556070] mt-1">
+                  Default credentials seeded: <code>tnscon</code> / <code>tnscon@2027</code>
+                </p>
+              </div>
+
+              {loginError && (
+                <div className="p-2.5 rounded bg-red-50 border border-red-200 text-red-700 text-xs">
+                  {loginError}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={isLoggingIn}
+                className="w-full py-3 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
+              >
+                {isLoggingIn ? 'Authenticating...' : 'Sign In to Admin Portal'}
+              </button>
+            </form>
+          ) : (
+            /* PUBLIC ABSTRACT VIEWER CARD */
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-left space-y-1">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-800 block">
+                  Public Viewing Access
+                </span>
+                <p className="text-xs text-emerald-950 leading-relaxed">
+                  Browse accepted research papers, oral presentations, and scientific e-posters. No administrative privileges required.
+                </p>
+              </div>
+
+              <Link
+                to="/abstract-viewer"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Eye className="w-4 h-4 text-[#FFCC00]" />
+                <span>Open Public Abstract Viewer</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          )}
+
+          <div className="pt-2 flex items-center justify-between text-xs text-[#556070] border-t border-[#E5DCCB]">
+            <a href="/" className="hover:text-[#003399] underline">
+              ← Conference Homepage
             </a>
+            <Link to="/abstract-viewer" className="hover:text-[#003399] text-[#003399] font-medium">
+              Direct Abstract Viewer →
+            </Link>
           </div>
         </div>
       </div>
@@ -262,6 +320,13 @@ export const AdminPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
+            <Link
+              to="/abstract-viewer"
+              className="flex items-center gap-1.5 text-xs text-[#FAF5ED] hover:text-[#FFCC00] px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 transition-colors"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-[#FFCC00]" />
+              <span className="hidden sm:inline">Public Abstract Viewer</span>
+            </Link>
             <button
               onClick={loadData}
               className="flex items-center gap-1.5 text-xs text-[#FAF5ED] hover:text-white px-3 py-1.5 rounded-lg bg-white/10 border border-white/20 cursor-pointer"
@@ -286,8 +351,7 @@ export const AdminPage: React.FC = () => {
           {[
             { id: 'overview', label: 'Executive Overview', icon: Users },
             { id: 'registrations', label: `Registrations (${totalRegs})`, icon: DollarSign },
-            { id: 'abstracts', label: `Abstracts (${abstracts.length})`, icon: FileText },
-            { id: 'settings', label: 'Discrepancies & Settings', icon: Sliders }
+            { id: 'abstracts', label: `Abstracts (${abstracts.length})`, icon: FileText }
           ].map((tab) => {
             const Icon = tab.icon;
             return (
@@ -620,121 +684,6 @@ export const AdminPage: React.FC = () => {
               ))}
             </div>
 
-          </div>
-        )}
-
-        {/* TAB 4: DISCREPANCIES & SETTINGS */}
-        {activeTab === 'settings' && (
-          <div className="max-w-3xl space-y-6 text-left">
-            <div className="bg-[#FFFDF9] p-6 sm:p-8 rounded-2xl border border-[#E5DCCB] shadow-sm space-y-6">
-              
-              <div>
-                <h3 className="font-serif text-xl font-bold text-[#003399]">
-                  Conference Governance & Discrepancy Policy Configuration
-                </h3>
-                <p className="text-xs text-[#556070] mt-1">
-                  Configure submission routing and display orientation policies according to official committee determinations.
-                </p>
-              </div>
-
-              {/* 1. NEUROVASCON 2026 Discrepancy Management */}
-              <div className="p-4 rounded-xl border border-[#D49B00]/40 bg-[#EBF1FA] space-y-3">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-[#003399]" />
-                  <h4 className="font-bold text-sm text-[#003399]">
-                    1. NEUROVASCON 2026 Submission Destination Control
-                  </h4>
-                </div>
-                <p className="text-xs text-[#182230] leading-relaxed">
-                  The guidelines document specifies <em>"Abstracts should be submitted only through the NEUROVASCON 2026 official website"</em>. For TNSCON 2027, this portal defaults to direct internal submission on <strong>tnscon2027hyd.com</strong>.
-                </p>
-
-                <div className="space-y-2 pt-1 text-xs">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="destination"
-                      checked={submissionDestination === 'INTERNAL'}
-                      onChange={() => setSubmissionDestination('INTERNAL')}
-                      className="text-[#003399] accent-[#003399]"
-                    />
-                    <span className="font-bold text-[#003399]">
-                      (Recommended) Direct Internal Portal Submission (tnscon2027hyd.com)
-                    </span>
-                  </label>
-
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="destination"
-                      checked={submissionDestination === 'EXTERNAL'}
-                      onChange={() => setSubmissionDestination('EXTERNAL')}
-                      className="text-[#003399] accent-[#003399]"
-                    />
-                    <span>Redirect to External Destination (NEUROVASCON 2026 or partner site)</span>
-                  </label>
-                </div>
-
-                {submissionDestination === 'EXTERNAL' && (
-                  <div className="pt-2">
-                    <input
-                      type="url"
-                      value={externalUrl}
-                      onChange={(e) => setExternalUrl(e.target.value)}
-                      placeholder="https://..."
-                      className="w-full p-2.5 rounded border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230]"
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* 2. E-Poster Orientation Discrepancy */}
-              <div className="p-4 rounded-xl border border-[#003399]/20 bg-[#EBF1FA] space-y-3">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-[#003399]" />
-                  <h4 className="font-bold text-sm text-[#003399]">
-                    2. E-Poster 16:9 Aspect Ratio vs. Portrait Orientation
-                  </h4>
-                </div>
-                <p className="text-xs text-[#182230] leading-relaxed">
-                  Preliminary guidelines reference standard 16:9 LCD screens alongside portrait slide requirements.
-                </p>
-
-                <select
-                  value={ePosterOrientation}
-                  onChange={(e) => setEPosterOrientation(e.target.value as any)}
-                  className="w-full p-2.5 rounded border border-[#E5DCCB] text-xs bg-[#FAF5ED] text-[#182230] font-medium"
-                >
-                  <option value="ADVISORY_PENDING">
-                    Flexible Advisory: Accept both 16:9 landscape & 9:16 portrait pending hall setup
-                  </option>
-                  <option value="PORTRAIT_ONLY">
-                    Enforce Portrait Format Only (Single slide)
-                  </option>
-                  <option value="LANDSCAPE_ONLY">
-                    Enforce 16:9 Landscape Ratio (1920×1080)
-                  </option>
-                </select>
-              </div>
-
-              {settingsSavedMessage && (
-                <div className="p-3 rounded bg-emerald-50 text-emerald-800 text-xs border border-emerald-200 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>{settingsSavedMessage}</span>
-                </div>
-              )}
-
-              <button
-                onClick={() => {
-                  setSettingsSavedMessage('Configuration settings saved successfully in secretariat database.');
-                  setTimeout(() => setSettingsSavedMessage(''), 4000);
-                }}
-                className="px-6 py-2.5 rounded-lg bg-[#003399] hover:bg-[#002266] text-white font-bold text-xs shadow-md transition-colors cursor-pointer"
-              >
-                Save Governance Preferences
-              </button>
-
-            </div>
           </div>
         )}
 

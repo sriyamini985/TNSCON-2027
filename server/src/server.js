@@ -396,6 +396,46 @@ app.get('/api/abstracts/status/:query', async (req, res) => {
 });
 
 // -------------------------------------------------------------
+// PUBLIC ABSTRACT VIEWING & VIEWER AUTHENTICATION
+// -------------------------------------------------------------
+
+app.post('/api/viewer/login', async (req, res) => {
+  try {
+    const { username, email } = req.body || {};
+    const identity = email || username || 'Public Viewer';
+    const token = jwt.sign(
+      { role: 'Viewer', username: identity },
+      process.env.JWT_SECRET || 'tnscon2027_secret',
+      { expiresIn: '7d' }
+    );
+
+    return res.json({
+      success: true,
+      token,
+      user: {
+        username: identity,
+        role: 'Viewer'
+      }
+    });
+  } catch (error) {
+    console.error('Viewer login error:', error);
+    return res.status(500).json({ error: 'Failed to authenticate viewer.' });
+  }
+});
+
+app.get('/api/abstracts/public', async (req, res) => {
+  try {
+    const abstracts = await prisma.abstractSubmission.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    return res.json({ success: true, abstracts });
+  } catch (error) {
+    console.error('Public abstracts lookup error:', error);
+    return res.status(500).json({ error: 'Failed to retrieve public abstracts.' });
+  }
+});
+
+// -------------------------------------------------------------
 // ADMIN AUTHENTICATION
 // -------------------------------------------------------------
 

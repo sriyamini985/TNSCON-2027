@@ -205,6 +205,23 @@ export const Navbar: React.FC = () => {
                     <ArrowRight className="w-4 h-4 text-[#D8CEBC]" />
                   </NavLink>
                 ))}
+
+                <div className="pt-3 border-t border-[#E5DCCB] mt-2 space-y-1">
+                  <NavLink
+                    to="/abstract-viewer"
+                    className="flex items-center justify-between px-3.5 py-2 rounded-lg text-sm font-semibold text-[#003399] hover:bg-[#F2EAE0]"
+                  >
+                    <span>Abstract Viewer (Public)</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#003399]" />
+                  </NavLink>
+                  <NavLink
+                    to="/admin"
+                    className="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-[#556070] hover:bg-[#F2EAE0]"
+                  >
+                    <span>Admin Portal</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#556070]" />
+                  </NavLink>
+                </div>
               </nav>
             </div>
 

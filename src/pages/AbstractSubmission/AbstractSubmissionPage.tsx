@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   FileText,
   CheckCircle2,
@@ -6,7 +7,8 @@ import {
   Search,
   Award,
   Users,
-  Send
+  Send,
+  Eye
 } from 'lucide-react';
 import { abstractTopics } from '../../data/conferenceData';
 import { ClientAdvisoryNotice } from '../../components/ui/ClientAdvisoryNotice';
@@ -177,37 +179,47 @@ export const AbstractSubmissionPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Navigation Tabs */}
-          <div className="flex border-b border-[#E5DCCB] mb-8">
-            <button
-              onClick={() => setActiveTab('submit')}
-              className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
-                activeTab === 'submit'
-                  ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
-                  : 'border-transparent text-[#556070] hover:text-[#003399]'
-              }`}
+          <div className="flex flex-wrap items-center justify-between border-b border-[#E5DCCB] mb-8 gap-2">
+            <div className="flex flex-wrap items-center">
+              <button
+                onClick={() => setActiveTab('submit')}
+                className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+                  activeTab === 'submit'
+                    ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
+                    : 'border-transparent text-[#556070] hover:text-[#003399]'
+                }`}
+              >
+                Submit Abstract Form
+              </button>
+              <button
+                onClick={() => setActiveTab('guidelines')}
+                className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+                  activeTab === 'guidelines'
+                    ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
+                    : 'border-transparent text-[#556070] hover:text-[#003399]'
+                }`}
+              >
+                Guidelines & Topics
+              </button>
+              <button
+                onClick={() => setActiveTab('status')}
+                className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
+                  activeTab === 'status'
+                    ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
+                    : 'border-transparent text-[#556070] hover:text-[#003399]'
+                }`}
+              >
+                Track Submission Status
+              </button>
+            </div>
+
+            <Link
+              to="/abstract-viewer"
+              className="py-2.5 px-4 rounded-lg bg-[#FAF5ED] hover:bg-[#EBF1FA] border border-[#003399]/30 text-[#003399] font-bold text-xs flex items-center gap-1.5 transition-colors shadow-xs"
             >
-              Submit Abstract Form
-            </button>
-            <button
-              onClick={() => setActiveTab('guidelines')}
-              className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
-                activeTab === 'guidelines'
-                  ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
-                  : 'border-transparent text-[#556070] hover:text-[#003399]'
-              }`}
-            >
-              Guidelines & Topics
-            </button>
-            <button
-              onClick={() => setActiveTab('status')}
-              className={`py-3 px-6 font-bold text-sm border-b-2 cursor-pointer transition-colors ${
-                activeTab === 'status'
-                  ? 'border-[#003399] text-[#003399] bg-[#FFFDF9] rounded-t-lg'
-                  : 'border-transparent text-[#556070] hover:text-[#003399]'
-              }`}
-            >
-              Track Submission Status
-            </button>
+              <Eye className="w-3.5 h-3.5 text-[#003399]" />
+              <span>Open Public Abstract Viewer →</span>
+            </Link>
           </div>
 
           {/* TAB 1: SUBMISSION FORM */}
