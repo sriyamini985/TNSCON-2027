@@ -222,8 +222,8 @@ export const siteContent = {
     societyBlurb:
       'The Telangana Neurosciences Society is dedicated to academic prestige, surgical mastery, advanced neurological care, and scientific collaboration across India.',
     leadership: {
-      organizingChairman: 'Dr. R T S Naik (Consultant Neurosurgeon)',
-      organizingSecretary: 'Dr. Chandrakanth Tapsi (Consultant Neurophysician)',
+      organizingChairman: 'Dr. R T S Naik',
+      organizingSecretary: 'Dr. Chandrakanth Tapsi',
       scientificNeurosurgery: 'Dr. N Pratap Kumar',
       scientificNeurology: 'Dr. Subbaiah Choudary',
     },
@@ -263,7 +263,7 @@ export const siteContent = {
       {
         name: 'Dr. R.T.S. Naik',
         role: 'Organising Chairman',
-        designation: 'Senior Consultant',
+        designation: '',
         societyRole: 'President',
         initials: 'RN',
         specialty: '',
@@ -275,7 +275,7 @@ export const siteContent = {
       {
         name: 'Dr. Chandrakanth Tapsi',
         role: 'Organising Secretary',
-        designation: 'Consultant',
+        designation: '',
         societyRole: 'Treasurer',
         initials: 'CT',
         specialty: '',
@@ -287,7 +287,7 @@ export const siteContent = {
       {
         name: 'Dr. G. Venu Gopal',
         role: 'Joint Organising Secretary',
-        designation: 'Consultant',
+        designation: '',
         societyRole: 'Joint Organising Secretary',
         initials: 'VG',
         specialty: '',
@@ -299,7 +299,7 @@ export const siteContent = {
       {
         name: 'Dr. T.V. Ramakrishna Murthy',
         role: 'Scientific Chair',
-        designation: 'Senior Consultant',
+        designation: '',
         societyRole: 'Scientific Committee Chair',
         initials: 'RM',
         specialty: '',
@@ -311,7 +311,7 @@ export const siteContent = {
       {
         name: 'Dr. G. Subbaiah Choudary',
         role: 'Scientific Chair',
-        designation: 'Senior Consultant',
+        designation: '',
         societyRole: 'Scientific Committee Chair',
         initials: 'SC',
         specialty: '',

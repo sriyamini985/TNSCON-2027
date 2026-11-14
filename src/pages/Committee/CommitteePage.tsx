@@ -115,13 +115,15 @@ export const CommitteePage: React.FC = () => {
                   {leader.name}
                 </h3>
 
-                {/* Designation */}
-                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wider mt-1.5">
+                {/* Role */}
+                <p className="text-xs font-bold text-[#D49B00] uppercase tracking-wider mt-2">
                   {leader.role}
                 </p>
-                <p className="text-xs text-[#556070] mt-0.5 font-medium">
-                  {leader.designation}
-                </p>
+                {leader.designation && (
+                  <p className="text-xs text-[#556070] mt-0.5 font-medium">
+                    {leader.designation}
+                  </p>
+                )}
 
               </div>
             ))}

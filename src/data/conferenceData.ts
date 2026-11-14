@@ -37,38 +37,33 @@ export const leadershipData = {
   organizingChairman: {
     name: 'Dr. R T S Naik',
     role: 'Organising Chairman',
-    designation: 'Senior Consultant Neurosurgeon',
     institution: 'Telangana Neurosciences Society',
-    bio: 'Renowned neurosurgeon with decades of surgical expertise in complex cranial and spinal neurosurgery, leading academic advancements across Telangana and India.'
+    bio: 'Renowned academic clinician with decades of surgical expertise in complex cranial corridors, leading academic advancements across Telangana and India.'
   },
   organizingSecretary: {
     name: 'Dr. Chandrakanth Tapsi',
     role: 'Organising Secretary',
-    designation: 'Consultant Neurophysician',
     institution: 'Telangana Neurosciences Society',
-    bio: 'Distinguished neurologist specializing in comprehensive clinical neurology, electrophysiology, and advancing scientific research initiatives in Telangana.',
-    image: '/assets/images/dr_chandrakanth_tapsi.jpg'
+    bio: 'Distinguished clinician specializing in comprehensive patient care, acute pathways, and advancing scientific research initiatives in Telangana.',
+    image: '/assets/images/committee/dr_chandrakanth_tapsi.jpg'
   },
   jointOrganizingSecretary: {
     name: 'Dr. G. Venu Gopal',
     role: 'Joint Organising Secretary',
-    designation: 'Consultant Neurospecialist',
     institution: 'Telangana Neurosciences Society',
     bio: 'Key member of the conference leadership coordinating operations, academic schedules, and delegate facilitation for TNSCON 2027.'
   },
   scientificCommittee: [
     {
-      specialty: 'Neurosurgery',
+      specialty: '',
       name: 'Dr. T V Ramakrishna Murthy',
-      role: 'Scientific Chair, Neurosurgery',
-      designation: 'Senior Consultant Neurosurgeon',
+      role: 'Scientific Chair',
       institution: 'Telangana Neurosciences Society'
     },
     {
-      specialty: 'Neurology',
+      specialty: '',
       name: 'Dr. G Subbaiah Choudary',
-      role: 'Scientific Chair, Neurology',
-      designation: 'Senior Consultant Neurologist',
+      role: 'Scientific Chair',
       institution: 'Telangana Neurosciences Society'
     }
   ]

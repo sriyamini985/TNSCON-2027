@@ -90,7 +90,6 @@ export const Footer: React.FC = () => {
                   Organizing Chairman
                 </span>
                 <strong className="text-[#FAF5ED] text-sm block">Dr. R.T.S. Naik</strong>
-                <span className="text-[#FAF5ED]/60 text-[11px]">Senior Consultant Neurosurgeon</span>
               </div>
 
               <div>
@@ -98,7 +97,6 @@ export const Footer: React.FC = () => {
                   Organizing Secretary
                 </span>
                 <strong className="text-[#FAF5ED] text-sm block">Dr. Chandrakanth Tapsi</strong>
-                <span className="text-[#FAF5ED]/60 text-[11px]">Consultant Neurophysician</span>
               </div>
 
               <div className="pt-1">
@@ -106,10 +104,10 @@ export const Footer: React.FC = () => {
                   Scientific Committee Leads
                 </span>
                 <p className="text-[#FAF5ED]/90 text-xs">
-                  Dr. N. Pratap Kumar <span className="text-[#FAF5ED]/50">(Neurosurgery)</span>
+                  Dr. N. Pratap Kumar
                 </p>
                 <p className="text-[#FAF5ED]/90 text-xs">
-                  Dr. G.V. Subbaiah Choudary <span className="text-[#FAF5ED]/50">(Neurology)</span>
+                  Dr. G.V. Subbaiah Choudary
                 </p>
               </div>
 

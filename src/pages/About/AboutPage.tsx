@@ -94,9 +94,6 @@ export const AboutPage: React.FC = () => {
                   <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-0.5">
                     Organizing Chairman
                   </p>
-                  <p className="text-xs text-[#556070] mt-0.5">
-                    Senior Consultant Neurosurgeon
-                  </p>
                 </div>
               </div>
 
@@ -104,7 +101,7 @@ export const AboutPage: React.FC = () => {
                 <img
                   src="/assets/images/dr_chandrakanth_tapsi.jpg"
                   alt="Dr. Chandrakanth Tapsi"
-                  className="w-12 h-12 rounded-full object-cover object-top border-2 border-[#D49B00] shadow-sm flex-shrink-0"
+                  className="w-12 h-12 rounded-full object-cover object-center border-2 border-[#D49B00] shadow-sm flex-shrink-0"
                 />
                 <div>
                   <h4 className="font-serif text-base font-bold text-[#003399]">
@@ -112,9 +109,6 @@ export const AboutPage: React.FC = () => {
                   </h4>
                   <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-0.5">
                     Organizing Secretary
-                  </p>
-                  <p className="text-xs text-[#556070] mt-0.5">
-                    Consultant Neurophysician
                   </p>
                 </div>
               </div>
@@ -126,19 +120,13 @@ export const AboutPage: React.FC = () => {
                 <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
                   Joint Organizing Secretary
                 </p>
-                <p className="text-xs text-[#556070] mt-0.5">
-                  Consultant Neurospecialist
-                </p>
               </div>
 
               <div className="bg-[#FAF5ED]/60 p-4 rounded-xl border border-[#E5DCCB]/70">
                 <h4 className="font-serif text-base font-bold text-[#003399]">
                   Scientific Chairs
                 </h4>
-                <p className="text-[11px] font-bold text-[#D49B00] uppercase tracking-wide mt-1">
-                  Neurosurgery & Neurology
-                </p>
-                <p className="text-xs text-[#556070] mt-0.5">
+                <p className="text-xs text-[#556070] mt-1 font-medium">
                   Dr. T V Ramakrishna Murthy & Dr. G Subbaiah Choudary
                 </p>
               </div>
