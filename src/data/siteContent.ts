@@ -334,7 +334,7 @@ export const siteContent = {
     advisors: [
       { name: 'Dr. G. Satyanarayana', designation: 'Immediate Past President', specialty: 'Neurology', photo: '/assets/images/committee/dr_g_sathyanarayana.jpg' },
       { name: 'Dr. M.K. Singh', designation: 'Advisor', specialty: 'Neurosciences' },
-      { name: 'Dr. Alok Ranjan', designation: 'Advisor', specialty: 'Neurosurgery' },
+      { name: 'Dr. Alok Ranjan', designation: 'Advisor', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_alok_ranjan.jpg' },
     ],
 
     // Executive Office Bearers (from official letterhead)
@@ -351,9 +351,9 @@ export const siteContent = {
       { name: 'Dr. N. Veena', designation: 'Executive Member', specialty: 'Neurology' },
       { name: 'Dr. G. Venugopal', designation: 'Executive Member', specialty: 'Neurosurgery' },
       { name: 'Dr. Sanjay Thumati', designation: 'Executive Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_t_sanjay.png' },
-      { name: 'Dr. P.V.K. Kishore', designation: 'Executive Member', specialty: 'Neurology' },
+      { name: 'Dr. P.V.K. Kishore', designation: 'Executive Member', specialty: 'Neurology', photo: '/assets/images/committee/dr_pvk_kishore.jpg' },
       { name: 'Dr. Dasari Srinivas', designation: 'Executive Member', specialty: 'Neurosurgery' },
-      { name: 'Dr. P. Ranjith', designation: 'Executive Member', specialty: 'Neurology' },
+      { name: 'Dr. P. Ranjith', designation: 'Executive Member', specialty: 'Neurology', photo: '/assets/images/committee/dr_p_ranjith.jpg' },
       { name: 'Dr. G. Rajashekar Reddy', designation: 'Executive Member', specialty: 'Neurosurgery' },
     ],
 
