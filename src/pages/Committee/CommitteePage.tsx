@@ -96,7 +96,7 @@ export const CommitteePage: React.FC = () => {
                 className="relative overflow-hidden bg-[#FFFDF9] rounded-2xl p-5 border border-[#E5DCCB] shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-[#003399] transition-all duration-200 flex flex-col text-center group"
               >
                 {/* Photo Frame */}
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-br from-[#001A4D] to-[#003399] border border-[#E5DCCB] shadow-inner flex items-center justify-center mx-auto mb-4 group-hover:scale-[1.01] transition-transform duration-200">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-br from-[#001A4D] to-[#003399] border-2 border-[#D49B00] shadow-md flex items-center justify-center mx-auto mb-4 group-hover:scale-[1.01] group-hover:border-[#003399] transition-all duration-200">
                   {leader.photo ? (
                     <img
                       src={leader.photo}
