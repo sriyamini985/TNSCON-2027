@@ -155,8 +155,8 @@ export const CommitteePage: React.FC = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-[#FAF5ED] border border-[#E5DCCB]">
                   <strong className="text-[#003399] block font-serif text-sm">Scientific Committee</strong>
-                  <p className="text-[#182230] mt-1">Dr. T V Ramakrishna Murthy (Neurosurgery Chair)</p>
-                  <p className="text-[#182230]">Dr. G Subbaiah Choudary (Neurology Chair)</p>
+                  <p className="text-[#182230] mt-1">Dr. T V Ramakrishna Murthy (Scientific Chair)</p>
+                  <p className="text-[#182230]">Dr. G Subbaiah Choudary (Scientific Chair)</p>
                 </div>
               </div>
             </div>
@@ -170,7 +170,7 @@ export const CommitteePage: React.FC = () => {
         <div className="bg-[#FFFDF9] p-4 rounded-xl border border-[#E5DCCB] shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
           <div className="flex items-center gap-2.5 text-xs text-[#182230] font-semibold">
             <Building2 className="w-4 h-4 text-[#D49B00]" />
-            <span>Telangana Neurosciences Society Office Bearers & Sub-Committees</span>
+            <span>Office Bearers & Sub-Committees</span>
           </div>
 
           <div className="relative w-full sm:w-72">
@@ -204,7 +204,7 @@ export const CommitteePage: React.FC = () => {
               .map((member) => (
                 <div
                   key={member.name}
-                  className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex flex-col justify-between"
+                  className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex flex-col"
                 >
                   <div className="space-y-2">
                     <div className="w-14 h-14 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm flex items-center justify-center bg-[#FAF5ED]">
@@ -223,9 +223,6 @@ export const CommitteePage: React.FC = () => {
                       {member.name}
                     </h4>
                   </div>
-                  <span className="text-[11px] text-[#556070] pt-3 mt-3 border-t border-[#E5DCCB] block">
-                    {member.specialty}
-                  </span>
                 </div>
               ))}
           </div>
@@ -268,9 +265,6 @@ export const CommitteePage: React.FC = () => {
                     <h4 className="font-serif font-bold text-[#182230] text-lg pt-1">
                       {adv.name}
                     </h4>
-                    <p className="text-xs text-[#556070]">
-                      {adv.specialty} · Telangana Neurosciences Society
-                    </p>
                   </div>
                 </div>
               ))}
@@ -296,7 +290,7 @@ export const CommitteePage: React.FC = () => {
               .map((ob) => (
                 <div
                   key={ob.name}
-                  className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex flex-col justify-between"
+                  className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex flex-col"
                 >
                   <div className="space-y-1.5">
                     <div className="w-12 h-12 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm mb-2 flex items-center justify-center bg-[#FAF5ED]">
@@ -314,9 +308,6 @@ export const CommitteePage: React.FC = () => {
                     <h4 className="font-serif font-bold text-[#182230] text-base leading-snug pt-1">
                       {ob.name}
                     </h4>
-                    <p className="text-xs text-[#556070]">
-                      {ob.specialty}
-                    </p>
                   </div>
                 </div>
               ))}
@@ -358,7 +349,7 @@ export const CommitteePage: React.FC = () => {
                       {exec.name}
                     </h4>
                     <p className="text-[11px] text-[#556070]">
-                      {exec.designation} · {exec.specialty}
+                      {exec.designation}
                     </p>
                   </div>
                 </div>
