@@ -101,7 +101,7 @@ export const CommitteePage: React.FC = () => {
                     <img
                       src={leader.photo}
                       alt={leader.name}
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover object-center"
                     />
                   ) : (
                     <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-[#D49B00]/50 text-[#FFCC00] font-serif text-2xl font-bold flex items-center justify-center shadow-md">
@@ -209,7 +209,7 @@ export const CommitteePage: React.FC = () => {
                   <div className="space-y-2">
                     <div className="w-14 h-14 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm flex items-center justify-center bg-[#FAF5ED]">
                       {(member as any).photo ? (
-                        <img src={(member as any).photo} alt={member.name} className="w-full h-full object-cover object-top" />
+                        <img src={(member as any).photo} alt={member.name} className="w-full h-full object-cover object-center" />
                       ) : (
                         <span className="font-serif font-bold text-sm text-[#003399]">
                           {member.name.split(' ').slice(-1)[0][0]}
@@ -254,7 +254,7 @@ export const CommitteePage: React.FC = () => {
                 >
                   <div className="w-14 h-14 rounded-xl overflow-hidden border-2 border-[#D49B00] shadow-sm flex-shrink-0 flex items-center justify-center bg-[#001A4D]">
                     {(adv as any).photo ? (
-                      <img src={(adv as any).photo} alt={adv.name} className="w-full h-full object-cover object-top" />
+                      <img src={(adv as any).photo} alt={adv.name} className="w-full h-full object-cover object-center" />
                     ) : (
                       <span className="font-serif font-bold text-lg text-[#FFCC00]">
                         {adv.name.split(' ').slice(-1)[0][0]}
@@ -301,7 +301,7 @@ export const CommitteePage: React.FC = () => {
                   <div className="space-y-1.5">
                     <div className="w-12 h-12 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm mb-2 flex items-center justify-center bg-[#FAF5ED]">
                       {(ob as any).photo ? (
-                        <img src={(ob as any).photo} alt={ob.name} className="w-full h-full object-cover object-top" />
+                        <img src={(ob as any).photo} alt={ob.name} className="w-full h-full object-cover object-center" />
                       ) : (
                         <span className="font-serif font-bold text-sm text-[#003399]">
                           {ob.name.split(' ').slice(-1)[0][0]}
@@ -342,13 +342,15 @@ export const CommitteePage: React.FC = () => {
               .map((exec) => (
                 <div
                   key={exec.name}
-                  className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex items-center gap-3"
+                  className="bg-[#FFFDF9] p-5 rounded-xl border border-[#E5DCCB] shadow-2xs hover:border-[#003399] transition-all flex items-center gap-3.5"
                 >
-                  <div className="w-10 h-10 rounded-full overflow-hidden border border-[#D49B00] shadow-2xs text-[#003399] flex items-center justify-center font-bold text-xs flex-shrink-0 bg-[#FAF5ED]">
+                  <div className="w-14 h-14 rounded-xl overflow-hidden border border-[#D49B00] shadow-sm text-[#003399] flex items-center justify-center font-bold text-sm flex-shrink-0 bg-[#FAF5ED]">
                     {(exec as any).photo ? (
-                      <img src={(exec as any).photo} alt={exec.name} className="w-full h-full object-cover object-top" />
+                      <img src={(exec as any).photo} alt={exec.name} className="w-full h-full object-cover object-center" />
                     ) : (
-                      <span>✓</span>
+                      <span className="font-serif font-bold text-sm text-[#003399]">
+                        {exec.name.replace(/^(Dr\.|Prof\.)\s*/, '').split(' ').filter(Boolean).map((n: string) => n[0]).slice(0, 2).join('')}
+                      </span>
                     )}
                   </div>
                   <div className="min-w-0">

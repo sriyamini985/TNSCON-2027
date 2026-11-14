@@ -293,7 +293,8 @@ export const siteContent = {
         specialty: 'Neurosciences',
         department: 'Organising Secretariat',
         bio: 'Joint Organising Secretary coordinating conference operations, academic scheduling, venue logistics, and delegate facilitation for TNSCON 2027.',
-        photoPlaceholder: true,
+        photo: '/assets/images/committee/dr_g_venugopal.jpg',
+        photoPlaceholder: false,
       },
       {
         name: 'Dr. T.V. Ramakrishna Murthy',
@@ -333,13 +334,13 @@ export const siteContent = {
     // Advisors & Immediate Past Leadership (from official letterhead)
     advisors: [
       { name: 'Dr. G. Satyanarayana', designation: 'Immediate Past President', specialty: 'Neurology', photo: '/assets/images/committee/dr_g_sathyanarayana.jpg' },
-      { name: 'Dr. M.K. Singh', designation: 'Advisor', specialty: 'Neurosciences' },
+      { name: 'Dr. M.K. Singh', designation: 'Advisor', specialty: 'Neurosciences', photo: '/assets/images/committee/dr_mk_singh.jpg' },
       { name: 'Dr. Alok Ranjan', designation: 'Advisor', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_alok_ranjan.jpg' },
     ],
 
     // Executive Office Bearers (from official letterhead)
     officeBearers: [
-      { name: 'Dr. Srikanth Jawalkar', role: 'Vice President', specialty: 'Neurosurgery' },
+      { name: 'Dr. Srikanth Jawalkar', role: 'Vice President', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_srikanth_jawalkar.jpg' },
       { name: 'Dr. C. Rajesh Reddy', role: 'Joint Secretary', specialty: 'Neurology', photo: '/assets/images/committee/dr_c_rajesh_reddy.jpg' },
       { name: 'Prof. M. Vijaya Saradhi', role: 'Ex-Officio Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_vijaya_saradhi.png' },
       { name: 'Dr. T.V. Ramakrishna Murthy', role: 'Ex-Officio Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_tv_ramakrishna_murthy.png' },
@@ -349,12 +350,13 @@ export const siteContent = {
     // Executive Council Members (from official letterhead)
     executiveMembers: [
       { name: 'Dr. N. Veena', designation: 'Executive Member', specialty: 'Neurology' },
-      { name: 'Dr. G. Venugopal', designation: 'Executive Member', specialty: 'Neurosurgery' },
+      { name: 'Dr. G. Venugopal', designation: 'Executive Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_g_venugopal.jpg' },
       { name: 'Dr. Sanjay Thumati', designation: 'Executive Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_t_sanjay.png' },
       { name: 'Dr. P.V.K. Kishore', designation: 'Executive Member', specialty: 'Neurology', photo: '/assets/images/committee/dr_pvk_kishore.jpg' },
-      { name: 'Dr. Dasari Srinivas', designation: 'Executive Member', specialty: 'Neurosurgery' },
+      { name: 'Dr. Dasari Srinivas', designation: 'Executive Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_dasari_srinivas.jpg' },
       { name: 'Dr. P. Ranjith', designation: 'Executive Member', specialty: 'Neurology', photo: '/assets/images/committee/dr_p_ranjith.jpg' },
-      { name: 'Dr. G. Rajashekar Reddy', designation: 'Executive Member', specialty: 'Neurosurgery' },
+      { name: 'Dr. G. Rajashekar Reddy', designation: 'Executive Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_g_rajashekar_reddy.jpg' },
+      { name: 'Prof. M. Vijaya Saradhi', designation: 'Ex-Officio Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/dr_vijaya_saradhi.png' },
     ],
 
     // Conference Working Sub-Committees (modeled after reference page structure)
