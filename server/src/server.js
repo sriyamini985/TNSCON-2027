@@ -898,9 +898,9 @@ const handleGetSettings = async (req, res) => {
     // Provide sensible defaults if not yet set in database
     const finalSettings = {
       abstractDestination: settingsMap.abstractDestination || 'INTERNAL', // 'INTERNAL' or 'EXTERNAL'
-      externalAbstractUrl: settingsMap.externalAbstractUrl || 'https://www.neurovascon2026.com',
-      flagNeurovasconDiscrepancy: settingsMap.flagNeurovasconDiscrepancy !== 'false',
-      ePosterOrientationPolicy: settingsMap.ePosterOrientationPolicy || 'ADVISORY_PENDING_COMMITTEE_SPEC',
+      externalAbstractUrl: settingsMap.externalAbstractUrl || 'https://www.tnscon2027hyd.com',
+      flagNeurovasconDiscrepancy: false,
+      ePosterOrientationPolicy: settingsMap.ePosterOrientationPolicy || 'WIDESCREEN_16_9',
       registrationOpen: settingsMap.registrationOpen !== 'false',
       abstractsOpen: settingsMap.abstractsOpen !== 'false',
       ...settingsMap
@@ -913,9 +913,9 @@ const handleGetSettings = async (req, res) => {
       success: true,
       settings: {
         abstractDestination: 'INTERNAL',
-        externalAbstractUrl: 'https://www.neurovascon2026.com',
-        flagNeurovasconDiscrepancy: true,
-        ePosterOrientationPolicy: 'ADVISORY_PENDING_COMMITTEE_SPEC',
+        externalAbstractUrl: 'https://www.tnscon2027hyd.com',
+        flagNeurovasconDiscrepancy: false,
+        ePosterOrientationPolicy: 'WIDESCREEN_16_9',
         registrationOpen: true,
         abstractsOpen: true
       }

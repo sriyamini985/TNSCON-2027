@@ -204,7 +204,7 @@ export const AbstractSubmissionPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Discrepancy & Transparency Notice */}
+      {/* Official Author Instructions & E-Poster Specifications */}
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-5 relative z-10 space-y-3">
         <ClientAdvisoryNotice type="abstract" />
         <ClientAdvisoryNotice type="eposter" />
