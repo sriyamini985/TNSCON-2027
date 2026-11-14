@@ -324,7 +324,7 @@ export const siteContent = {
     // Patrons & Founder Members (from official letterhead)
     founderMembers: [
       { name: 'Prof. D. Raja Reddy', designation: 'Founder Member', specialty: 'Neurosurgery' },
-      { name: 'Prof. K. Satyanarayana', designation: 'Founder Member', specialty: 'Neurosciences', photo: '/assets/images/committee/dr_g_sathyanarayana.jpg' },
+      { name: 'Prof. K. Satyanarayana', designation: 'Founder Member', specialty: 'Neurosciences', photo: '/assets/images/committee/prof_k_satyanarayana.jpg' },
       { name: 'Prof. P. Dhairyawan', designation: 'Founder Member', specialty: 'Neurology', photo: '/assets/images/committee/prof_p_dhairyawan.jpg' },
       { name: 'Prof. P. Govardhan Reddy', designation: 'Founder Member', specialty: 'Neurosurgery', photo: '/assets/images/committee/prof_p_govardhan_reddy.png' },
       { name: 'Prof. G. Prakash Rao', designation: 'Founder Member', specialty: 'Neurosciences', photo: '/assets/images/committee/dr_g_prakash_rao.png' },
