@@ -29,6 +29,62 @@ const createTransporterWithPort = (port) => {
 };
 
 const sendMailWithFallback = async (mailOptions) => {
+  // 1. Try Resend HTTP API if key provided (HTTPS port 443 - 100% bypasses cloud SMTP port blocks)
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const fromAddr = process.env.RESEND_FROM || `${mailOptions.fromName || 'TNSCON 2027 Secretariat'} <onboarding@resend.dev>`;
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: fromAddr,
+          to: [mailOptions.to],
+          subject: mailOptions.subject,
+          html: mailOptions.html
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.id) {
+        console.log(`[EMAIL DELIVERED via Resend API] to ${mailOptions.to} (ID: ${data.id})`);
+        return { success: true, messageId: data.id };
+      }
+      console.warn('[Resend API Warning]:', data);
+    } catch (apiErr) {
+      console.warn('[Resend API Error]:', apiErr.message);
+    }
+  }
+
+  // 2. Try Brevo HTTP API if key provided (HTTPS port 443)
+  if (process.env.BREVO_API_KEY) {
+    try {
+      const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'api-key': process.env.BREVO_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          sender: { name: mailOptions.fromName || 'TNSCON 2027 Secretariat', email: process.env.BREVO_FROM || 'info@tnscon2027hyd.com' },
+          to: [{ email: mailOptions.to }],
+          subject: mailOptions.subject,
+          htmlContent: mailOptions.html
+        })
+      });
+      const data = await res.json();
+      if (res.ok && (data.messageId || data.id)) {
+        console.log(`[EMAIL DELIVERED via Brevo API] to ${mailOptions.to} (ID: ${data.messageId || data.id})`);
+        return { success: true, messageId: data.messageId || data.id };
+      }
+      console.warn('[Brevo API Warning]:', data);
+    } catch (apiErr) {
+      console.warn('[Brevo API Error]:', apiErr.message);
+    }
+  }
+
+  // 3. Fallback to direct SMTP (ports 587 & 465)
   if (!process.env.SMTP_HOST || !process.env.SMTP_USER) {
     return { success: false, simulated: true, error: 'SMTP server not configured in server/.env' };
   }
