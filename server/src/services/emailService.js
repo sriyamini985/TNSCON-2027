@@ -1,27 +1,57 @@
 import nodemailer from 'nodemailer';
 
-const createTransporter = () => {
-  if (!process.env.SMTP_HOST || !process.env.SMTP_USER) {
+const createTransporterWithPort = (port) => {
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+
+  if (!host || !user) {
     return null;
   }
-  const port = parseInt(process.env.SMTP_PORT || '465', 10);
+
   const isSecure = port === 465;
 
   return nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
+    host,
     port,
     secure: isSecure,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
+      user,
+      pass
     },
     tls: {
       rejectUnauthorized: false
     },
-    connectionTimeout: 15000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 12000
   });
+};
+
+const sendMailWithFallback = async (mailOptions) => {
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER) {
+    return { success: false, simulated: true, error: 'SMTP server not configured in server/.env' };
+  }
+
+  const configuredPort = parseInt(process.env.SMTP_PORT || '587', 10);
+  // Try port 587 first (preferred for cloud hosting like Render to avoid port 465 SSL timeout), then 465
+  const portsToTry = configuredPort === 465 ? [587, 465] : [configuredPort, 587, 465].filter((v, i, a) => a.indexOf(v) === i);
+
+  let lastError = null;
+  for (const port of portsToTry) {
+    try {
+      const transporter = createTransporterWithPort(port);
+      if (!transporter) continue;
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`[EMAIL DELIVERED] via port ${port} to ${mailOptions.to} (MessageId: ${info.messageId})`);
+      return { success: true, messageId: info.messageId, port };
+    } catch (err) {
+      console.warn(`[SMTP ATTEMPT FAILED on port ${port}]: ${err.message}`);
+      lastError = err;
+    }
+  }
+
+  return { success: false, error: lastError?.message || 'SMTP delivery failed' };
 };
 
 const getEmailTemplate = (title, preheader, contentHtml) => {
@@ -66,7 +96,6 @@ const getEmailTemplate = (title, preheader, contentHtml) => {
 };
 
 export const sendRegistrationSubmittedEmail = async (reg) => {
-  const transporter = createTransporter();
   const fullName = `${reg.title || ''} ${reg.firstName} ${reg.lastName || ''}`.trim();
   const html = getEmailTemplate(
     'Registration Received',
@@ -87,21 +116,21 @@ export const sendRegistrationSubmittedEmail = async (reg) => {
     `
   );
 
-  if (!transporter) {
-    console.log(`[EMAIL SIMULATED] Registration submitted sent to: ${reg.email} (ID: ${reg.registrationId})`);
-    return { simulated: true, to: reg.email };
-  }
+  const fromAddress = process.env.SMTP_FROM || process.env.SMTP_USER || 'info@tnscon2027hyd.com';
+  const fromName = process.env.SMTP_FROM_NAME || 'TNSCON 2027 Secretariat';
 
-  return transporter.sendMail({
-    from: `"${process.env.SMTP_FROM_NAME || 'TNSCON 2027 Secretariat'}" <${process.env.SMTP_FROM}>`,
+  const mailOptions = {
+    from: `"${fromName}" <${fromAddress}>`,
     to: reg.email,
     subject: `[TNSCON 2027] Registration Acknowledged — ${reg.registrationId}`,
     html
-  });
+  };
+
+  const result = await sendMailWithFallback(mailOptions);
+  return { ...result, to: reg.email };
 };
 
 export const sendRegistrationApprovedEmail = async (reg) => {
-  const transporter = createTransporter();
   const fullName = `${reg.title || ''} ${reg.firstName} ${reg.lastName || ''}`.trim();
   const html = getEmailTemplate(
     'Registration Verified & Payment Successful',
@@ -185,28 +214,21 @@ export const sendRegistrationApprovedEmail = async (reg) => {
     `
   );
 
-  if (!transporter) {
-    console.warn(`[EMAIL WARNING] No SMTP transporter configured. Registration verified for: ${reg.email}`);
-    return { success: false, simulated: true, error: 'SMTP server not configured in server/.env', to: reg.email };
-  }
+  const fromAddress = process.env.SMTP_FROM || process.env.SMTP_USER || 'info@tnscon2027hyd.com';
+  const fromName = process.env.SMTP_FROM_NAME || 'TNSCON 2027 Secretariat';
 
-  try {
-    const info = await transporter.sendMail({
-      from: `"${process.env.SMTP_FROM_NAME || 'TNSCON 2027 Secretariat'}" <${process.env.SMTP_FROM}>`,
-      to: reg.email,
-      subject: `[CONFIRMED] TNSCON 2027 Registration Verified & Payment Successful — ${reg.registrationId}`,
-      html
-    });
-    console.log(`[EMAIL DELIVERED] Verification email sent to ${reg.email} (MessageId: ${info.messageId})`);
-    return { success: true, messageId: info.messageId, to: reg.email };
-  } catch (smtpErr) {
-    console.error(`[EMAIL ERROR] SMTP delivery failed (${smtpErr.message}) for: ${reg.email}`);
-    return { success: false, error: smtpErr.message, to: reg.email };
-  }
+  const mailOptions = {
+    from: `"${fromName}" <${fromAddress}>`,
+    to: reg.email,
+    subject: `[CONFIRMED] TNSCON 2027 Registration Verified & Payment Successful — ${reg.registrationId}`,
+    html
+  };
+
+  const result = await sendMailWithFallback(mailOptions);
+  return { ...result, to: reg.email };
 };
 
 export const sendAbstractSubmittedEmail = async (abs) => {
-  const transporter = createTransporter();
   const html = getEmailTemplate(
     'Abstract Submission Received',
     `TNSCON 2027 Abstract Acknowledged - ${abs.submissionId}`,
@@ -225,15 +247,16 @@ export const sendAbstractSubmittedEmail = async (abs) => {
     `
   );
 
-  if (!transporter) {
-    console.log(`[EMAIL SIMULATED] Abstract submission email sent to: ${abs.presentingAuthorEmail} (ID: ${abs.submissionId})`);
-    return { simulated: true, to: abs.presentingAuthorEmail };
-  }
+  const fromAddress = process.env.SMTP_FROM || process.env.SMTP_USER || 'info@tnscon2027hyd.com';
+  const fromName = process.env.SMTP_FROM_NAME || 'TNSCON 2027 Secretariat';
 
-  return transporter.sendMail({
-    from: `"${process.env.SMTP_FROM_NAME || 'TNSCON 2027 Secretariat'}" <${process.env.SMTP_FROM}>`,
+  const mailOptions = {
+    from: `"${fromName}" <${fromAddress}>`,
     to: abs.presentingAuthorEmail,
     subject: `[TNSCON 2027] Abstract Received — ${abs.submissionId}`,
     html
-  });
+  };
+
+  const result = await sendMailWithFallback(mailOptions);
+  return { ...result, to: abs.presentingAuthorEmail };
 };
