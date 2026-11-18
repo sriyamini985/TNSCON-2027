@@ -33,21 +33,40 @@ const sendMailWithFallback = async (mailOptions) => {
   const resendApiKey = process.env.RESEND_API_KEY;
   if (resendApiKey) {
     try {
-      const fromAddr = process.env.RESEND_FROM || `TNSCON 2027 Secretariat <onboarding@resend.dev>`;
-      const res = await fetch('https://api.resend.com/emails', {
+      const preferredFrom = process.env.RESEND_FROM || `TNSCON 2027 Secretariat <info@tnscon2027hyd.com>`;
+      let res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${resendApiKey}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: fromAddr,
+          from: preferredFrom,
           to: [mailOptions.to],
           subject: mailOptions.subject,
           html: mailOptions.html
         })
       });
-      const data = await res.json();
+      let data = await res.json();
+
+      // If domain verification is still propagating, gracefully fall back to onboarding@resend.dev
+      if (!res.ok && data?.message && data.message.toLowerCase().includes('domain')) {
+        res = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${resendApiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            from: `TNSCON 2027 Secretariat <onboarding@resend.dev>`,
+            to: [mailOptions.to],
+            subject: mailOptions.subject,
+            html: mailOptions.html
+          })
+        });
+        data = await res.json();
+      }
+
       if (res.ok && data.id) {
         console.log(`[EMAIL DELIVERED via Resend API] to ${mailOptions.to} (ID: ${data.id})`);
         return { success: true, messageId: data.id };
