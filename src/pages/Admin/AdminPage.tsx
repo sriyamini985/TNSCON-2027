@@ -52,6 +52,18 @@ export const AdminPage: React.FC = () => {
   // Rejection reason prompt state
   const [rejectionReason, setRejectionReason] = useState('');
 
+  // Handle unauthorized session expiry events across any admin actions
+  useEffect(() => {
+    const handleUnauthorized = (e: any) => {
+      setToken(null);
+      setLoginError(e?.detail?.message || 'Your session has expired. Please log in again.');
+    };
+    window.addEventListener('tnscon_admin_unauthorized', handleUnauthorized);
+    return () => {
+      window.removeEventListener('tnscon_admin_unauthorized', handleUnauthorized);
+    };
+  }, []);
+
   useEffect(() => {
     if (token) {
       loadData();
@@ -66,7 +78,12 @@ export const AdminPage: React.FC = () => {
       ]);
       setRegistrations(regRes.registrations || []);
       setAbstracts(absRes.abstracts || []);
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.message === 'UNAUTHORIZED') {
+        setToken(null);
+        setLoginError('Your session has expired. Please log in again.');
+        return;
+      }
       console.error('Error loading dashboard data:', err);
     }
   };
@@ -88,6 +105,7 @@ export const AdminPage: React.FC = () => {
   const handleLogout = () => {
     api.logoutAdmin();
     setToken(null);
+    setLoginError('');
   };
 
   const handleUpdateRegStatus = async (id: number, status: 'Verified' | 'Rejected') => {
@@ -116,6 +134,7 @@ export const AdminPage: React.FC = () => {
       setRejectionReason('');
       await loadData();
     } catch (err: any) {
+      if (err?.message === 'UNAUTHORIZED') return;
       alert('Failed to update status: ' + err.message);
     }
   };
@@ -129,6 +148,7 @@ export const AdminPage: React.FC = () => {
         alert(`⚠️ Email Failed to Deliver!\n\nCould not send email to ${reg.email}.\nReason: ${res.emailError || res.result?.error || 'Invalid SMTP credentials'}.\n\nPlease provide valid SMTP mail credentials in server/.env.`);
       }
     } catch (err: any) {
+      if (err?.message === 'UNAUTHORIZED') return;
       alert('Failed to send verification email: ' + err.message);
     }
   };
@@ -139,6 +159,7 @@ export const AdminPage: React.FC = () => {
       setSelectedAbs(null);
       await loadData();
     } catch (err: any) {
+      if (err?.message === 'UNAUTHORIZED') return;
       alert('Failed to update abstract: ' + err.message);
     }
   };
@@ -153,6 +174,7 @@ export const AdminPage: React.FC = () => {
       await loadData();
       alert(`Registration ${identifier} was permanently deleted.`);
     } catch (err: any) {
+      if (err?.message === 'UNAUTHORIZED') return;
       alert('Failed to delete registration: ' + err.message);
     }
   };
@@ -167,6 +189,7 @@ export const AdminPage: React.FC = () => {
       await loadData();
       alert(`Abstract ${identifier} was permanently deleted.`);
     } catch (err: any) {
+      if (err?.message === 'UNAUTHORIZED') return;
       alert('Failed to delete abstract: ' + err.message);
     }
   };

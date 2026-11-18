@@ -33,6 +33,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const JWT_SECRET = process.env.JWT_SECRET || 'tnscon2027_prestigious_academic_jwt_secret_hyd';
 
 // CORS Configuration (Configurable for Production Deployment)
 const defaultOrigins = [
@@ -109,11 +110,14 @@ const authenticateAdmin = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'tnscon2027_secret');
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.admin = decoded;
     next();
   } catch (err) {
-    return res.status(401).json({ error: 'Invalid or expired token. Please log in again.' });
+    return res.status(401).json({ 
+      error: 'Session expired or invalid. Please log in again.', 
+      code: 'UNAUTHORIZED' 
+    });
   }
 };
 
@@ -470,8 +474,8 @@ app.post('/api/viewer/login', async (req, res) => {
     const identity = email || username || 'Public Viewer';
     const token = jwt.sign(
       { role: 'Viewer', username: identity },
-      process.env.JWT_SECRET || 'tnscon2027_secret',
-      { expiresIn: '7d' }
+      JWT_SECRET,
+      { expiresIn: '30d' }
     );
 
     return res.json({
@@ -526,8 +530,8 @@ app.post('/api/admin/login', async (req, res) => {
 
     const token = jwt.sign(
       { id: admin.id, username: admin.username, role: admin.role },
-      process.env.JWT_SECRET || 'tnscon2027_secret',
-      { expiresIn: '24h' }
+      JWT_SECRET,
+      { expiresIn: '30d' }
     );
 
     return res.json({

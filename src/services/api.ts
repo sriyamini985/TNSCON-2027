@@ -77,6 +77,15 @@ if (!localStorage.getItem(STORAGE_KEYS.ABSTRACTS)) {
   setLocalData(STORAGE_KEYS.ABSTRACTS, []);
 }
 
+export const handleAdminUnauthorized = (message = 'Your session has expired. Please log in again.') => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.TOKEN);
+  } catch {}
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('tnscon_admin_unauthorized', { detail: { message } }));
+  }
+};
+
 export const api = {
   // Submit Registration
   async register(formData: RegistrationFormData) {
@@ -369,11 +378,16 @@ export const api = {
       const res = await fetch(`${API_BASE}/admin/registrations?${params.toString()}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
       if (res.ok) {
         const data = await res.json();
         if (data.registrations && data.registrations.length > 0) return data;
       }
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Using local store for admin registrations');
     }
 
@@ -409,6 +423,10 @@ export const api = {
         },
         body: JSON.stringify({ status, notes, rejectionReason, registration: registrationData })
       });
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
       if (res.ok) {
         const data = await res.json();
         // Keep local store synchronized
@@ -425,7 +443,8 @@ export const api = {
         }
         return data;
       }
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Fallback update registration status in local store');
     }
 
@@ -469,8 +488,13 @@ export const api = {
         },
         body: JSON.stringify({ registration: registrationData })
       });
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
       if (res.ok) return await res.json();
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Direct send verification email warning:', e);
     }
     return { success: true, message: `Confirmation email dispatched to ${registrationData.email}` };
@@ -480,11 +504,16 @@ export const api = {
   async deleteRegistration(id: number | string) {
     const token = this.getAdminToken();
     try {
-      await fetch(`${API_BASE}/admin/registrations/${id}`, {
+      const res = await fetch(`${API_BASE}/admin/registrations/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
-    } catch (e) {
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Delete registration fallback to local storage');
     }
 
@@ -501,11 +530,16 @@ export const api = {
       const res = await fetch(`${API_BASE}/admin/abstracts`, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
       if (res.ok) {
         const data = await res.json();
         if (data.abstracts && data.abstracts.length > 0) return data;
       }
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Fallback admin abstracts');
     }
 
@@ -524,8 +558,13 @@ export const api = {
         },
         body: JSON.stringify({ status, reviewerNotes: notes })
       });
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
       if (res.ok) return await res.json();
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Fallback update abstract');
     }
 
@@ -546,11 +585,16 @@ export const api = {
   async deleteAbstract(id: number | string) {
     const token = this.getAdminToken();
     try {
-      await fetch(`${API_BASE}/admin/abstracts/${id}`, {
+      const res = await fetch(`${API_BASE}/admin/abstracts/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });
-    } catch (e) {
+      if (res.status === 401) {
+        handleAdminUnauthorized();
+        throw new Error('UNAUTHORIZED');
+      }
+    } catch (e: any) {
+      if (e?.message === 'UNAUTHORIZED') throw e;
       console.warn('Delete abstract fallback to local storage');
     }
 
