@@ -16,6 +16,8 @@ services:
         value: tnscon
       - key: ADMIN_PASS
         value: tnscon@2027
+      - key: RESEND_API_KEY
+        sync: false
       - key: SMTP_HOST
         value: smtp.titan.email
       - key: SMTP_PORT

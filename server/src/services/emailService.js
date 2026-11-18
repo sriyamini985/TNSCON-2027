@@ -29,14 +29,15 @@ const createTransporterWithPort = (port) => {
 };
 
 const sendMailWithFallback = async (mailOptions) => {
-  // 1. Try Resend HTTP API if key provided (HTTPS port 443 - 100% bypasses cloud SMTP port blocks)
-  if (process.env.RESEND_API_KEY) {
+  // 1. Try Resend HTTP API (HTTPS port 443 - zero firewall timeout risk on Render)
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (resendApiKey) {
     try {
-      const fromAddr = process.env.RESEND_FROM || `${mailOptions.fromName || 'TNSCON 2027 Secretariat'} <onboarding@resend.dev>`;
+      const fromAddr = process.env.RESEND_FROM || `TNSCON 2027 Secretariat <onboarding@resend.dev>`;
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Authorization': `Bearer ${resendApiKey}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -52,6 +53,9 @@ const sendMailWithFallback = async (mailOptions) => {
         return { success: true, messageId: data.id };
       }
       console.warn('[Resend API Warning]:', data);
+      if (data && data.message) {
+        return { success: false, error: data.message };
+      }
     } catch (apiErr) {
       console.warn('[Resend API Error]:', apiErr.message);
     }
