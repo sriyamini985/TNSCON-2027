@@ -173,13 +173,15 @@ export const Footer: React.FC = () => {
               Conference Manager
             </h4>
 
-            {/* CMC Logo (Transparent, enlarged) */}
+            {/* CMC Logo */}
             <div className="pt-0.5">
-              <img
-                src="/assets/images/cmc_logo_transparent.png"
-                alt="CMC — Conference Management Company"
-                className="h-10 sm:h-12 w-auto object-contain filter drop-shadow-sm"
-              />
+              <div className="inline-flex items-center bg-white px-3 py-1.5 rounded-xl shadow-md border border-[#D49B00]/30">
+                <img
+                  src="/assets/images/cmc_logo.png"
+                  alt="CMC — Conference Management Company"
+                  className="h-9 sm:h-10 w-auto object-contain"
+                />
+              </div>
             </div>
 
             <div className="space-y-2 text-xs sm:text-[13px] text-[#FAF5ED]/80 leading-relaxed">
