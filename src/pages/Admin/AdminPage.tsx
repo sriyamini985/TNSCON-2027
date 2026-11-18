@@ -821,7 +821,7 @@ export const AdminPage: React.FC = () => {
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-3 bg-[#FAF5ED] p-3 rounded-lg border border-[#E5DCCB]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#FAF5ED] p-3 rounded-lg border border-[#E5DCCB]">
                 <div>
                   <span className="text-[#556070] block">Delegate Name:</span>
                   <strong className="text-sm text-[#182230]">{selectedReg.title} {selectedReg.firstName} {selectedReg.lastName}</strong>

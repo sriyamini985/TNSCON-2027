@@ -136,20 +136,28 @@ const sendMailWithFallback = async (mailOptions) => {
 const getEmailTemplate = (title, preheader, contentHtml) => {
   return `
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>${title}</title>
     <style>
-      body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #FAF5ED; margin: 0; padding: 0; color: #182230; }
-      .container { max-width: 620px; margin: 30px auto; background-color: #FFFDF9; border-radius: 12px; border: 1px solid #E5DCCB; overflow: hidden; box-shadow: 0 4px 20px rgba(0,51,153,0.08); }
-      .header { background: #003399; padding: 32px 28px; text-align: center; border-bottom: 4px solid #D49B00; }
-      .header h1 { color: #FFFFFF; font-size: 24px; margin: 0 0 6px 0; letter-spacing: 0.5px; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FAF5ED; margin: 0; padding: 0; color: #182230; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      .container { max-width: 600px; width: 100%; margin: 20px auto; background-color: #FFFDF9; border-radius: 12px; border: 1px solid #E5DCCB; overflow: hidden; box-shadow: 0 4px 20px rgba(0,51,153,0.08); }
+      .header { background: #003399; padding: 26px 20px; text-align: center; border-bottom: 4px solid #D49B00; }
+      .header h1 { color: #FFFFFF; font-size: 22px; margin: 0 0 6px 0; letter-spacing: 0.5px; font-weight: bold; }
       .header p { color: #FAF5ED; font-size: 13px; margin: 0; opacity: 0.95; }
-      .content { padding: 36px 32px; font-size: 15px; line-height: 1.6; color: #182230; }
-      .badge { display: inline-block; background-color: #FFFDF9; color: #003399; border: 1px solid #D49B00; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 14px; margin: 12px 0; }
-      .card { background: #FAF5ED; border-left: 4px solid #003399; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; border-top: 1px solid #E5DCCB; border-right: 1px solid #E5DCCB; border-bottom: 1px solid #E5DCCB; }
-      .footer { background-color: #FAF5ED; border-top: 1px solid #E5DCCB; padding: 24px; text-align: center; font-size: 12px; color: #556070; }
+      .content { padding: 26px 20px; font-size: 14px; line-height: 1.6; color: #182230; }
+      .badge { display: inline-block; background-color: #FFFDF9; color: #003399; border: 1.5px solid #D49B00; padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 14px; margin: 8px 0; }
+      .card { background: #FAF5ED; border-left: 4px solid #003399; padding: 14px 16px; margin: 16px 0; border-radius: 0 8px 8px 0; border-top: 1px solid #E5DCCB; border-right: 1px solid #E5DCCB; border-bottom: 1px solid #E5DCCB; }
+      .footer { background-color: #FAF5ED; border-top: 1px solid #E5DCCB; padding: 20px; text-align: center; font-size: 12px; color: #556070; }
       .footer a { color: #003399; text-decoration: none; font-weight: 600; }
+      @media only screen and (max-width: 480px) {
+        .container { margin: 0 auto !important; border-radius: 0 !important; width: 100% !important; border-left: none !important; border-right: none !important; }
+        .header { padding: 20px 14px !important; }
+        .content { padding: 18px 14px !important; }
+      }
     </style>
   </head>
   <body>
@@ -185,7 +193,7 @@ export const sendRegistrationSubmittedEmail = async (reg) => {
     <div class="card">
       <p style="margin: 0 0 6px 0;"><strong>Registration ID:</strong> <span class="badge">${reg.registrationId}</span></p>
       <p style="margin: 0 0 6px 0;"><strong>Category:</strong> ${reg.category}</p>
-      <p style="margin: 0 0 6px 0;"><strong>Transaction Reference / UTR:</strong> ${reg.transactionId}</p>
+      <p style="margin: 0 0 6px 0;"><strong>Transaction Reference / UTR:</strong> <span style="font-family: monospace; font-weight: bold; word-break: break-all;">${reg.transactionId}</span></p>
       <p style="margin: 0 0 6px 0;"><strong>Amount Paid:</strong> ₹${reg.fee}</p>
       <p style="margin: 0;"><strong>Payment Status:</strong> <span style="color: #D97706; font-weight: 600;">Verification Pending</span></p>
     </div>
@@ -230,44 +238,84 @@ export const sendRegistrationApprovedEmail = async (reg) => {
     </p>
 
     <!-- Official Registration & Payment Summary Box -->
-    <div style="background-color: #FFFDF9; border: 2px solid #D49B00; border-radius: 12px; padding: 22px 24px; margin: 24px 0; box-shadow: 0 4px 14px rgba(212,155,0,0.12);">
+    <div style="background-color: #FFFDF9; border: 2px solid #D49B00; border-radius: 12px; padding: 20px 16px; margin: 20px 0; box-shadow: 0 4px 14px rgba(212,155,0,0.12);">
+      
+      <!-- Registration ID Header -->
       <div style="border-bottom: 1px solid #E5DCCB; padding-bottom: 14px; margin-bottom: 14px; text-align: center;">
-        <span style="font-size: 12px; text-transform: uppercase; color: #556070; font-weight: bold; letter-spacing: 1.5px; display: block; margin-bottom: 4px;">
-          Your Confirmed Registration ID
+        <span style="font-size: 11px; text-transform: uppercase; color: #556070; font-weight: bold; letter-spacing: 1.5px; display: block; margin-bottom: 6px;">
+          Confirmed Registration ID
         </span>
-        <span style="font-size: 26px; font-weight: 800; color: #003399; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 1px; display: inline-block; background: #FAF5ED; padding: 6px 20px; border-radius: 8px; border: 1px solid #D49B00;">
+        <span style="font-size: 26px; font-weight: 800; color: #003399; letter-spacing: 1.5px; display: inline-block; background: #FAF5ED; padding: 6px 22px; border-radius: 8px; border: 1.5px solid #D49B00;">
           ${reg.registrationId}
         </span>
       </div>
 
-      <table style="width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6;">
-        <tr>
-          <td style="padding: 7px 0; color: #556070; width: 44%;">Payment Status:</td>
-          <td style="padding: 7px 0; font-weight: bold; color: #059669;">
-            <span style="background: #ECFDF5; padding: 3px 10px; border-radius: 4px; border: 1px solid #059669; font-size: 13px;">
-              ✓ Payment Successful & Verified
+      <!-- Payment & Delegate Details Table (Fully Responsive) -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5;">
+        <!-- Status Row -->
+        <tr style="border-bottom: 1px solid #F0E8D8;">
+          <td style="padding: 10px 0; color: #556070; font-weight: 600; width: 40%; vertical-align: middle;">
+            Payment Status:
+          </td>
+          <td style="padding: 10px 0; text-align: right; vertical-align: middle;">
+            <span style="display: inline-block; background: #ECFDF5; border: 1px solid #059669; color: #065F46; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; white-space: nowrap;">
+              ✓ Payment Verified
             </span>
           </td>
         </tr>
-        <tr>
-          <td style="padding: 7px 0; color: #556070;">Amount Received:</td>
-          <td style="padding: 7px 0; font-weight: bold; color: #003399; font-size: 15px;">₹${reg.fee}</td>
+
+        <!-- Amount Row -->
+        <tr style="border-bottom: 1px solid #F0E8D8;">
+          <td style="padding: 10px 0; color: #556070; font-weight: 600; width: 40%; vertical-align: middle;">
+            Amount Paid:
+          </td>
+          <td style="padding: 10px 0; text-align: right; font-weight: 800; color: #003399; font-size: 16px; vertical-align: middle;">
+            ₹${reg.fee}
+          </td>
         </tr>
-        <tr>
-          <td style="padding: 7px 0; color: #556070;">UTR / Transaction Reference:</td>
-          <td style="padding: 7px 0; font-family: monospace; font-weight: bold; color: #182230;">${reg.transactionId}</td>
+
+        <!-- Delegate Name Row -->
+        <tr style="border-bottom: 1px solid #F0E8D8;">
+          <td style="padding: 10px 0; color: #556070; font-weight: 600; width: 40%; vertical-align: middle;">
+            Delegate Name:
+          </td>
+          <td style="padding: 10px 0; text-align: right; font-weight: bold; color: #182230; font-size: 14px; vertical-align: middle;">
+            ${fullName}
+          </td>
         </tr>
-        <tr>
-          <td style="padding: 7px 0; color: #556070;">Delegate Name:</td>
-          <td style="padding: 7px 0; font-weight: 600; color: #182230;">${fullName}</td>
+
+        <!-- Category Row -->
+        <tr style="border-bottom: 1px solid #F0E8D8;">
+          <td style="padding: 10px 0; color: #556070; font-weight: 600; width: 40%; vertical-align: middle;">
+            Category:
+          </td>
+          <td style="padding: 10px 0; text-align: right; font-weight: 600; color: #003399; font-size: 13px; vertical-align: middle;">
+            ${reg.category}
+          </td>
         </tr>
-        <tr>
-          <td style="padding: 7px 0; color: #556070;">Registration Category:</td>
-          <td style="padding: 7px 0; font-weight: 600; color: #182230;">${reg.category}</td>
+
+        <!-- UTR Full Block -->
+        <tr style="border-bottom: 1px solid #F0E8D8;">
+          <td colspan="2" style="padding: 10px 0;">
+            <div style="color: #556070; font-size: 12px; font-weight: 600; margin-bottom: 4px;">
+              UTR / Transaction Reference:
+            </div>
+            <div style="font-family: Consolas, Monaco, monospace; font-size: 13px; font-weight: bold; color: #182230; word-break: break-all; background: #FAF5ED; padding: 6px 10px; border-radius: 6px; border: 1px solid #E5DCCB; letter-spacing: 0.5px;">
+              ${reg.transactionId}
+            </div>
+          </td>
         </tr>
+
+        <!-- Institution Full Block -->
         <tr>
-          <td style="padding: 7px 0; color: #556070;">Institution / Hospital:</td>
-          <td style="padding: 7px 0; color: #182230;">${reg.hospital || 'Not Specified'}</td>
+          <td colspan="2" style="padding: 10px 0 4px 0;">
+            <div style="color: #556070; font-size: 12px; font-weight: 600; margin-bottom: 3px;">
+              Institution / Hospital:
+            </div>
+            <div style="color: #182230; font-size: 13px; font-weight: 600;">
+              ${reg.hospital || 'Not Specified'}
+            </div>
+          </td>
         </tr>
       </table>
     </div>
