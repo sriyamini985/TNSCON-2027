@@ -71,6 +71,24 @@ if (!fs.existsSync(uploadsDir)) {
 }
 app.use('/uploads', express.static(uploadsDir));
 
+// Health Check Endpoint (monitors Render uptime & keeps Supabase DB active)
+app.get(['/health', '/api/health'], async (req, res) => {
+  try {
+    await prisma.$queryRawUnsafe('SELECT 1');
+    res.json({
+      status: 'healthy',
+      database: 'connected',
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: 'degraded',
+      database: err.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // JWT Middleware for Admin protection
 const authenticateAdmin = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -180,12 +198,19 @@ app.post('/api/registrations', upload.single('paymentScreenshot'), async (req, r
       return res.status(409).json({ error: duplicateError });
     }
 
-    // Payment proof screenshot
+    // Payment proof screenshot — prioritize persistent Base64 Data URL stored directly in database
     let paymentScreenshotUrl = '';
-    if (req.file) {
-      paymentScreenshotUrl = `/uploads/payments/${req.file.filename}`;
-    } else if (req.body.paymentScreenshotBase64) {
+    if (req.body.paymentScreenshotBase64 && req.body.paymentScreenshotBase64.startsWith('data:')) {
       paymentScreenshotUrl = req.body.paymentScreenshotBase64;
+    } else if (req.file) {
+      try {
+        const fileBuffer = fs.readFileSync(req.file.path);
+        const mime = req.file.mimetype || 'image/jpeg';
+        paymentScreenshotUrl = `data:${mime};base64,${fileBuffer.toString('base64')}`;
+      } catch (err) {
+        console.warn('Failed to convert screenshot to base64, using local path:', err.message);
+        paymentScreenshotUrl = `/uploads/payments/${req.file.filename}`;
+      }
     }
 
     const registration = await createRegistration({
@@ -328,12 +353,26 @@ app.post('/api/abstracts', abstractUploadFields, async (req, res) => {
     let bonafideFilePath = null;
 
     if (files.abstractFile && files.abstractFile[0]) {
-      docFilePath = `/uploads/abstracts/${files.abstractFile[0].filename}`;
-      docOriginalName = files.abstractFile[0].originalname;
+      const f = files.abstractFile[0];
+      docOriginalName = f.originalname;
+      try {
+        const fBuf = fs.readFileSync(f.path);
+        const mime = f.mimetype || 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        docFilePath = `data:${mime};base64,${fBuf.toString('base64')}`;
+      } catch (err) {
+        docFilePath = `/uploads/abstracts/${f.filename}`;
+      }
     }
 
     if (files.bonafideFile && files.bonafideFile[0]) {
-      bonafideFilePath = `/uploads/bonafides/${files.bonafideFile[0].filename}`;
+      const f = files.bonafideFile[0];
+      try {
+        const fBuf = fs.readFileSync(f.path);
+        const mime = f.mimetype || 'application/pdf';
+        bonafideFilePath = `data:${mime};base64,${fBuf.toString('base64')}`;
+      } catch (err) {
+        bonafideFilePath = `/uploads/bonafides/${f.filename}`;
+      }
     }
 
     const submission = await createAbstractSubmission({
