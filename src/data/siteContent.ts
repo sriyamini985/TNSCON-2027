@@ -224,8 +224,9 @@ export const siteContent = {
     leadership: {
       organizingChairman: 'Dr. R T S Naik',
       organizingSecretary: 'Dr. Chandrakanth Tapsi',
-      scientificNeurosurgery: 'Dr. N Pratap Kumar',
-      scientificNeurology: 'Dr. Subbaiah Choudary',
+      jointOrganizingSecretary: 'Dr. G. Venu Gopal',
+      scientificNeurosurgery: 'Dr. T.V. Ramakrishna Murthy',
+      scientificNeurology: 'Dr. G. Subbaiah Choudary',
     },
     venueDetails: {
       hall: 'Conference Hall, Rajiv Gandhi Terminal',
@@ -363,8 +364,8 @@ export const siteContent = {
     subCommittees: [
       {
         committeeName: 'Scientific Committee',
-        chairpersons: ['Dr. N. Pratap Kumar', 'Dr. G.V. Subbaiah Choudary'],
-        coChairpersons: ['Prof. M. Vijaya Saradhi', 'Dr. Sanjay Thumati'],
+        chairpersons: ['Dr. T.V. Ramakrishna Murthy', 'Dr. G. Subbaiah Choudary'],
+        coChairpersons: ['Prof. M. Vijaya Saradhi', 'Dr. Sanjay Thumati', 'Dr. N. Pratap Kumar'],
         members: ['Dr. Dasari Srinivas', 'Dr. N. Veena'],
       },
       {

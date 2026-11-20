@@ -41,7 +41,7 @@ export const ScientificProgramPage: React.FC = () => {
           <AlertCircle className="w-5 h-5 text-[#003399] flex-shrink-0 mt-0.5" />
           <div>
             <strong className="text-[#003399] block text-sm font-serif">Notice Regarding Scientific Schedule:</strong>
-            The schedule below represents the provisional scientific curriculum framework. Exact speaker allocations, masterclass slots, and paper timings will be finalized by the Scientific Committee (Dr. N Pratap Kumar & Dr. Subbaiah Choudary) following peer-review completion. All entries labeled with <em>"Placeholder Entry"</em> are provided for conference structural visualization.
+            The schedule below represents the provisional scientific curriculum framework. Exact speaker allocations, masterclass slots, and paper timings will be finalized by the Scientific Committee (Dr. T.V. Ramakrishna Murthy & Dr. G. Subbaiah Choudary) following peer-review completion. All entries labeled with <em>"Placeholder Entry"</em> are provided for conference structural visualization.
           </div>
         </div>
       </div>

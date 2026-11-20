@@ -99,15 +99,22 @@ export const Footer: React.FC = () => {
                 <strong className="text-[#FAF5ED] text-sm block">Dr. Chandrakanth Tapsi</strong>
               </div>
 
+              <div>
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#FFCC00] block">
+                  Joint Organizing Secretary
+                </span>
+                <strong className="text-[#FAF5ED] text-sm block">Dr. G. Venu Gopal</strong>
+              </div>
+
               <div className="pt-1">
                 <span className="text-[10px] uppercase font-bold tracking-wider text-[#FFCC00] block">
                   Scientific Committee Leads
                 </span>
                 <p className="text-[#FAF5ED]/90 text-xs">
-                  Dr. N. Pratap Kumar
+                  Dr. T.V. Ramakrishna Murthy
                 </p>
                 <p className="text-[#FAF5ED]/90 text-xs">
-                  Dr. G.V. Subbaiah Choudary
+                  Dr. G. Subbaiah Choudary
                 </p>
               </div>
 
