@@ -285,7 +285,7 @@ export const siteContent = {
         photoPlaceholder: false,
       },
       {
-        name: 'Dr. G. Venu Gopal',
+        name: 'Dr. G. Venugopal',
         role: 'Joint Organising Secretary',
         designation: '',
         societyRole: 'Joint Organising Secretary',
