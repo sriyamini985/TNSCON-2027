@@ -119,9 +119,9 @@ export const CommitteePage: React.FC = () => {
                 <p className="text-xs font-bold text-[#D49B00] uppercase tracking-wider mt-2">
                   {leader.role}
                 </p>
-                {leader.designation && (
+                {(leader.specialty || leader.designation) && (
                   <p className="text-xs text-[#556070] mt-0.5 font-medium">
-                    {leader.designation}
+                    {leader.specialty || leader.designation}
                   </p>
                 )}
 
@@ -157,8 +157,8 @@ export const CommitteePage: React.FC = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-[#FAF5ED] border border-[#E5DCCB]">
                   <strong className="text-[#003399] block font-serif text-sm">Scientific Committee</strong>
-                  <p className="text-[#182230] mt-1">Dr. T V Ramakrishna Murthy (Scientific Chair)</p>
-                  <p className="text-[#182230]">Dr. G Subbaiah Choudary (Scientific Chair)</p>
+                  <p className="text-[#182230] mt-1">Dr. T V R K Murthy (Scientific Chairman – Neurosurgery)</p>
+                  <p className="text-[#182230]">Dr. Subbaiah Choudary (Scientific Chair – Neurology)</p>
                 </div>
               </div>
             </div>

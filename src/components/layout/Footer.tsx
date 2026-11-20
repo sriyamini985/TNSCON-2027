@@ -111,10 +111,10 @@ export const Footer: React.FC = () => {
                   Scientific Committee Leads
                 </span>
                 <p className="text-[#FAF5ED]/90 text-xs">
-                  Dr. T.V. Ramakrishna Murthy
+                  Dr. T V R K Murthy (Neurosurgery)
                 </p>
                 <p className="text-[#FAF5ED]/90 text-xs">
-                  Dr. G. Subbaiah Choudary
+                  Dr. Subbaiah Choudary (Neurology)
                 </p>
               </div>
 

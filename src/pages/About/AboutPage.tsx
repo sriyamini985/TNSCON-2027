@@ -127,7 +127,7 @@ export const AboutPage: React.FC = () => {
                   Scientific Chairs
                 </h4>
                 <p className="text-xs text-[#556070] mt-1 font-medium">
-                  Dr. T V Ramakrishna Murthy & Dr. G Subbaiah Choudary
+                  Dr. T V R K Murthy & Dr. Subbaiah Choudary
                 </p>
               </div>
             </div>

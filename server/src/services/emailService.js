@@ -370,7 +370,7 @@ export const sendAbstractSubmittedEmail = async (abs) => {
       <p style="margin: 0;"><strong>Current Status:</strong> <span style="color: #2563EB; font-weight: 600;">Under Scientific Review</span></p>
     </div>
     <p><strong>Important Reminder:</strong> As per conference guidelines, all presenting authors must complete delegate registration by <strong>31st January 2027</strong>. Scientific committee review notifications will be communicated via email.</p>
-    <p style="margin-top: 24px;">Warm regards,<br><strong>Scientific Committee</strong><br>Dr. T.V. Ramakrishna Murthy (Neurosurgery)<br>Dr. G. Subbaiah Choudary (Neurology)</p>
+    <p style="margin-top: 24px;">Warm regards,<br><strong>Scientific Committee</strong><br>Dr. T V R K Murthy (Neurosurgery)<br>Dr. Subbaiah Choudary (Neurology)</p>
     `
   );
 

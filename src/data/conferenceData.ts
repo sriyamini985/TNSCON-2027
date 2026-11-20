@@ -55,14 +55,14 @@ export const leadershipData = {
   },
   scientificCommittee: [
     {
-      specialty: '',
-      name: 'Dr. T V Ramakrishna Murthy',
-      role: 'Scientific Chair',
+      specialty: 'Neurosurgery',
+      name: 'Dr. T V R K Murthy',
+      role: 'Scientific Chairman',
       institution: 'Telangana Neurosciences Society'
     },
     {
-      specialty: '',
-      name: 'Dr. G Subbaiah Choudary',
+      specialty: 'Neurology',
+      name: 'Dr. Subbaiah Choudary',
       role: 'Scientific Chair',
       institution: 'Telangana Neurosciences Society'
     }

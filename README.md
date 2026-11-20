@@ -130,8 +130,9 @@ The optimized static files will be generated in the `dist/` directory, ready to 
 
 * **Organizing Chairman:** Dr. R T S Naik
 * **Organizing Secretary:** Dr. Chandrakanth Tapsi
-* **Scientific Committee (Neurosurgery):** Dr. N Pratap Kumar
-* **Scientific Committee (Neurology):** Dr. Subbaiah Choudary
+* **Joint Organizing Secretary:** Dr. G. Venu Gopal
+* **Scientific Chairman (Neurosurgery):** Dr. T V R K Murthy
+* **Scientific Chair (Neurology):** Dr. Subbaiah Choudary
 * **Venue:** Rajiv Gandhi Terminal, Begumpet Airport, Hyderabad
 * **Official Portal:** [www.tnscon2027hyd.com](https://www.tnscon2027hyd.com)
 

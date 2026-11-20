@@ -28,19 +28,19 @@ export const SpeakersPage: React.FC = () => {
       isConfirmed: true
     },
     {
-      name: 'Dr. T.V. Ramakrishna Murthy',
-      role: 'Scientific Committee — Neurosurgery',
+      name: 'Dr. T V R K Murthy',
+      role: 'Scientific Chairman — Neurosurgery',
       specialty: 'Neurosurgery',
       designation: '',
       institution: '',
       session: 'Minimally Invasive Spinal Stabilization & Deformity Correction',
-      initials: 'RM',
+      initials: 'TM',
       image: '/assets/images/committee/dr_tv_ramakrishna_murthy.png',
       isConfirmed: true
     },
     {
-      name: 'Dr. G. Subbaiah Choudary',
-      role: 'Scientific Committee — Neurology',
+      name: 'Dr. Subbaiah Choudary',
+      role: 'Scientific Chair — Neurology',
       specialty: 'Neurology',
       designation: '',
       institution: '',
