@@ -15,6 +15,8 @@ export const exportToExcel = (registrations) => {
       'Phone / Mobile': reg.mobile,
       'Email': reg.email,
       'Category': reg.category,
+      'Speciality': reg.speciality || 'Neurosurgery',
+      'Neurology CME (12 March)': reg.speciality === 'Neurology' ? (reg.attendNeurologyCme || 'Yes') : 'N/A',
       'Registration Fee (INR)': reg.fee,
       'Transaction ID / UTR': reg.transactionId,
       'Payment Status': reg.paymentStatus,
@@ -47,6 +49,8 @@ export const exportToCSV = (registrations) => {
       'Email': reg.email,
       'Hospital': reg.hospital,
       'Category': reg.category,
+      'Speciality': reg.speciality || 'Neurosurgery',
+      'Neurology CME Attendance': reg.speciality === 'Neurology' ? (reg.attendNeurologyCme || 'Yes') : 'N/A',
       'Amount': reg.fee,
       'Transaction ID': reg.transactionId,
       'Payment Status': reg.paymentStatus,
@@ -73,6 +77,8 @@ export const exportToRegxperts = (registrations) => {
       'Email': reg.email,
       'Phone': reg.mobile,
       'Category': reg.category,
+      'Speciality': reg.speciality || 'Neurosurgery',
+      'NeurologyCME': reg.speciality === 'Neurology' ? (reg.attendNeurologyCme || 'Yes') : 'N/A',
       'KitbagCollected': reg.registrationStatus === 'Verified' ? 'NO' : 'HOLD',
       'FoodLogs': ''
     };

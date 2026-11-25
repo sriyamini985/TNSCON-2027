@@ -78,7 +78,14 @@ export const generateRegistrationReceiptPDF = (data: {
   
   const fields = [
     { label: 'Full Name:', value: fullName },
-    { label: 'Category & Speciality:', value: `${data.formData.category} — ${data.formData.speciality || 'Neurosurgery'}` },
+    { 
+      label: 'Category & Speciality:', 
+      value: `${data.formData.category} — ${data.formData.speciality || 'Neurosurgery'}${
+        data.formData.speciality === 'Neurology' 
+          ? ` (CME 12 March: ${data.formData.attendNeurologyCme || 'Yes'})` 
+          : (data.formData.includeWorkshop ? ' (incl. Workshop)' : '')
+      }` 
+    },
     { label: 'Institution / Hospital:', value: data.formData.hospital },
     { label: 'Designation / Qualification:', value: `${data.formData.designation || 'Consultant'} ${data.formData.qualification ? '(' + data.formData.qualification + ')' : ''}` },
     { label: 'Medical Council Reg. No:', value: data.formData.medicalCouncilNo || 'Provided on File' },

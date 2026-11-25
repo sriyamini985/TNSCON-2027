@@ -641,6 +641,11 @@ export const AdminPage: React.FC = () => {
                             {reg.speciality && (
                               <span className="text-[10px] text-[#003399] font-bold mt-0.5 block">
                                 {reg.speciality}
+                                {reg.speciality === 'Neurology' && (
+                                  <span className={`block font-medium text-[9.5px] ${reg.attendNeurologyCme === 'No' ? 'text-rose-600' : 'text-emerald-700'}`}>
+                                    CME: {reg.attendNeurologyCme || 'Yes'}
+                                  </span>
+                                )}
                               </span>
                             )}
                           </td>
@@ -831,6 +836,11 @@ export const AdminPage: React.FC = () => {
                   <strong className="text-sm text-[#003399]">
                     {selectedReg.category} {selectedReg.speciality ? `(${selectedReg.speciality})` : ''}
                   </strong>
+                  {selectedReg.speciality === 'Neurology' && (
+                    <span className="block text-xs font-semibold text-[#182230] mt-1">
+                      Willing to attend Neurology CME (12th March 2027): <span className={selectedReg.attendNeurologyCme === 'No' ? 'text-rose-600' : 'text-emerald-700'}>{selectedReg.attendNeurologyCme || 'Yes'}</span>
+                    </span>
+                  )}
                 </div>
                 <div>
                   <span className="text-[#556070] block">Institution:</span>

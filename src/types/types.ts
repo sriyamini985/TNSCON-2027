@@ -4,6 +4,7 @@ export interface RegistrationFormData {
   lastName: string;
   gender: string;
   speciality?: 'Neurosurgery' | 'Neurology' | string;
+  attendNeurologyCme?: 'Yes' | 'No' | string;
   designation: string;
   qualification: string;
   medicalCouncilNo: string;
@@ -34,6 +35,7 @@ export interface RegistrationRecord {
   lastName?: string;
   gender?: string;
   speciality?: string;
+  attendNeurologyCme?: string;
   designation?: string;
   qualification?: string;
   medicalCouncilNo?: string;

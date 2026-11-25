@@ -35,6 +35,7 @@ export const RegistrationPage: React.FC = () => {
     lastName: '',
     gender: 'Male',
     speciality: 'Neurosurgery',
+    attendNeurologyCme: 'Yes',
     designation: 'Consultant',
     qualification: 'MCh / DM / DNB',
     medicalCouncilNo: '',
@@ -399,16 +400,30 @@ export const RegistrationPage: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Informative Notice when Neurology is Selected */}
+                    {/* Neurology Category: Willing to attend Neurology CME Dropdown (12th March 2027) */}
                     {formData.speciality === 'Neurology' && formData.category !== 'Accompanying Person' && (
-                      <div className="p-3.5 rounded-xl border border-sky-200 bg-sky-50/70 text-xs text-sky-900 flex items-start gap-2.5 mt-2">
-                        <span className="text-base flex-shrink-0">ℹ️</span>
-                        <div>
-                          <strong className="font-semibold block text-sky-950">Hands-on Workshop is exclusive to Neurosurgery</strong>
-                          <span className="text-[11px] text-sky-800 leading-relaxed block mt-0.5">
-                            The Pre-Conference Hands-on Workshop covers surgical corridors and neuro-navigation. For Neurology delegates, dedicated clinical stroke plenaries, EEG/EMG masterclasses, and case presentations are fully included in your registration.
+                      <div className="p-4 rounded-xl border-2 border-[#003399]/30 bg-[#FFFDF9] space-y-2 mt-3 shadow-xs">
+                        <div className="flex items-center justify-between">
+                          <label htmlFor="attendNeurologyCme" className="block text-xs uppercase font-bold tracking-wider text-[#182230]">
+                            Willing to attend Neurology CME (12th March 2027) *
+                          </label>
+                          <span className="text-[10.5px] font-bold text-[#003399] bg-[#EBF1FA] px-2.5 py-0.5 rounded-full border border-[#003399]/20">
+                            Included in Registration
                           </span>
                         </div>
+                        <select
+                          id="attendNeurologyCme"
+                          name="attendNeurologyCme"
+                          value={formData.attendNeurologyCme || 'Yes'}
+                          onChange={handleInputChange}
+                          className="w-full p-3.5 rounded-xl border-2 border-[#003399]/30 focus:border-[#003399] bg-white text-sm font-bold text-[#182230] focus:outline-none focus:ring-2 focus:ring-[#003399]/20 transition-all cursor-pointer shadow-2xs"
+                        >
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                        <span className="block text-[11px] text-[#556070] mt-0.5">
+                          Dedicated full-day academic CME in clinical stroke protocols, EEG/EMG masterclasses, and case presentations on 12th March 2027.
+                        </span>
                       </div>
                     )}
 
@@ -652,6 +667,11 @@ export const RegistrationPage: React.FC = () => {
                             + Hands-on Neurosurgery Workshop Included (12 March 2027)
                           </span>
                         )}
+                        {formData.speciality === 'Neurology' && formData.category !== 'Accompanying Person' && (
+                          <span className="text-xs text-[#003399] font-semibold block mt-0.5">
+                            • Willing to attend Neurology CME (12th March 2027): <strong>{formData.attendNeurologyCme || 'Yes'}</strong>
+                          </span>
+                        )}
                       </div>
                       <div className="text-left sm:text-right">
                         <span className="text-[11px] uppercase tracking-wider font-bold text-[#556070] block">
@@ -871,6 +891,15 @@ export const RegistrationPage: React.FC = () => {
                       </span>
                     </div>
 
+                    {formData.speciality === 'Neurology' && (
+                      <div className="flex items-center justify-between border-b border-[#E5DCCB] pb-2">
+                        <span className="text-xs text-[#556070]">Neurology CME (12 March):</span>
+                        <span className={`text-xs font-bold ${formData.attendNeurologyCme === 'No' ? 'text-rose-600' : 'text-emerald-700'}`}>
+                          {formData.attendNeurologyCme === 'No' ? 'No (Not Attending)' : 'Yes (Attending)'}
+                        </span>
+                      </div>
+                    )}
+
                     <div className="flex items-center justify-between border-b border-[#E5DCCB] pb-2">
                       <span className="text-xs text-[#556070]">UTR Reference:</span>
                       <span className="text-xs font-manrope font-semibold text-[#182230]">
@@ -923,6 +952,8 @@ export const RegistrationPage: React.FC = () => {
                           mobile: '',
                           email: '',
                           category: registrationCategories[0].name,
+                          speciality: 'Neurosurgery',
+                          attendNeurologyCme: 'Yes',
                           fee: registrationCategories[0].fee,
                           transactionId: '',
                           paymentScreenshot: null

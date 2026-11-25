@@ -17,6 +17,7 @@ model Registration {
   designation        String?
   qualification      String?
   speciality         String?   @default("Neurosurgery")
+  attendNeurologyCme String?   @default("Yes")
   medicalCouncilNo   String?
   hospital           String
   address            String?

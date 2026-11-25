@@ -71,6 +71,7 @@ export const createRegistration = async (data) => {
       designation: data.designation || 'Consultant',
       qualification: data.qualification || '',
       speciality: data.speciality || 'Neurosurgery',
+      attendNeurologyCme: data.attendNeurologyCme || (data.speciality === 'Neurology' ? 'Yes' : null),
       medicalCouncilNo: data.medicalCouncilNo || '',
       hospital: data.hospital.trim(),
       address: data.address || '',

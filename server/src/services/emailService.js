@@ -192,7 +192,7 @@ export const sendRegistrationSubmittedEmail = async (reg) => {
     <p>Thank you for registering for <strong>TNSCON 2027 — The 11th Annual Conference of Telangana Neurosciences Society</strong>.</p>
     <div class="card">
       <p style="margin: 0 0 6px 0;"><strong>Registration ID:</strong> <span class="badge">${reg.registrationId}</span></p>
-      <p style="margin: 0 0 6px 0;"><strong>Category:</strong> ${reg.category}</p>
+      <p style="margin: 0 0 6px 0;"><strong>Category:</strong> ${reg.category} (${reg.speciality || 'Neurosurgery'}${reg.speciality === 'Neurology' ? ` • CME 12th March: ${reg.attendNeurologyCme || 'Yes'}` : ''})</p>
       <p style="margin: 0 0 6px 0;"><strong>Transaction Reference / UTR:</strong> <span style="font-family: monospace; font-weight: bold; word-break: break-all;">${reg.transactionId}</span></p>
       <p style="margin: 0 0 6px 0;"><strong>Amount Paid:</strong> ₹${reg.fee}</p>
       <p style="margin: 0;"><strong>Payment Status:</strong> <span style="color: #D97706; font-weight: 600;">Verification Pending</span></p>
@@ -287,10 +287,10 @@ export const sendRegistrationApprovedEmail = async (reg) => {
         <!-- Category Row -->
         <tr style="border-bottom: 1px solid #F0E8D8;">
           <td style="padding: 10px 0; color: #556070; font-weight: 600; width: 40%; vertical-align: middle;">
-            Category:
+            Category & Track:
           </td>
           <td style="padding: 10px 0; text-align: right; font-weight: 600; color: #003399; font-size: 13px; vertical-align: middle;">
-            ${reg.category}
+            ${reg.category} (${reg.speciality || 'Neurosurgery'}${reg.speciality === 'Neurology' ? ` • CME 12th March: ${reg.attendNeurologyCme || 'Yes'}` : ''})
           </td>
         </tr>
 
